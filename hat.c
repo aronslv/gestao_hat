@@ -17,7 +17,7 @@ void tela_produtos(void);
 int main(void) {
     tela_main();
     tela_info();
-    tela_revendedora();
+    tela_revendedoras();
     tela_funcionarios();
     tela_fornecedoras();
     tela_produtos();
