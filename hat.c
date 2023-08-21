@@ -18,6 +18,10 @@ int main(void) {
     tela_main();
     tela_info();
     tela_revendedoras();
+    tela_cad_rev();
+    tela_pes_rev();
+    tela_edit_rev();
+    tela_exc_rev();
     tela_funcionarios();
     tela_fornecedoras();
     tela_produtos();
