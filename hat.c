@@ -19,11 +19,6 @@ void tela_cad_forn(void);
 void tela_pes_forn(void);
 void tela_edit_forn(void);
 void tela_exc_forn(void);
-void tela_produtos(void);
-void tela_cad_prods(void);
-void tela_pes_prods(void);
-void tela_edit_prods(void);
-void tela_exc_prods(void);
 
 //programa main
 int main(void) {
@@ -44,11 +39,6 @@ int main(void) {
     tela_pes_forn();
     tela_edit_forn();
     tela_exc_forn();
-    tela_produtos();
-    tela_cad_prods();
-    tela_pes_prods();
-    tela_edit_prods();
-    tela_exc_prods();
     return 0;
 }
 
