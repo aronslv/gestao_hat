@@ -58,7 +58,7 @@ void tela_main(void) {
     printf("§              5. Relatórios                                                  §\n");
     printf("§              0. Sair                                                        §\n");
     printf("§                                                                             §\n");
-    printf("§              Digite o nº da opção desejada: ");
+    printf("§              Digite o número da opção desejada: ");
     scanf("%c", &op);
     getchar();
     printf("§                                                                             §\n");
@@ -101,7 +101,7 @@ void tela_revendedoras(void) {
     printf("§              4. Excluir uma Revendedora do Sistema                          §\n");
     printf("§              0. Retornar ao Menu Principal                                  §\n");
     printf("§                                                                             §\n");
-    printf("§              Digite o nº da opção desejada: ");
+    printf("§              Digite o número da opção desejada: ");
     scanf("%c", &op);
     getchar();
     printf("§                                                                             §\n");
@@ -195,7 +195,7 @@ void tela_funcionarios(void) {
     printf("§              4. Excluir um Funcionário do Sistema                           §\n");
     printf("§              0. Retornar ao Menu Principal                                  §\n");
     printf("§                                                                             §\n");
-    printf("§              Digite o nº da opção desejada: ");
+    printf("§              Digite o número da opção desejada: ");
     scanf("%c", &op);
     getchar();
     printf("§                                                                             §\n");
@@ -288,7 +288,7 @@ void tela_fornecedoras(void) {
     printf("§              4. Excluir uma Fornecedora do Sistema                          §\n");
     printf("§              0. Retornar ao Menu Principal                                  §\n");
     printf("§                                                                             §\n");
-    printf("§              Digite o nº da opção desejada: ");
+    printf("§              Digite o número da opção desejada: ");
     scanf("%c", &op);
     getchar();
     printf("§                                                                             §\n");
