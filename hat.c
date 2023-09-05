@@ -1,14 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include "rev.h"
 
 //funções base
 char tela_main(void);
 void tela_info(void);
-void tela_revendedoras(void);
-void tela_cad_rev(void);
-void tela_pes_rev(void);
-void tela_edit_rev(void);
-void tela_exc_rev(void);
 void tela_funcionarios(void);
 void tela_cad_func(void);
 void tela_pes_func(void);
@@ -32,11 +28,11 @@ int main(void) {
                     break;
             case '3': tela_fornecedoras();
                     break;
-            case '4': printf("Em andamento");
+            case '4': printf("Em desenvolvimento!");
                     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
                     getchar();
                     break;
-            case '5': printf("Em andamento");
+            case '5': printf("Em desenvolvimento!");
                     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
                     getchar();
                     break;
