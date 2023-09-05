@@ -1,15 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "rev.h"
+#include "func.h"
 
 //funções base
 char tela_main(void);
 void tela_info(void);
-char tela_funcionarios(void);
-void tela_cad_func(void);
-void tela_pes_func(void);
-void tela_edit_func(void);
-void tela_exc_func(void);
 char tela_fornecedoras(void);
 void tela_cad_forn(void);
 void tela_pes_forn(void);
@@ -39,19 +35,7 @@ int main(void) {
             case '6':   tela_info();
                         break;
         }
-    } while (op != '0');
-    tela_cad_rev();
-    tela_pes_rev();
-    tela_edit_rev();
-    tela_exc_rev();
-    tela_cad_func();
-    tela_pes_func();
-    tela_edit_func();
-    tela_exc_func();
-    tela_cad_forn();
-    tela_pes_forn();
-    tela_edit_forn();
-    tela_exc_forn();
+    } while (op != '0');   
     return 0;
 }
 
