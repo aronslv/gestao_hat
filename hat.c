@@ -5,12 +5,12 @@
 //funções base
 char tela_main(void);
 void tela_info(void);
-void tela_funcionarios(void);
+char tela_funcionarios(void);
 void tela_cad_func(void);
 void tela_pes_func(void);
 void tela_edit_func(void);
 void tela_exc_func(void);
-void tela_fornecedoras(void);
+char tela_fornecedoras(void);
 void tela_cad_forn(void);
 void tela_pes_forn(void);
 void tela_edit_forn(void);
@@ -22,22 +22,22 @@ int main(void) {
     do {
         op = tela_main();
         switch(op) {
-            case '1': tela_revendedoras();
-                    break;
-            case '2': tela_funcionarios();
-                    break;
-            case '3': tela_fornecedoras();
-                    break;
-            case '4': printf("Em desenvolvimento!");
-                    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-                    getchar();
-                    break;
-            case '5': printf("Em desenvolvimento!");
-                    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-                    getchar();
-                    break;
-            case '6': tela_info();
-                    break;
+            case '1':   tela_revendedoras();
+                        break;
+            case '2':   tela_funcionarios();
+                        break;
+            case '3':   tela_fornecedoras();
+                        break;
+            case '4':   printf("Em desenvolvimento!\n");
+                        printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+                        getchar();
+                        break;
+            case '5':   printf("Em desenvolvimento!\n");
+                        printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+                        getchar();
+                        break;
+            case '6':   tela_info();
+                        break;
         }
     } while (op != '0');
     tela_cad_rev();
@@ -102,101 +102,7 @@ void tela_info(void) {
     getchar();
 }
 
-void tela_revendedoras(void) {
-    char op;
-    system("clear||cls");
-    printf("\n");
-    printf("-------------------------------------------------------------------------------\n");
-    printf("§                                                                             §\n");
-    printf("§              < < < < < < < < Revendedoras > > > > > > > >                   §\n");
-    printf("§                                                                             §\n");
-    printf("§              1. Cadastro de Revendedoras                                    §\n");
-    printf("§              2. Pesquisar Revendedoras                                      §\n");
-    printf("§              3. Editar Dados de Revendedoras                                §\n");
-    printf("§              4. Excluir uma Revendedora do Sistema                          §\n");
-    printf("§              0. Retornar ao Menu Principal                                  §\n");
-    printf("§                                                                             §\n");
-    printf("§              Digite o número da opção desejada: ");
-    scanf("%c", &op);
-    getchar();
-    printf("§                                                                             §\n");
-    printf("-------------------------------------------------------------------------------\n");
-    printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
-}
-
-void tela_cad_rev(void) {
-    system("clear||cls");
-    printf("\n");
-    printf("-------------------------------------------------------------------------------\n");
-    printf("§                                                                             §\n");
-    printf("§              < < < < < < < Cadastro - Revendedoras > > > > > > >            §\n");
-    printf("§                                                                             §\n");
-    printf("§              Digite as informações a seguir:                                §\n");
-    printf("§                                                                             §\n");
-    printf("§              CNPJ:                                                          §\n");
-    printf("§              Nome do estabelecimento:                                       §\n");
-    printf("§              Endereço do estabelecimento:                                   §\n");
-    printf("§              Nome do proprietário(a):                                       §\n");
-    printf("§              Celular (apenas números):                                      §\n");
-    printf("§                                                                             §\n");
-    printf("§                                                                             §\n");
-    printf("-------------------------------------------------------------------------------\n");
-    printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
-}
-
-void tela_pes_rev(void) {
-    system("clear||cls");
-    printf("\n");
-    printf("-------------------------------------------------------------------------------\n");
-    printf("§                                                                             §\n");
-    printf("§              < < < < < < < Pesquisa - Revendedoras > > > > > > >            §\n");
-    printf("§                                                                             §\n");
-    printf("§              Informe o CNPJ que deseja pesquisar:                           §\n");
-    printf("§                                                                             §\n");
-    printf("§                                                                             §\n");
-    printf("-------------------------------------------------------------------------------\n");
-    printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar(); 
-}
-
-void tela_edit_rev(void) {
-    system("clear||cls");
-    printf("\n");
-    printf("-------------------------------------------------------------------------------\n");
-    printf("§                                                                             §\n");
-    printf("§              < < < < < < < Edição - Revendedoras > > > > > > >              §\n");
-    printf("§                                                                             §\n");
-    printf("§              Informe o CNPJ para edição de dados:                           §\n");
-    printf("§                                                                             §\n");
-    printf("§                                                                             §\n");
-    printf("-------------------------------------------------------------------------------\n");
-    printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar(); 
-}
-
-void tela_exc_rev(void) {
-    system("clear||cls");
-    printf("\n");
-    printf("-------------------------------------------------------------------------------\n");
-    printf("§                                                                             §\n");
-    printf("§              < < < < < < < Exclusão - Revendedoras > > > > > > >            §\n");
-    printf("§                                                                             §\n");
-    printf("§              Informe o CNPJ para excluir do sistema:                        §\n");
-    printf("§                                                                             §\n");
-    printf("§                                                                             §\n");
-    printf("-------------------------------------------------------------------------------\n");
-    printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar(); 
-}
-
-void tela_funcionarios(void) {
+char tela_funcionarios(void) {
     char op;
     system("clear||cls");
     printf("\n");
@@ -289,7 +195,7 @@ void tela_exc_func(void) {
     getchar(); 
 }
 
-void tela_fornecedoras(void) {
+char tela_fornecedoras(void) {
     char op;
     system("clear||cls");
     printf("\n");
