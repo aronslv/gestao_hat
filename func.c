@@ -120,4 +120,4 @@ void tela_exc_func(void) {
     getchar(); 
 }
 
-#endif FUNC_H
+#endif 
