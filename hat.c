@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include "rev.h"
 #include "func.h"
+#include "forn.h"
 
 //funções base
 char tela_main(void);
@@ -13,11 +14,11 @@ int main(void) {
     do {
         op = tela_main();
         switch(op) {
-            case '1':   tela_revendedoras();
+            case '1':   modulo_rev();
                         break;
-            case '2':   tela_funcionarios();
+            case '2':   modulo_func();
                         break;
-            case '3':   tela_fornecedoras();
+            case '3':   modulo_forn();
                         break;
             case '4':   printf("Em desenvolvimento!\n");
                         printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
