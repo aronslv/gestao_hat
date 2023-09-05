@@ -8,8 +8,8 @@
 void modulo_forn(void) {
     char op;
     do{
-        op = tela_funcionarios();
-        switch(op) {
+        op = tela_fornecedoras();
+        switch (op) {
             case '1':   tela_cad_forn();
                         break;
             case '2':   tela_pes_forn();
@@ -45,6 +45,7 @@ char tela_fornecedoras(void) {
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
+    return op;
 }
 
 void tela_cad_forn(void) {

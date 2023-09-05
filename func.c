@@ -9,7 +9,7 @@ void modulo_func(void) {
     char op;
     do{
         op = tela_funcionarios();
-        switch(op) {
+        switch (op) {
             case '1':   tela_cad_func();
                         break;
             case '2':   tela_pes_func();
@@ -45,6 +45,7 @@ char tela_funcionarios(void) {
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
+    return op;
 }
 
 void tela_cad_func(void) {
