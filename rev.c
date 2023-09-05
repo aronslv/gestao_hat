@@ -5,9 +5,6 @@
 
 // função do módulo de revendedoras
 
-#ifndef REV_H
-#define REV_H
-
 void modulo_rev(void) {
     char op;
     do{
@@ -120,5 +117,3 @@ void tela_exc_rev(void) {
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar(); 
 }
-
-#endif REV_H
