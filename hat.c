@@ -2,7 +2,7 @@
 #include <stdlib.h>
 
 //funções base
-void tela_main(void);
+char tela_main(void);
 void tela_info(void);
 void tela_revendedoras(void);
 void tela_cad_rev(void);
@@ -22,19 +22,36 @@ void tela_exc_forn(void);
 
 //programa main
 int main(void) {
-    tela_main();
-    tela_info();
-    tela_revendedoras();
+    char op;
+    do {
+        op = tela_main();
+        switch(op) {
+            case '1': tela_revendedoras();
+                    break;
+            case '2': tela_funcionarios();
+                    break;
+            case '3': tela_fornecedoras();
+                    break;
+            case '4': printf("Em andamento");
+                    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+                    getchar();
+                    break;
+            case '5': printf("Em andamento");
+                    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+                    getchar();
+                    break;
+            case '6': tela_info();
+                    break;
+        }
+    } while (op != '0');
     tela_cad_rev();
     tela_pes_rev();
     tela_edit_rev();
     tela_exc_rev();
-    tela_funcionarios();
     tela_cad_func();
     tela_pes_func();
     tela_edit_func();
     tela_exc_func();
-    tela_fornecedoras();
     tela_cad_forn();
     tela_pes_forn();
     tela_edit_forn();
@@ -43,7 +60,7 @@ int main(void) {
 }
 
 //funções telas
-void tela_main(void) {
+char tela_main(void) {
     char op;
     system("clear||cls");
     printf("\n");
@@ -56,6 +73,7 @@ void tela_main(void) {
     printf("§              3. Fornecedores                                                §\n");
     printf("§              4. Produtos                                                    §\n");
     printf("§              5. Relatórios                                                  §\n");
+    printf("§              6. Informações                                                 §\n");
     printf("§              0. Sair                                                        §\n");
     printf("§                                                                             §\n");
     printf("§              Digite o número da opção desejada: ");
@@ -66,6 +84,7 @@ void tela_main(void) {
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
+    return op;
 }
 
 void tela_info(void) {
