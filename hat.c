@@ -1,5 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include "rev.h"
 #include "func.h"
 #include "forn.h"

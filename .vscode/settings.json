@@ -57,6 +57,7 @@
   "C_Cpp_Runner.useLinkTimeOptimization": false,
   "files.associations": {
     "unistd.h": "c",
-    "stdlib.h": "c"
+    "stdlib.h": "c",
+    "forn.h": "c"
   }
 }
