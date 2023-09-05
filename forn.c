@@ -5,6 +5,9 @@
 
 // função do módulo de fornecedores
 
+#ifndef FORN_H
+#define FORN_H
+
 void modulo_forn(void) {
     char op;
     do{
@@ -118,3 +121,5 @@ void tela_exc_forn(void) {
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar(); 
 }
+
+#endif FORN_H

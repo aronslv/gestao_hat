@@ -5,6 +5,9 @@
 
 // função do módulo de funcionários
 
+#ifndef FUNC_H
+#define FUNC_H
+
 void modulo_func(void) {
     char op;
     do{
@@ -116,3 +119,5 @@ void tela_exc_func(void) {
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar(); 
 }
+
+#endif FUNC_H
