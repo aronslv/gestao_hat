@@ -37,13 +37,11 @@ char tela_fornecedoras(void) {
     printf("§              4. Excluir uma Fornecedora do Sistema                          §\n");
     printf("§              0. Retornar ao Menu Principal                                  §\n");
     printf("§                                                                             §\n");
-    printf("§              Digite o número da opção desejada: ");
-    scanf("%c", &op);
-    getchar();
     printf("§                                                                             §\n");
     printf("-------------------------------------------------------------------------------\n");
     printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    printf("§              Digite o número da opção desejada: ");
+    scanf("%c", &op);
     getchar();
     return op;
 }

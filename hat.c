@@ -53,13 +53,11 @@ char tela_main(void) {
     printf("§              6. Informações                                                 §\n");
     printf("§              0. Sair                                                        §\n");
     printf("§                                                                             §\n");
-    printf("§              Digite o número da opção desejada: ");
-    scanf("%c", &op);
-    getchar();
     printf("§                                                                             §\n");
     printf("-------------------------------------------------------------------------------\n");
     printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    printf("§              Digite o número da opção desejada: ");
+    scanf("%c", &op);
     getchar();
     return op;
 }
