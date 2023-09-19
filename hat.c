@@ -4,6 +4,7 @@
 #include "rev.h"
 #include "func.h"
 #include "forn.h"
+#include "prods.h"
 
 //funções base
 char tela_main(void);
