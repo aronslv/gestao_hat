@@ -22,9 +22,7 @@ int main(void) {
                         break;
             case '3':   modulo_forn();
                         break;
-            case '4':   printf("Em desenvolvimento!\n");
-                        printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-                        getchar();
+            case '4':   modulo_prods();
                         break;
             case '5':   printf("Em desenvolvimento!\n");
                         printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
