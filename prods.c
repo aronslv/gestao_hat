@@ -70,7 +70,7 @@ void tela_cad_prods(void) {
     getchar();
 }
 
-void tela_pes_rev(void) {
+void tela_pes_prods(void) {
     system("clear||cls");
     printf("\n");
     printf("-------------------------------------------------------------------------------\n");
@@ -86,7 +86,7 @@ void tela_pes_rev(void) {
     getchar(); 
 }
 
-void tela_edit_rev(void) {
+void tela_edit_prods(void) {
     system("clear||cls");
     printf("\n");
     printf("----------------------------------------------------------------------------------\n");
@@ -102,7 +102,7 @@ void tela_edit_rev(void) {
     getchar(); 
 }
 
-void tela_exc_rev(void) {
+void tela_exc_prods(void) {
     system("clear||cls");
     printf("\n");
     printf("----------------------------------------------------------------------------------\n");
