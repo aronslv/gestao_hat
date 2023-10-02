@@ -6,22 +6,53 @@
 // função do módulo de produtos
 
 void modulo_prods(void) {
+    char opc;
     char op;
     do{
-        op = tela_produtos();
-        switch (op) {
-            case '1':   tela_cad_prods();
+        opc = escolha_prods();
+        switch (opc) {
+            case '1':   printf("\n");
+                        printf("Em desenvolvimento!\n");
+                        printf(">>> Tecle <ENTER> para continuar...\n");
+                        getchar();                
                         break;
-            case '2':   tela_pes_prods();
-                        break;
-            case '3':   tela_edit_prods();
-                        break;
-            case '4':   tela_exc_prods();
-                        break;
+            case '2':
+            do{
+                op = tela_produtos();
+                switch (op) {
+                    case '1':   tela_cad_prods();
+                                break;
+                    case '2':   tela_pes_prods();
+                                break;
+                    case '3':   tela_edit_prods();
+                                break;
+                    case '4':   tela_exc_prods();
+                                break;
+                }
+            }while (op != '0');      
         }
+    }while (opc != '0');
+}
 
-    }while (op != '0');
-
+char escolha_prods(void) {
+    char opc;
+    system("clear||cls");
+    printf("\n");
+    printf("-------------------------------------------------------------------------------\n");
+    printf("§                                                                             §\n");
+    printf("§                  < < < < < < < Opções de Produtos > > > > > > >             §\n");
+    printf("§                                                                             §\n");
+    printf("§                  1. Matéria-prima                                           §\n");
+    printf("§                  2. Produtos                                                §\n");
+    printf("§                  0. Retornar ao Menu Principal                              §\n");
+    printf("§                                                                             §\n");
+    printf("§                                                                             §\n");
+    printf("-------------------------------------------------------------------------------\n");
+    printf("\n");
+    printf("§              Digite o número da opção desejada: ");
+    scanf("%c", &opc);
+    getchar();
+    return opc;
 }
 
 char tela_produtos(void) {
@@ -36,7 +67,7 @@ char tela_produtos(void) {
     printf("§              2. Pesquisar Produtos                                          §\n");
     printf("§              3. Editar Dados de Produtos                                    §\n");
     printf("§              4. Excluir um Produto do Sistema                               §\n");
-    printf("§              0. Retornar ao Menu Principal                                  §\n");
+    printf("§              0. Retornar ao Menu de Opções                                  §\n");
     printf("§                                                                             §\n");
     printf("§                                                                             §\n");
     printf("-------------------------------------------------------------------------------\n");
@@ -50,21 +81,21 @@ char tela_produtos(void) {
 void tela_cad_prods(void) {
     system("clear||cls");
     printf("\n");
-    printf("-------------------------------------------------------------------------------\n");
-    printf("§                                                                             §\n");
-    printf("§              < < < < < < < Cadastro - Produtos > > > > > > >                §\n");
-    printf("§                                                                             §\n");
-    printf("§              Digite as informações a seguir:                                §\n");
-    printf("§                                                                             §\n");
-    printf("§              Tipo do Produto:                                               §\n");
-    printf("§              Custo da Produção(Unidade):                                    §\n");
-    printf("§              Quantidade:                                                    §\n");
-    printf("§              Data da Produção:                                              §\n");
-    printf("§              Revendedora Designada:                                         §\n");
-    printf("§              Preço de Revenda(Unidade):                                     §\n");
-    printf("§                                                                             §\n");
-    printf("§                                                                             §\n");
-    printf("-------------------------------------------------------------------------------\n");
+    printf("-----------------------------------------------------------------------------\n");
+    printf("                                                                             \n");
+    printf("              < < < < < < < Cadastro - Produtos > > > > > > >                \n");
+    printf("                                                                             \n");
+    printf("              Digite as informações a seguir:                                \n");
+    printf("                                                                             \n");
+    printf("              Tipo do Produto:                                               \n");
+    printf("              Custo da Produção(Unidade):                                    \n");
+    printf("              Quantidade:                                                    \n");
+    printf("              Data da Produção:                                              \n");
+    printf("              Revendedora Designada:                                         \n");
+    printf("              Preço de Revenda(Unidade):                                     \n");
+    printf("                                                                             \n");
+    printf("                                                                             \n");
+    printf("-----------------------------------------------------------------------------\n");
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
@@ -73,14 +104,14 @@ void tela_cad_prods(void) {
 void tela_pes_prods(void) {
     system("clear||cls");
     printf("\n");
-    printf("-------------------------------------------------------------------------------\n");
-    printf("§                                                                             §\n");
-    printf("§              < < < < < < < Pesquisa - Produtos > > > > > > >                §\n");
-    printf("§                                                                             §\n");
-    printf("§     Informe o CNPJ da revendedora para pesquisa de produtos:                §\n");
-    printf("§                                                                             §\n");
-    printf("§                                                                             §\n");
-    printf("-------------------------------------------------------------------------------\n");
+    printf("-----------------------------------------------------------------------------\n");
+    printf("                                                                             \n");
+    printf("              < < < < < < < Pesquisa - Produtos > > > > > > >                \n");
+    printf("                                                                             \n");
+    printf("     Informe o CNPJ da revendedora para pesquisa de produtos:                \n");
+    printf("                                                                             \n");
+    printf("                                                                             \n");
+    printf("-----------------------------------------------------------------------------\n");
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar(); 
@@ -89,14 +120,14 @@ void tela_pes_prods(void) {
 void tela_edit_prods(void) {
     system("clear||cls");
     printf("\n");
-    printf("----------------------------------------------------------------------------------\n");
-    printf("§                                                                                §\n");
-    printf("§              < < < < < < < Edição - Produtos > > > > > > >                     §\n");
-    printf("§                                                                                §\n");
-    printf("§     Informe o CNPJ da revendedora para edição de produtos:                     §\n");
-    printf("§                                                                                §\n");
-    printf("§                                                                                §\n");
-    printf("----------------------------------------------------------------------------------\n");
+    printf("--------------------------------------------------------------------------------\n");
+    printf("                                                                                \n");
+    printf("              < < < < < < < Edição - Produtos > > > > > > >                     \n");
+    printf("                                                                                \n");
+    printf("     Informe o CNPJ da revendedora para edição de produtos:                     \n");
+    printf("                                                                                \n");
+    printf("                                                                                \n");
+    printf("--------------------------------------------------------------------------------\n");
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar(); 
@@ -105,14 +136,14 @@ void tela_edit_prods(void) {
 void tela_exc_prods(void) {
     system("clear||cls");
     printf("\n");
-    printf("----------------------------------------------------------------------------------\n");
-    printf("§                                                                                §\n");
-    printf("§              < < < < < < < Exclusão - Produtos > > > > > > >                   §\n");
-    printf("§                                                                                §\n");
-    printf("§     Informe o CNPJ da revendedora para exclusão de produtos:                   §\n");
-    printf("§                                                                                §\n");
-    printf("§                                                                                §\n");
-    printf("----------------------------------------------------------------------------------\n");
+    printf("--------------------------------------------------------------------------------\n");
+    printf("                                                                                \n");
+    printf("              < < < < < < < Exclusão - Produtos > > > > > > >                   \n");
+    printf("                                                                                \n");
+    printf("     Informe o CNPJ da revendedora para exclusão de produtos:                   \n");
+    printf("                                                                                \n");
+    printf("                                                                                \n");
+    printf("--------------------------------------------------------------------------------\n");
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar(); 
