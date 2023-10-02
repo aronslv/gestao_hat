@@ -47,6 +47,12 @@ char tela_fornecedoras(void) {
 }
 
 void tela_cad_forn(void) {
+    char cnpj[20];
+    char nome1[30];
+    char nome2[50];
+    char end[30];
+    char cel[12];
+
     system("clear||cls");
     printf("\n");
     printf("-----------------------------------------------------------------------------\n");
@@ -55,16 +61,28 @@ void tela_cad_forn(void) {
     printf("                                                                             \n");
     printf("              Digite as informações a seguir:                                \n");
     printf("                                                                             \n");
-    printf("              CNPJ:                                                          \n");
-    printf("              Nome do estabelecimento:                                       \n");
-    printf("              Endereço do estabelecimento:                                   \n");
-    printf("              Matéria-prima fornecida:                                       \n");
-    printf("              Nome do proprietário(a):                                       \n");
-    printf("              Celular (apenas números):                                      \n");
+    printf("              CNPJ (apenas números): ");
+    scanf("%[0-9]", cnpj);
+    getchar();
+    printf("              Nome do estabelecimento: ");
+    scanf("%[A-ZÁÉÍÓÚÂÊÔÇÀÃÕ a-záéíóúâêôçàãõ]", nome1);
+    getchar();
+    printf("              Endereço do estabelecimento: ");
+    scanf("%[A-ZÁÉÍÓÚÂÊÔÇÀÃÕ a-záéíóúâêôçàãõ.,0-9]", end);
+    getchar();
+    printf("              Nome do proprietário(a): ");
+    scanf("%[A-ZÁÉÍÓÚÂÊÔÇÀÃÕ a-záéíóúâêôçàãõ]", nome2);
+    getchar();
+    printf("              Celular (apenas números): ");
+    scanf("%[0-9]", cel);
+    getchar();
     printf("                                                                             \n");
     printf("                                                                             \n");
     printf("-----------------------------------------------------------------------------\n");
     printf("\n");
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Cadastro concluído!\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
 }
