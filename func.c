@@ -2,6 +2,12 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "func.h"
+#include "valid.h"
+
+void ler_cpf(char*);
+void ler_nome(char*);
+void ler_data(char*);
+void ler_cel(char*);
 
 // função do módulo de funcionários
 
@@ -60,18 +66,13 @@ void tela_cad_func(void) {
     printf("                                                                             \n");
     printf("              Digite as informações a seguir:                                \n");
     printf("                                                                             \n");
-    printf("              Nome completo: ");
-    scanf("%[A-ZÁÉÍÓÚÂÊÔÇÀÃÕ a-záéíóúâêôçàãõ]", nome);
-    getchar();
-    printf("              CPF (apenas números): ");
-    scanf("%[0-9]", cpf);
-    getchar();
-    printf("              Profissão: ");
-    scanf("%[A-ZÁÉÍÓÚÂÊÔÇÀÃÕ a-záéíóúâêôçàãõ]", prof);
-    getchar();
-    printf("              Celular (apenas números): ");
-    scanf("%[0-9]", cel);
-    getchar();
+    ler_nome(nome);
+
+    ler_cpf(cpf);
+
+    ler_prof(prof);
+
+    ler_cel(cel);
     printf("                                                                             \n");
     printf("                                                                             \n");
     printf("-----------------------------------------------------------------------------\n");
@@ -130,3 +131,78 @@ void tela_exc_func(void) {
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar(); 
 }
+
+// Função inspirada no código do Prof. Flavius
+
+void ler_nome(char* nome) {
+  fflush(stdin);
+  printf("Nome completo: ");
+  fgets(nome, 50, stdin); 
+  // Remove o caractere de nova linha do final, se estiver presente
+  int tam = strlen(nome);
+  if (tam > 0 && nome[tam - 1] == '\n') {
+    nome[tam - 1] = '\0';
+    fflush(stdin);
+  }
+  while (!validarNome(nome)) {
+    printf("Nome inválido: %s\n", nome);
+    printf("Informe um novo nome: ");
+    fflush(stdin);
+    fgets(nome, 50, stdin); 
+    // Remove o caractere de nova linha do final, se estiver presente
+    tam = strlen(nome);
+    if (tam > 0 && nome[tam - 1] == '\n') {
+      nome[tam - 1] = '\0';
+      fflush(stdin);
+    }
+  } 
+}
+
+// Função inspirada no código do Prof. Flavius
+
+void ler_cpf (char* cpf) {
+    fflush(stdin);
+    printf("Digite o CPF (Apenas Números): ");
+    fgets (cpf, 12, stdin);
+    while (!validarCpf (cpf)) {
+        printf("Erro! Digite novamente: ");
+        fgets (cpf, 12, stdin);
+    }
+    getchar();
+}
+
+void ler_prof(char* prof) {
+  fflush(stdin);
+  printf("Profissão: ");
+  fgets(prof, 50, stdin); 
+  // Remove o caractere de nova linha do final, se estiver presente
+  int tam = strlen(prof);
+  if (tam > 0 && prof[tam - 1] == '\n') {
+    prof[tam - 1] = '\0';
+    fflush(stdin);
+  }
+  while (!validarNome(prof)) {
+    printf("Escrita inválida: %s\n", prof);
+    printf("Informe a profissão novamente: ");
+    fflush(stdin);
+    fgets(prof, 50, stdin); 
+    // Remove o caractere de nova linha do final, se estiver presente
+    tam = strlen(prof);
+    if (tam > 0 && prof[tam - 1] == '\n') {
+      prof[tam - 1] = '\0';
+      fflush(stdin);
+    }
+  } 
+}
+
+void ler_cel (char* cel) {
+    fflush (stdin);
+    printf("Digite o Telefone (Apenas Números): ");
+    fgets (cel, 12, stdin);
+
+    while (!validarFone (cel)) {
+        printf("Erro! Digite novamente: ");
+        fgets (cel, 12, stdin);
+    
+    }
+} 
