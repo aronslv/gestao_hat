@@ -43,15 +43,12 @@ int ehLetra(char c) {
 // Função baseada no código do Prof. Flavius e Mariana Medeiros
 
 int validarNome(char* nome) {
-  int tam;
-  
-  tam = strlen(nome);
-  for (int i = 0; i < tam-1; i++) {
-    if (!ehLetra(nome[i])) {
-      return false;
+    for (int i=0; nome[i]!='\0'; i++) {
+        if (!ehLetra(nome[i])) {
+            return false;
+        }
     }
-  }
-  return true;  
+    return true;
 }
 
 // Função baseada no código do Prof. Flavius
