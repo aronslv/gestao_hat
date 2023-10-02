@@ -1,12 +1,14 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
+#include <time.h>
 #include "func.h"
 #include "valid.h"
 
 void ler_cpf(char*);
 void ler_nome(char*);
-void ler_data(char*);
+void ler_prof(char*);
 void ler_cel(char*);
 
 // função do módulo de funcionários
@@ -77,9 +79,8 @@ void tela_cad_func(void) {
     printf("                                                                             \n");
     printf("-----------------------------------------------------------------------------\n");
     printf("\n");
-    printf("\t\t\t>>> Processando as informações...\n");
-    sleep(1);
     printf("\t\t\t>>> Cadastro concluído!\n");
+    sleep(1);
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
 }
@@ -165,7 +166,7 @@ void ler_cpf (char* cpf) {
     printf("Digite o CPF (Apenas Números): ");
     fgets (cpf, 12, stdin);
     while (!validarCpf (cpf)) {
-        printf("Erro! Digite novamente: ");
+        printf("CPF inválido! Digite o CPF novamente: ");
         fgets (cpf, 12, stdin);
     }
     getchar();
@@ -201,7 +202,7 @@ void ler_cel (char* cel) {
     fgets (cel, 12, stdin);
 
     while (!validarFone (cel)) {
-        printf("Erro! Digite novamente: ");
+        printf("Telefone inválido! Digite novamente: ");
         fgets (cel, 12, stdin);
     
     }

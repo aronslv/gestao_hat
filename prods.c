@@ -99,8 +99,8 @@ void tela_cad_mat(void) {
     printf("                                                                             \n");
     printf("              Digite as informações a seguir:                                \n");
     printf("                                                                             \n");
-    printf("              Tipo de Matéria-Prima: ");
-    printf("              Valor da Compra(Unidade): R$ ");
+    printf("              Tipo de Matéria-Prima:                                         \n");
+    printf("              Valor da Compra(Unidade): R$                                   \n");                             
     printf("              Quantidade:                                                    \n");
     printf("              Data da Compra:                                                \n");
     printf("              CNPJ da Fornecedora (apenas números):                          \n");
