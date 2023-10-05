@@ -79,8 +79,9 @@ void tela_cad_func(void) {
     printf("                                                                             \n");
     printf("-----------------------------------------------------------------------------\n");
     printf("\n");
-    printf("\t\t\t>>> Cadastro concluído!\n");
+    printf("\t\t\t>>> Processando as informações...\n");
     sleep(1);
+    printf("\t\t\t>>> Cadastro concluído!\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
 }
@@ -206,4 +207,5 @@ void ler_cel (char* cel) {
         fgets (cel, 12, stdin);
     
     }
+    getchar();
 } 
