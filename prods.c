@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "prods.h"
+#include "valid.h"
 
 // função do módulo de produtos
 

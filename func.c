@@ -9,7 +9,7 @@
 void ler_cpf(char*);
 void ler_nome(char*);
 void ler_prof(char*);
-void ler_cel(char*);
+void ler_cel2(char*);
 
 // função do módulo de funcionários
 
@@ -74,7 +74,7 @@ void tela_cad_func(void) {
 
     ler_prof(prof);
 
-    ler_cel(cel);
+    ler_cel2(cel);
     printf("                                                                             \n");
     printf("                                                                             \n");
     printf("-----------------------------------------------------------------------------\n");
@@ -197,7 +197,7 @@ void ler_prof(char* prof) {
   } 
 }
 
-void ler_cel (char* cel) {
+void ler_cel2 (char* cel) {
     fflush (stdin);
     printf("Digite o Telefone (Apenas Números): ");
     fgets (cel, 12, stdin);

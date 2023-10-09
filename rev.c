@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include "rev.h"
+#include "valid.h"
 
 // função do módulo de revendedoras
 

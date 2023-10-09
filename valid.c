@@ -142,3 +142,86 @@ int validarFone(char* fone) {
     
   } 
 }*/
+
+// Função baseada no código de https://github.com/DayXL/Atividade-projeto-bonelaria.git
+
+int validarNumInteiro(char* numero) {
+    int i = 0;
+
+    while (numero[i] != '\0') {
+        if ((numero[i] >= '0') && (numero[i] <= '9')) {
+            i = i + 1;
+
+        }
+
+        else {
+            return false;
+
+        }
+
+    }
+
+    return true;
+
+}
+
+// Função baseada no código de https://github.com/DayXL/Atividade-projeto-bonelaria.git
+
+int verificarCnpj(char* cnpj) {
+
+    int parteUm[12] = {5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
+    int parteDois[13] = {6, 5, 4, 3, 2, 9, 8, 7, 6, 5, 4, 3, 2};
+
+    int soma = 0;
+    int resto = 0;
+    int tam;
+    
+    tam = strlen(cnpj);
+    cnpj[tam - 1] = '\0';
+
+    if ((validarNumInteiro(cnpj)) && (tam == 15)) {
+
+        for (int i = 0; i < 12; i++) {
+            soma = soma + ((cnpj[i] - '0' ) * (parteUm[i]));
+
+        }
+
+        resto = soma % 11;
+
+        resto = (resto == 0 || resto == 1) ? 0 : 11 - resto;
+
+        if (resto == (cnpj[12] - '0' )) {
+            soma = 0;
+
+            for (int i = 0; i < 13; i++) {
+                soma = soma + ((cnpj[i] - '0' ) * (parteDois[i]));
+
+            }
+
+            resto = soma % 11;
+
+            resto = (resto == 0 || resto == 1) ? 0 : 11 - resto;
+
+            if (resto == (cnpj[13] - '0' )) {
+                return false;
+
+            }
+
+            else {
+                return true;
+            }
+
+        }
+
+        else {
+            return true;
+
+        }
+    }
+
+    else {
+        return true;
+
+    }
+
+}
