@@ -140,10 +140,10 @@ void tela_exc_forn(void) {
 void ler_cnpj (char* cnpj) {
     fflush(stdin);
     printf("Digite o CNPJ (Apenas Números): ");
-    fgets (cnpj, 14, stdin);
+    fgets (cnpj, 15, stdin);
     while (!verificarCnpj(cnpj)) {
         printf("CNPJ inválido! Digite o CNPJ novamente: ");
-        fgets (cnpj, 14, stdin);
+        fgets (cnpj, 15, stdin);
     }
     getchar();
 }
