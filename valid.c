@@ -225,3 +225,18 @@ int verificarCnpj(char* cnpj) {
     }
 
 }
+
+int validarCnpj(char* cnpj) {
+  int tam;
+
+  tam = strlen(cnpj);
+  if (tam < 14 || tam > 15) {
+    return false;
+  }
+  for (int i = 0; i < tam; i++) {
+    if (!ehDigito(cnpj[i])) {
+      return false;
+    }
+  }
+  return true;
+}

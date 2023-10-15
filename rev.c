@@ -5,6 +5,12 @@
 #include "rev.h"
 #include "valid.h"
 
+void ler_cnpj2(char*);
+void ler_nome4(char*);
+void ler_nome5(char*);
+void ler_nome6(char*);
+void ler_cel3(char*);
+
 // função do módulo de revendedoras
 
 void modulo_rev(void) {
@@ -50,9 +56,9 @@ char tela_revendedoras(void) {
 
 void tela_cad_rev(void) {
     char cnpj[20];
-    char nome1[30];
-    char nome2[50];
+    char nome_est[30];
     char end[30];
+    char nome_prop[50];
     char cel[12];
 
     system("clear||cls");
@@ -63,21 +69,15 @@ void tela_cad_rev(void) {
     printf("                                                                             \n");
     printf("              Digite as informações a seguir:                                \n");
     printf("                                                                             \n");
-    printf("              CNPJ (apenas números): ");
-    scanf("%[0-9]", cnpj);
-    getchar();
-    printf("              Nome do estabelecimento: ");
-    scanf("%[A-ZÁÉÍÓÚÂÊÔÇÀÃÕ a-záéíóúâêôçàãõ]", nome1);
-    getchar();
-    printf("              Endereço do estabelecimento: ");
-    scanf("%[A-ZÁÉÍÓÚÂÊÔÇÀÃÕ a-záéíóúâêôçàãõ.,0-9]", end);
-    getchar();
-    printf("              Nome do proprietário(a): ");
-    scanf("%[A-ZÁÉÍÓÚÂÊÔÇÀÃÕ a-záéíóúâêôçàãõ]", nome2);
-    getchar();
-    printf("              Celular (apenas números): ");
-    scanf("%[0-9]", cel);
-    getchar();
+    ler_cnpj2(cnpj);
+
+    ler_nome4(nome_est);
+
+    ler_nome6(end);
+
+    ler_nome5(nome_prop);
+
+    ler_cel3(cel);
     printf("                                                                             \n");
     printf("                                                                             \n");
     printf("-----------------------------------------------------------------------------\n");
@@ -135,4 +135,100 @@ void tela_exc_rev(void) {
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar(); 
+}
+
+void ler_cnpj2 (char* cnpj) {
+    fflush(stdin);
+    printf("Digite o CNPJ (Apenas Números): ");
+    fgets (cnpj, 15, stdin);
+    while (!validarCnpj(cnpj)) {
+        printf("CNPJ inválido! Digite o CNPJ novamente: ");
+        fgets (cnpj, 15, stdin);
+    }
+    getchar();
+}
+
+void ler_nome4(char* nome_est) {
+  fflush(stdin);
+  printf("Nome do estabelecimento: ");
+  fgets(nome_est, 50, stdin); 
+  // Remove o caractere de nova linha do final, se estiver presente
+  int tam = strlen(nome_est);
+  if (tam > 0 && nome_est[tam - 1] == '\n') {
+    nome_est[tam - 1] = '\0';
+    fflush(stdin);
+  }
+  while (!validarNome(nome_est)) {
+    printf("Nome inválido: %s\n", nome_est);
+    printf("Informe um novo nome de estabelecimento: ");
+    fflush(stdin);
+    fgets(nome_est, 50, stdin); 
+    // Remove o caractere de nova linha do final, se estiver presente
+    tam = strlen(nome_est);
+    if (tam > 0 && nome_est[tam - 1] == '\n') {
+      nome_est[tam - 1] = '\0';
+      fflush(stdin);
+    }
+  } 
+}
+
+void ler_nome5(char* nome_prop) {
+  fflush(stdin);
+  printf("Nome do proprietário: ");
+  fgets(nome_prop, 50, stdin); 
+  // Remove o caractere de nova linha do final, se estiver presente
+  int tam = strlen(nome_prop);
+  if (tam > 0 && nome_prop[tam - 1] == '\n') {
+    nome_prop[tam - 1] = '\0';
+    fflush(stdin);
+  }
+  while (!validarNome(nome_prop)) {
+    printf("Nome inválido: %s\n", nome_prop);
+    printf("Informe um novo nome: ");
+    fflush(stdin);
+    fgets(nome_prop, 50, stdin); 
+    // Remove o caractere de nova linha do final, se estiver presente
+    tam = strlen(nome_prop);
+    if (tam > 0 && nome_prop[tam - 1] == '\n') {
+      nome_prop[tam - 1] = '\0';
+      fflush(stdin);
+    }
+  } 
+}
+
+void ler_nome6(char* end) {
+  fflush(stdin);
+  printf("Endereço do estabelecimento: ");
+  fgets(end, 50, stdin); 
+  // Remove o caractere de nova linha do final, se estiver presente
+  int tam = strlen(end);
+  if (tam > 0 && end[tam - 1] == '\n') {
+    end[tam - 1] = '\0';
+    fflush(stdin);
+  }
+  while (!validarNome(end)) {
+    printf("Endereço inválido: %s\n", end);
+    printf("Informe um novo endereço de estabelecimento: ");
+    fflush(stdin);
+    fgets(end, 50, stdin); 
+    // Remove o caractere de nova linha do final, se estiver presente
+    tam = strlen(end);
+    if (tam > 0 && end[tam - 1] == '\n') {
+      end[tam - 1] = '\0';
+      fflush(stdin);
+    }
+  } 
+}
+
+void ler_cel3 (char* cel) {
+    fflush (stdin);
+    printf("Digite o Telefone (Apenas Números): ");
+    fgets (cel, 12, stdin);
+
+    while (!validarFone (cel)) {
+        printf("Telefone inválido! Digite novamente: ");
+        fgets (cel, 12, stdin);
+    
+    }
+    getchar();
 }
