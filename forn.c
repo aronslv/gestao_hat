@@ -55,11 +55,7 @@ char tela_fornecedoras(void) {
 }
 
 void tela_cad_forn(void) {
-    char cnpj[15];
-    char nome_est[30];
-    char nome_prop[50];
-    char end[30];
-    char cel[12];
+    Fornecedor* fornecedor;
 
     system("clear||cls");
     printf("\n");
@@ -69,15 +65,18 @@ void tela_cad_forn(void) {
     printf("                                                                             \n");
     printf("              Digite as informações a seguir:                                \n");
     printf("                                                                             \n");
-    ler_cnpj1(cnpj);
 
-    ler_nome1(nome_est);
+    fornecedor = (Fornecedor*) malloc(sizeof(Fornecedor));
+    
+    ler_cnpj1(fornecedor->cnpj);
 
-    ler_nome3(end);
+    ler_nome1(fornecedor->nome_est);
 
-    ler_nome2(nome_prop);
+    ler_nome3(fornecedor->end);
 
-    ler_cel1(cel);
+    ler_nome2(fornecedor->nome_prop);
+
+    ler_cel1(fornecedor->cel);
     printf("                                                                             \n");
     printf("                                                                             \n");
     printf("-----------------------------------------------------------------------------\n");
