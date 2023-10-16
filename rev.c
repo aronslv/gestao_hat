@@ -55,11 +55,7 @@ char tela_revendedoras(void) {
 }
 
 void tela_cad_rev(void) {
-    char cnpj[15];
-    char nome_est[30];
-    char end[30];
-    char nome_prop[50];
-    char cel[12];
+    Revendedor* revendedor;
 
     system("clear||cls");
     printf("\n");
@@ -69,15 +65,18 @@ void tela_cad_rev(void) {
     printf("                                                                             \n");
     printf("              Digite as informações a seguir:                                \n");
     printf("                                                                             \n");
-    ler_cnpj2(cnpj);
 
-    ler_nome4(nome_est);
+    revendedor = (Revendedor*) malloc(sizeof(Revendedor));
+    
+    ler_cnpj2(revendedor->cnpj);
 
-    ler_nome6(end);
+    ler_nome4(revendedor->nome_est);
 
-    ler_nome5(nome_prop);
+    ler_nome6(revendedor->end);
 
-    ler_cel3(cel);
+    ler_nome5(revendedor->nome_prop);
+
+    ler_cel3(revendedor->cel);
     printf("                                                                             \n");
     printf("                                                                             \n");
     printf("-----------------------------------------------------------------------------\n");
