@@ -55,10 +55,7 @@ char tela_funcionarios(void) {
 }
 
 void tela_cad_func(void) {
-    char nome[50];
-    char cpf[12];
-    char prof[25];
-    char cel[12];
+    Funcionario* funcionario;
 
     system("clear||cls");
     printf("\n");
@@ -68,13 +65,16 @@ void tela_cad_func(void) {
     printf("                                                                             \n");
     printf("              Digite as informações a seguir:                                \n");
     printf("                                                                             \n");
-    ler_nome(nome);
 
-    ler_cpf(cpf);
+    funcionario = (Funcionario*) malloc(sizeof(Funcionario));
+    
+    ler_nome(funcionario->nome);
 
-    ler_prof(prof);
+    ler_cpf(funcionario->cpf);
 
-    ler_cel2(cel);
+    ler_prof(funcionario->prof);
+
+    ler_cel2(funcionario->cel);
     printf("                                                                             \n");
     printf("                                                                             \n");
     printf("-----------------------------------------------------------------------------\n");
