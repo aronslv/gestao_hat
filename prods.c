@@ -1,8 +1,18 @@
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <unistd.h>
 #include "prods.h"
 #include "valid.h"
+
+void ler_mat_prim(char*);
+void ler_prods(char*);
+void ler_quant_mat(char*);
+void ler_quant_prods(char*);
+void ler_data1(char*);
+void ler_data2(char*);
+void ler_cnpj3(char*);
+void ler_cnpj4(char*);
 
 // função do módulo de produtos
 
@@ -91,6 +101,10 @@ char tela_material(void) {
 }
 
 void tela_cad_mat(void) {
+    char mat_prim[25];
+    char quant_mat[5];
+    char data[11];
+    char cnpj[15];
 
     system("clear||cls");
     printf("\n");
@@ -100,13 +114,13 @@ void tela_cad_mat(void) {
     printf("                                                                             \n");
     printf("              Digite as informações a seguir:                                \n");
     printf("                                                                             \n");
-    printf("              Tipo de Matéria-Prima:                                         \n");
-    printf("              Valor da Compra(Unidade): R$                                   \n");                             
-    printf("              Quantidade:                                                    \n");
-    printf("              Data da Compra:                                                \n");
-    printf("              CNPJ da Fornecedora (apenas números):                          \n");
-    printf("                                                                             \n");
-    printf("              ID da Matéria-Prima: (gerado)                                  \n");
+    ler_mat_prim(mat_prim);
+
+    ler_quant_mat(quant_mat);
+
+    ler_data1(data);
+
+    ler_cnpj3(cnpj);
     printf("                                                                             \n");
     printf("                                                                             \n");
     printf("-----------------------------------------------------------------------------\n");
@@ -187,6 +201,11 @@ char tela_produtos(void) {
 }
 
 void tela_cad_prods(void) {
+    char prods[25];
+    char quant_prods[5];
+    char data[11];
+    char cnpj[15];
+
     system("clear||cls");
     printf("\n");
     printf("-----------------------------------------------------------------------------\n");
@@ -195,13 +214,13 @@ void tela_cad_prods(void) {
     printf("                                                                             \n");
     printf("              Digite as informações a seguir:                                \n");
     printf("                                                                             \n");
-    printf("              Tipo do Produto:                                               \n");
-    printf("              Custo da Produção(Unidade):                                    \n");
-    printf("              Quantidade:                                                    \n");
-    printf("              Data da Produção:                                              \n");
-    printf("              CNPJ da Revendedora (apenas números):                          \n");
-    printf("                                                                             \n");
-    printf("              ID do Produto: (gerado)                                        \n");
+    ler_mat_prim(prods);
+
+    ler_quant_mat(quant_prods);
+
+    ler_data2(data);
+
+    ler_cnpj4(cnpj);
     printf("                                                                             \n");
     printf("                                                                             \n");
     printf("-----------------------------------------------------------------------------\n");
@@ -256,4 +275,164 @@ void tela_exc_prods(void) {
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar(); 
+}
+
+void ler_mat_prim(char* mat_prim) {
+  fflush(stdin);
+  printf("Nome completo: ");
+  fgets(mat_prim, 25, stdin); 
+  // Remove o caractere de nova linha do final, se estiver presente
+  int tam = strlen(mat_prim);
+  if (tam > 0 && mat_prim[tam - 1] == '\n') {
+    mat_prim[tam - 1] = '\0';
+    fflush(stdin);
+  }
+  while (!validarNome(mat_prim)) {
+    printf("Nome inválido: %s\n", mat_prim);
+    printf("Informe um novo nome: ");
+    fflush(stdin);
+    fgets(mat_prim, 25, stdin); 
+    // Remove o caractere de nova linha do final, se estiver presente
+    tam = strlen(mat_prim);
+    if (tam > 0 && mat_prim[tam - 1] == '\n') {
+      mat_prim[tam - 1] = '\0';
+      fflush(stdin);
+    }
+  } 
+}
+
+void ler_quant_mat(char* quant_mat) {
+  fflush(stdin);
+    printf("Quantidade: ");
+    fgets (quant_mat, 5, stdin);
+    while (!validarQuant (quant_mat)) {
+        printf("Quantidade inválida! Digite a quantidade novamente: ");
+        fgets (quant_mat, 5, stdin);
+    }
+    getchar(); 
+}
+
+void ler_data1(char* data) {
+    int dia, mes, ano;
+    char dd[3], mm[3], aa[5];
+    fflush(stdin);
+    printf("Data de compra: ");
+    fgets(data, 11, stdin); 
+    getchar();
+  
+    strncpy(dd, &data[0], 2);
+    sscanf(dd, "%d", &dia);
+  
+    strncpy(mm, &data[3], 2);
+    sscanf(mm, "%d", &mes);
+
+    strncpy(aa, &data[6], 4);
+    sscanf(aa, "%d", &ano);
+
+  while (!validarData(dia, mes, ano)) {
+    printf("Data inválida: %d/%d/%d\n", dia, mes, ano);
+    printf("Informe uma nova data\n\n");
+    printf("Data de compra: ");
+    fgets(data, 11, stdin);
+    fflush(stdin);
+    getchar();
+    strncpy(dd, &data[0], 2);
+    sscanf(dd, "%d", &dia);
+    strncpy(mm, &data[3], 2);
+    sscanf(mm, "%d", &mes);
+    strncpy(aa, &data[6], 4);
+    sscanf(aa, "%d", &ano);
+    
+  } 
+}
+
+void ler_cnpj3 (char* cnpj) {
+    fflush(stdin);
+    printf("Digite o CNPJ (Apenas Números): ");
+    fgets (cnpj, 15, stdin);
+    while (!validarCnpj(cnpj)) {
+        printf("CNPJ inválido! Digite o CNPJ novamente: ");
+        fgets (cnpj, 15, stdin);
+    }
+    getchar();
+}
+
+void ler_prods(char* prods) {
+  fflush(stdin);
+  printf("Tipo de Produto: ");
+  fgets(prods, 25, stdin); 
+  // Remove o caractere de nova linha do final, se estiver presente
+  int tam = strlen(prods);
+  if (tam > 0 && prods[tam - 1] == '\n') {
+    prods[tam - 1] = '\0';
+    fflush(stdin);
+  }
+  while (!validarNome(prods)) {
+    printf("Tipo inválido: %s\n", prods);
+    printf("Informe um novo tipo: ");
+    fflush(stdin);
+    fgets(prods, 25, stdin); 
+    // Remove o caractere de nova linha do final, se estiver presente
+    tam = strlen(prods);
+    if (tam > 0 && prods[tam - 1] == '\n') {
+      prods[tam - 1] = '\0';
+      fflush(stdin);
+    }
+  } 
+}
+
+void ler_quant_prods(char* quant_prods) {
+    fflush(stdin);
+    printf("Quantidade: ");
+    fgets (quant_prods, 5, stdin);
+    while (!validarQuant (quant_prods)) {
+        printf("Quantidade inválida! Digite a quantidade novamente: ");
+        fgets (quant_prods, 5, stdin);
+    }
+    getchar();
+}
+
+void ler_data2(char* data) {
+    int dia, mes, ano;
+    char dd[3], mm[3], aa[5];
+    fflush(stdin);
+    printf("Data de compra: ");
+    fgets(data, 11, stdin); 
+    getchar();
+  
+    strncpy(dd, &data[0], 2);
+    sscanf(dd, "%d", &dia);
+  
+    strncpy(mm, &data[3], 2);
+    sscanf(mm, "%d", &mes);
+
+    strncpy(aa, &data[6], 4);
+    sscanf(aa, "%d", &ano);
+
+  while (!validarData(dia, mes, ano)) {
+    printf("Data inválida: %d/%d/%d\n", dia, mes, ano);
+    printf("Informe uma nova data\n\n");
+    printf("Data de compra: ");
+    fgets(data, 11, stdin);
+    fflush(stdin);
+    getchar();
+    strncpy(dd, &data[0], 2);
+    sscanf(dd, "%d", &dia);
+    strncpy(mm, &data[3], 2);
+    sscanf(mm, "%d", &mes);
+    strncpy(aa, &data[6], 4);
+    sscanf(aa, "%d", &ano);
+    
+  } 
+}
+
+void ler_cnpj4 (char* cnpj) {
+    fflush(stdin);
+    printf("Digite o CNPJ (Apenas Números): ");
+    fgets (cnpj, 15, stdin);
+    while (!validarCnpj(cnpj)) {
+        printf("CNPJ inválido! Digite o CNPJ novamente: ");
+        fgets (cnpj, 15, stdin);
+    }
+    getchar();
 }

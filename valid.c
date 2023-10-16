@@ -68,6 +68,18 @@ int validarCpf(char* cpf) {
   return true;
 }
 
+int validarQuant(char* x) {
+  int tam;
+
+  tam = strlen(x);
+  for (int i = 0; i < tam; i++) {
+    if (!ehDigito(x[i])) {
+      return false;
+    }
+  }
+  return true;
+}
+
 
 // Função baseada no código do Prof. Flavius
 
@@ -106,42 +118,6 @@ int validarFone(char* fone) {
   return true;
 
 }
-
-// Função baseada no código do Prof. Flavius
-
-/*void ler_data(char* data) {
-  int dia, mes, ano;
-  char dd[3], mm[3], aa[5];
-  fflush(stdin);
-  printf("Data de nascimento: ");
-  fgets(data, 11, stdin); 
-  getchar();
-  
-  strncpy(dd, &data[0], 2);
-  sscanf(dd, "%d", &dia);
-  
-  strncpy(mm, &data[3], 2);
-  sscanf(mm, "%d", &mes);
-
-  strncpy(aa, &data[6], 4);
-  sscanf(aa, "%d", &ano);
-
-  while (!validarData(dia, mes, ano)) {
-    printf("Data inválida: %d/%d/%d\n", dia, mes, ano);
-    printf("Informe uma nova data\n\n");
-    printf("Data de nascimento: ");
-    fgets(data, 11, stdin);
-    fflush(stdin);
-    getchar();
-    strncpy(dd, &data[0], 2);
-    sscanf(dd, "%d", &dia);
-    strncpy(mm, &data[3], 2);
-    sscanf(mm, "%d", &mes);
-    strncpy(aa, &data[6], 4);
-    sscanf(aa, "%d", &ano);
-    
-  } 
-}*/
 
 // Função baseada no código de https://github.com/DayXL/Atividade-projeto-bonelaria.git
 

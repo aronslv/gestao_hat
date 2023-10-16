@@ -55,7 +55,7 @@ char tela_revendedoras(void) {
 }
 
 void tela_cad_rev(void) {
-    char cnpj[20];
+    char cnpj[15];
     char nome_est[30];
     char end[30];
     char nome_prop[50];
