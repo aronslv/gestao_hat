@@ -136,6 +136,9 @@ void tela_cad_mat(void) {
     printf("                                                                             \n");
     printf("-----------------------------------------------------------------------------\n");
     printf("\n");
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Cadastro concluído!\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
 }
@@ -251,6 +254,9 @@ void tela_cad_prods(void) {
     printf("                                                                             \n");
     printf("-----------------------------------------------------------------------------\n");
     printf("\n");
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Cadastro concluído!\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
 }

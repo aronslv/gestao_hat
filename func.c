@@ -72,6 +72,10 @@ void tela_cad_func(void) {
 
     ler_cpf(funcionario->cpf);
 
+    printf("Salário: R$ ");
+    scanf("%f", &funcionario->salario);
+    getchar();
+
     ler_prof(funcionario->prof);
 
     ler_cel2(funcionario->cel);
