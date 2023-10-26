@@ -7,10 +7,6 @@
 
 void ler_mat_prim(char*);
 void ler_prods(char*);
-void ler_quant_mat(char*);
-void ler_quant_prods(char*);
-void ler_data1(char*);
-void ler_data2(char*);
 void ler_cnpj3(char*);
 void ler_cnpj4(char*);
 
@@ -102,7 +98,8 @@ char tela_material(void) {
 
 void tela_cad_mat(void) {
     char mat_prim[25];
-    char quant_mat[5];
+    int quant_mat;
+    float valor;
     char data[11];
     char cnpj[15];
 
@@ -116,9 +113,23 @@ void tela_cad_mat(void) {
     printf("                                                                             \n");
     ler_mat_prim(mat_prim);
 
-    ler_quant_mat(quant_mat);
+    printf("Quantidade: ");
+    scanf("%d", &quant_mat);
+    getchar();
 
-    ler_data1(data);
+    printf("Valor da unidade: R$ ");
+    scanf("%f", &valor);
+    getchar();
+
+    printf("Digite a data de compra(dd/mm/aaaa): ");
+    scanf("%[0-9/]", data);
+    getchar();
+    while(!validarData(data)) {
+      printf("Data inválida!\n");
+      printf("Informe uma nova data: ");
+      scanf("%[0-9/]", data);
+      getchar();
+    }
 
     ler_cnpj3(cnpj);
     printf("                                                                             \n");
@@ -202,7 +213,8 @@ char tela_produtos(void) {
 
 void tela_cad_prods(void) {
     char prods[25];
-    char quant_prods[5];
+    int quant_prods;
+    float valor;
     char data[11];
     char cnpj[15];
 
@@ -216,9 +228,23 @@ void tela_cad_prods(void) {
     printf("                                                                             \n");
     ler_mat_prim(prods);
 
-    ler_quant_mat(quant_prods);
+    printf("Quantidade: ");
+    scanf("%d", &quant_prods);
+    getchar();
 
-    ler_data2(data);
+    printf("Valor da unidade: R$ ");
+    scanf("%f", &valor);
+    getchar();
+
+    printf("Digite a data de compra(dd/mm/aaaa): ");
+    scanf("%[0-9/]", data);
+    getchar();
+    while(!validarData(data)) {
+      printf("Data inválida!\n");
+      printf("Informe uma nova data: ");
+      scanf("%[0-9/]", data);
+      getchar();
+    }
 
     ler_cnpj4(cnpj);
     printf("                                                                             \n");
@@ -301,51 +327,6 @@ void ler_mat_prim(char* mat_prim) {
   } 
 }
 
-void ler_quant_mat(char* quant_mat) {
-  fflush(stdin);
-    printf("Quantidade: ");
-    fgets (quant_mat, 5, stdin);
-    while (!validarQuant (quant_mat)) {
-        printf("Quantidade inválida! Digite a quantidade novamente: ");
-        fgets (quant_mat, 5, stdin);
-    }
-    getchar(); 
-}
-
-void ler_data1(char* data) {
-    int dia, mes, ano;
-    char dd[3], mm[3], aa[5];
-    fflush(stdin);
-    printf("Data de compra: ");
-    fgets(data, 11, stdin); 
-    getchar();
-  
-    strncpy(dd, &data[0], 2);
-    sscanf(dd, "%d", &dia);
-  
-    strncpy(mm, &data[3], 2);
-    sscanf(mm, "%d", &mes);
-
-    strncpy(aa, &data[6], 4);
-    sscanf(aa, "%d", &ano);
-
-  while (!validarData(dia, mes, ano)) {
-    printf("Data inválida: %d/%d/%d\n", dia, mes, ano);
-    printf("Informe uma nova data\n\n");
-    printf("Data de compra: ");
-    fgets(data, 11, stdin);
-    fflush(stdin);
-    getchar();
-    strncpy(dd, &data[0], 2);
-    sscanf(dd, "%d", &dia);
-    strncpy(mm, &data[3], 2);
-    sscanf(mm, "%d", &mes);
-    strncpy(aa, &data[6], 4);
-    sscanf(aa, "%d", &ano);
-    
-  } 
-}
-
 void ler_cnpj3 (char* cnpj) {
     fflush(stdin);
     printf("Digite o CNPJ (Apenas Números): ");
@@ -378,51 +359,6 @@ void ler_prods(char* prods) {
       prods[tam - 1] = '\0';
       fflush(stdin);
     }
-  } 
-}
-
-void ler_quant_prods(char* quant_prods) {
-    fflush(stdin);
-    printf("Quantidade: ");
-    fgets (quant_prods, 5, stdin);
-    while (!validarQuant (quant_prods)) {
-        printf("Quantidade inválida! Digite a quantidade novamente: ");
-        fgets (quant_prods, 5, stdin);
-    }
-    getchar();
-}
-
-void ler_data2(char* data) {
-    int dia, mes, ano;
-    char dd[3], mm[3], aa[5];
-    fflush(stdin);
-    printf("Data de compra: ");
-    fgets(data, 11, stdin); 
-    getchar();
-  
-    strncpy(dd, &data[0], 2);
-    sscanf(dd, "%d", &dia);
-  
-    strncpy(mm, &data[3], 2);
-    sscanf(mm, "%d", &mes);
-
-    strncpy(aa, &data[6], 4);
-    sscanf(aa, "%d", &ano);
-
-  while (!validarData(dia, mes, ano)) {
-    printf("Data inválida: %d/%d/%d\n", dia, mes, ano);
-    printf("Informe uma nova data\n\n");
-    printf("Data de compra: ");
-    fgets(data, 11, stdin);
-    fflush(stdin);
-    getchar();
-    strncpy(dd, &data[0], 2);
-    sscanf(dd, "%d", &dia);
-    strncpy(mm, &data[3], 2);
-    sscanf(mm, "%d", &mes);
-    strncpy(aa, &data[6], 4);
-    sscanf(aa, "%d", &ano);
-    
   } 
 }
 
