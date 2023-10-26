@@ -14,11 +14,13 @@ void ler_cel3(char*);
 // função do módulo de revendedoras
 
 void modulo_rev(void) {
+    Revendedor* rev;
     char op;
     do{
         op = tela_revendedoras();
         switch (op) {
-            case '1':   tela_cad_rev();
+            case '1':   rev = tela_cad_rev();
+                        esc_rev(rev);
                         break;
             case '2':   tela_pes_rev();
                         break;
@@ -54,7 +56,7 @@ char tela_revendedoras(void) {
     return op;
 }
 
-void tela_cad_rev(void) {
+Revendedor* tela_cad_rev(void) {
     Revendedor* revendedor;
 
     system("clear||cls");
@@ -77,6 +79,8 @@ void tela_cad_rev(void) {
     ler_nome5(revendedor->nome_prop);
 
     ler_cel3(revendedor->cel);
+
+    revendedor->status = 'c';
     printf("                                                                             \n");
     printf("                                                                             \n");
     printf("-----------------------------------------------------------------------------\n");
@@ -86,6 +90,7 @@ void tela_cad_rev(void) {
     printf("\t\t\t>>> Cadastro concluído!\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
+    return revendedor;
 }
 
 void tela_pes_rev(void) {
@@ -230,4 +235,22 @@ void ler_cel3 (char* cel) {
     
     }
     getchar();
+}
+
+// Arquivos
+
+void esc_rev(Revendedor* revendedor) {
+  FILE* fp;
+  fp = fopen("rev.dat", "ab");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  else {
+    fwrite(revendedor, sizeof(Revendedor), 1, fp);
+    fclose(fp);
+  }
 }
