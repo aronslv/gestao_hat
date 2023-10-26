@@ -97,11 +97,7 @@ char tela_material(void) {
 }
 
 void tela_cad_mat(void) {
-    char mat_prim[25];
-    int quant_mat;
-    float valor;
-    char data[11];
-    char cnpj[15];
+    Materia* materia;
 
     system("clear||cls");
     printf("\n");
@@ -111,27 +107,30 @@ void tela_cad_mat(void) {
     printf("                                                                             \n");
     printf("              Digite as informações a seguir:                                \n");
     printf("                                                                             \n");
-    ler_mat_prim(mat_prim);
+
+    materia = (Materia*) malloc(sizeof(Materia));
+
+    ler_mat_prim(materia->mat_prim);
 
     printf("Quantidade: ");
-    scanf("%d", &quant_mat);
+    scanf("%d", &materia->quant_mat);
     getchar();
 
     printf("Valor da unidade: R$ ");
-    scanf("%f", &valor);
+    scanf("%f", &materia->valor);
     getchar();
 
     printf("Digite a data de compra(dd/mm/aaaa): ");
-    scanf("%[0-9/]", data);
+    scanf("%[0-9/]", materia->data);
     getchar();
-    while(!validarData(data)) {
+    while(!validarData(materia->data)) {
       printf("Data inválida!\n");
       printf("Informe uma nova data: ");
-      scanf("%[0-9/]", data);
+      scanf("%[0-9/]", materia->data);
       getchar();
     }
 
-    ler_cnpj3(cnpj);
+    ler_cnpj3(materia->cnpj);
     printf("                                                                             \n");
     printf("                                                                             \n");
     printf("-----------------------------------------------------------------------------\n");
@@ -215,11 +214,7 @@ char tela_produtos(void) {
 }
 
 void tela_cad_prods(void) {
-    char prods[25];
-    int quant_prods;
-    float valor;
-    char data[11];
-    char cnpj[15];
+    Produto* produto;
 
     system("clear||cls");
     printf("\n");
@@ -229,27 +224,30 @@ void tela_cad_prods(void) {
     printf("                                                                             \n");
     printf("              Digite as informações a seguir:                                \n");
     printf("                                                                             \n");
-    ler_mat_prim(prods);
+
+    produto = (Produto*) malloc(sizeof(Produto));
+
+    ler_mat_prim(produto->prods);
 
     printf("Quantidade: ");
-    scanf("%d", &quant_prods);
+    scanf("%d", &produto->quant_prods);
     getchar();
 
     printf("Valor da unidade: R$ ");
-    scanf("%f", &valor);
+    scanf("%f", &produto->valor);
     getchar();
 
     printf("Digite a data de compra(dd/mm/aaaa): ");
-    scanf("%[0-9/]", data);
+    scanf("%[0-9/]", produto->data);
     getchar();
-    while(!validarData(data)) {
+    while(!validarData(produto->data)) {
       printf("Data inválida!\n");
       printf("Informe uma nova data: ");
-      scanf("%[0-9/]", data);
+      scanf("%[0-9/]", produto->data);
       getchar();
     }
 
-    ler_cnpj4(cnpj);
+    ler_cnpj4(produto->cnpj);
     printf("                                                                             \n");
     printf("                                                                             \n");
     printf("-----------------------------------------------------------------------------\n");
