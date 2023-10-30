@@ -14,19 +14,26 @@ void ler_cel3(char*);
 // função do módulo de revendedoras
 
 void modulo_rev(void) {
-    Revendedor* rev;
+    Revendedor* rev_x;
     char op;
     do{
         op = tela_revendedoras();
         switch (op) {
-            case '1':   rev = tela_cad_rev();
-                        esc_rev(rev);
+            case '1':   rev_x = tela_cad_rev();
+                        esc_rev(rev_x);
+                        free(rev_x);
                         break;
-            case '2':   tela_pes_rev();
+            case '2':   rev_x = tela_pes_rev();
+                        exb_rev(rev_x);
+                        free(rev_x);
                         break;
             case '3':   tela_edit_rev();
                         break;
             case '4':   tela_exc_rev();
+                        break;
+            case '5':   lista_todos();
+                        printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+                        getchar();
                         break;
         }
         
@@ -45,6 +52,7 @@ char tela_revendedoras(void) {
     printf("§              2. Pesquisar Revendedoras                                      §\n");
     printf("§              3. Editar Dados de Revendedoras                                §\n");
     printf("§              4. Excluir uma Revendedora do Sistema                          §\n");
+    printf("§              5. Listar todas as revendedoras                                §\n");
     printf("§              0. Retornar ao Menu Principal                                  §\n");
     printf("§                                                                             §\n");
     printf("§                                                                             §\n");
@@ -57,7 +65,7 @@ char tela_revendedoras(void) {
 }
 
 Revendedor* tela_cad_rev(void) {
-    Revendedor* revendedor;
+    Revendedor* rev;
 
     system("clear||cls");
     printf("\n");
@@ -68,19 +76,19 @@ Revendedor* tela_cad_rev(void) {
     printf("              Digite as informações a seguir:                                \n");
     printf("                                                                             \n");
 
-    revendedor = (Revendedor*) malloc(sizeof(Revendedor));
+    rev = (Revendedor*) malloc(sizeof(Revendedor));
     
-    ler_cnpj2(revendedor->cnpj);
+    ler_cnpj2(rev->cnpj);
 
-    ler_nome4(revendedor->nome_est);
+    ler_nome4(rev->nome_est);
 
-    ler_nome6(revendedor->end);
+    ler_nome6(rev->end);
 
-    ler_nome5(revendedor->nome_prop);
+    ler_nome5(rev->nome_prop);
 
-    ler_cel3(revendedor->cel);
+    ler_cel3(rev->cel);
 
-    revendedor->status = 'c';
+    rev->status = 'c';
     printf("                                                                             \n");
     printf("                                                                             \n");
     printf("-----------------------------------------------------------------------------\n");
@@ -90,23 +98,41 @@ Revendedor* tela_cad_rev(void) {
     printf("\t\t\t>>> Cadastro concluído!\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
-    return revendedor;
+    return rev;
 }
 
-void tela_pes_rev(void) {
-    system("clear||cls");
-    printf("\n");
-    printf("-----------------------------------------------------------------------------\n");
-    printf("                                                                             \n");
-    printf("              < < < < < < < Pesquisa - Revendedoras > > > > > > >            \n");
-    printf("                                                                             \n");
-    printf("              Informe o CNPJ que deseja pesquisar:                           \n");
-    printf("                                                                             \n");
-    printf("                                                                             \n");
-    printf("-----------------------------------------------------------------------------\n");
-    printf("\n");
+Revendedor* tela_pes_rev(void) {
+  FILE* fp;
+  Revendedor* rev;
+  char cnpj[15];
+  system("clear||cls");
+  printf("\n");
+  printf("-----------------------------------------------------------------------------\n");
+  printf("                                                                             \n");
+  printf("              < < < < < < < Pesquisa - Revendedoras > > > > > > >            \n");
+  printf("                                                                             \n");
+  printf("Informe o CNPJ que deseja pesquisar: ");
+  fgets (cnpj, 15, stdin);
+  getchar();
+  rev = (Revendedor*) malloc(sizeof(Revendedor));
+  fp = fopen("rev.dat", "rb");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar(); 
+    getchar();
+  } else {
+      while(!feof(fp)) {
+        fread(rev, sizeof(Revendedor), 1, fp);
+        if((rev->cnpj == cnpj) && (rev->status != 'e')) {
+          fclose(fp);
+          return rev;
+        }
+      }
+    }
+  fclose(fp);
+  return NULL;
 }
 
 void tela_edit_rev(void) {
@@ -237,9 +263,48 @@ void ler_cel3 (char* cel) {
     getchar();
 }
 
-// Arquivos
+void lista_todos(void) {
+  FILE* fp;
+  Revendedor* revendedor;
+  printf("\n = Lista de Clientes = \n");
+  revendedor = (Revendedor*) malloc(sizeof(Revendedor));
+  fp = fopen("rev.dat", "rb");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  while (fread(revendedor, sizeof(Revendedor), 1, fp)) { 
+    if (revendedor->status != 'x') {
+      exb_rev(revendedor);
+    }
+  }
+  fclose(fp);
+  free(revendedor);
+}
 
-void esc_rev(Revendedor* revendedor) {
+void exb_rev(Revendedor* rev) {
+    char sit[20];
+    printf("CNPJ: %s\n", rev->cnpj);
+    printf("Nome do estabelecimento: %s\n", rev->nome_est);
+    printf("Endereço: %s\n", rev->end);
+    printf("Nome do proprietário: %s\n", rev->nome_prop);
+    printf("Telefone: %s\n", rev->cel);
+    if (rev->status == 'c') {
+      strcpy(sit, "Cadastrado");
+    } else {
+      strcpy(sit, "Não Informado");
+    }
+    printf("Situação da Revendedora: %s\n", sit);
+    printf("\n");
+  }
+
+
+// arquivos
+
+void esc_rev(Revendedor* rev) {
   FILE* fp;
   fp = fopen("rev.dat", "ab");
   if (fp == NULL) {
@@ -250,7 +315,7 @@ void esc_rev(Revendedor* revendedor) {
     getchar();
   }
   else {
-    fwrite(revendedor, sizeof(Revendedor), 1, fp);
+    fwrite(rev, sizeof(Revendedor), 1, fp);
     fclose(fp);
   }
 }

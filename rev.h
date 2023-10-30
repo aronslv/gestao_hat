@@ -18,7 +18,9 @@ void modulo_rev(void);
 char tela_revendedoras(void);
 Revendedor* tela_cad_rev(void);
 void esc_rev(Revendedor*);
-void tela_pes_rev(void);
+Revendedor* tela_pes_rev(void);
+void lista_todos(void);
+void exb_rev(Revendedor*);
 void tela_edit_rev(void);
 void tela_exc_rev(void);
 
