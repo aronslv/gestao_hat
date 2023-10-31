@@ -125,7 +125,11 @@ Revendedor* tela_pes_rev(void) {
   } else {
       while(!feof(fp)) {
         fread(rev, sizeof(Revendedor), 1, fp);
-        if((rev->cnpj == cnpj) && (rev->status != 'e')) {
+        if((strcmp(rev->cnpj, cnpj) == 0) && (rev->status != 'e')) {
+          exb_rev(rev);
+          printf("\n");
+          printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+          getchar();
           fclose(fp);
           return rev;
         }
@@ -266,7 +270,7 @@ void ler_cel3 (char* cel) {
 void lista_todos(void) {
   FILE* fp;
   Revendedor* revendedor;
-  printf("\n = Lista de Clientes = \n");
+  printf("\n = Lista de Revendedoras = \n");
   revendedor = (Revendedor*) malloc(sizeof(Revendedor));
   fp = fopen("rev.dat", "rb");
   if (fp == NULL) {
@@ -277,7 +281,7 @@ void lista_todos(void) {
     getchar();
   }
   while (fread(revendedor, sizeof(Revendedor), 1, fp)) { 
-    if (revendedor->status != 'x') {
+    if (revendedor->status != 'e') {
       exb_rev(revendedor);
     }
   }
@@ -286,7 +290,16 @@ void lista_todos(void) {
 }
 
 void exb_rev(Revendedor* rev) {
+  if ((rev == NULL) || (rev->status == 'e')) {
+    printf("\n");
+    printf("\t\t\tCNPJ não encontrado!\n");
+    printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }else{
     char sit[20];
+    printf("\n= = = Revendedora Cadastrada = = =\n");
+    printf("\n");
     printf("CNPJ: %s\n", rev->cnpj);
     printf("Nome do estabelecimento: %s\n", rev->nome_est);
     printf("Endereço: %s\n", rev->end);
@@ -300,7 +313,7 @@ void exb_rev(Revendedor* rev) {
     printf("Situação da Revendedora: %s\n", sit);
     printf("\n");
   }
-
+}
 
 // arquivos
 
