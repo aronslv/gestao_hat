@@ -140,19 +140,63 @@ Revendedor* tela_pes_rev(void) {
 }
 
 void tela_edit_rev(void) {
-    system("clear||cls");
-    printf("\n");
-    printf("-----------------------------------------------------------------------------\n");
-    printf("                                                                             \n");
-    printf("              < < < < < < < Edição - Revendedoras > > > > > > >              \n");
-    printf("                                                                             \n");
-    printf("              Informe o CNPJ para edição de dados:                           \n");
-    printf("                                                                             \n");
-    printf("                                                                             \n");
-    printf("-----------------------------------------------------------------------------\n");
-    printf("\n");
+  char cnpj[15];
+  Revendedor* new_rev = (Revendedor*) malloc(sizeof(Revendedor));
+  FILE* fp;
+  int rev_found = 0;
+  system("clear||cls");
+  printf("\n");
+  printf("-----------------------------------------------------------------------------\n");
+  printf("                                                                             \n");
+  printf("              < < < < < < < Edição - Revendedoras > > > > > > >              \n");
+  printf("                                                                             \n");
+  printf("Informe o CNPJ para edição de dados: ");
+  fgets (cnpj, 15, stdin);
+  getchar();
+  fp = fopen("rev.dat", "r+b");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar(); 
+    getchar();
+  } else {
+    while (fread(new_rev, sizeof(Revendedor), 1, fp) == 1) {
+      if(strcmp(new_rev->cnpj, cnpj) == 0) {
+        printf("\n");
+        printf("\t\t\t= = = Revendedora Encontrada = = =\n");
+        printf("\n");
+
+        ler_cnpj2(new_rev->cnpj);
+
+        ler_nome4(new_rev->nome_est);
+
+        ler_nome6(new_rev->end);
+
+        ler_nome5(new_rev->nome_prop);
+
+        ler_cel3(new_rev->cel);
+
+        new_rev->status = 'c';
+
+        fseek(fp, -sizeof(Revendedor), SEEK_CUR);
+        fwrite(new_rev, sizeof(Revendedor), 1, fp);
+        rev_found = 1;
+        break;
+      }
+    }
+  }
+  if (!rev_found) {
+        printf("\n");
+        printf("\t\t\tCNPJ não encontrado!\n");
+    } else {
+        printf("\n");
+        printf("\t\t\tRevendedora atualizada com sucesso!\n");
+    }
+  printf("\n");
+  printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+  getchar();
+  fclose(fp);
 }
 
 void tela_exc_rev(void) {
