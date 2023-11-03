@@ -14,11 +14,14 @@ void ler_cel1(char*);
 // função do módulo de fornecedores
 
 void modulo_forn(void) {
+    Fornecedor* forn_x;
     char op;
     do{
         op = tela_fornecedoras();
         switch (op) {
-            case '1':   tela_cad_forn();
+            case '1':   forn_x = tela_cad_forn();
+                        esc_forn(forn_x);
+                        free(forn_x);
                         break;
             case '2':   tela_pes_forn();
                         break;
@@ -54,38 +57,41 @@ char tela_fornecedoras(void) {
     return op;
 }
 
-void tela_cad_forn(void) {
-    Fornecedor* fornecedor;
+Fornecedor* tela_cad_forn(void) {
+  Fornecedor* forn;
 
-    system("clear||cls");
-    printf("\n");
-    printf("-----------------------------------------------------------------------------\n");
-    printf("                                                                             \n");
-    printf("              < < < < < < < Cadastro - Fornecedoras > > > > > > >            \n");
-    printf("                                                                             \n");
-    printf("              Digite as informações a seguir:                                \n");
-    printf("                                                                             \n");
+  system("clear||cls");
+  printf("\n");
+  printf("-----------------------------------------------------------------------------\n");
+  printf("                                                                             \n");
+  printf("              < < < < < < < Cadastro - Fornecedoras > > > > > > >            \n");
+  printf("                                                                             \n");
+  printf("              Digite as informações a seguir:                                \n");
+  printf("                                                                             \n");
 
-    fornecedor = (Fornecedor*) malloc(sizeof(Fornecedor));
+  forn = (Fornecedor*) malloc(sizeof(Fornecedor));
     
-    ler_cnpj1(fornecedor->cnpj);
+  ler_cnpj1(forn->cnpj);
 
-    ler_nome1(fornecedor->nome_est);
+  ler_nome1(forn->nome_est);
 
-    ler_nome3(fornecedor->end);
+  ler_nome3(forn->end);
 
-    ler_nome2(fornecedor->nome_prop);
+  ler_nome2(forn->nome_prop);
 
-    ler_cel1(fornecedor->cel);
-    printf("                                                                             \n");
-    printf("                                                                             \n");
-    printf("-----------------------------------------------------------------------------\n");
-    printf("\n");
-    printf("\t\t\t>>> Processando as informações...\n");
-    sleep(1);
-    printf("\t\t\t>>> Cadastro concluído!\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
+  ler_cel1(forn->cel);
+
+  forn->status = 'c';
+  printf("                                                                             \n");
+  printf("                                                                             \n");
+  printf("-----------------------------------------------------------------------------\n");
+  printf("\n");
+  printf("\t\t\t>>> Processando as informações...\n");
+  sleep(1);
+  printf("\t\t\t>>> Cadastro concluído!\n");
+  printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+  getchar();
+  return forn;
 }
 
 void tela_pes_forn(void) {
@@ -230,4 +236,20 @@ void ler_cel1 (char* cel) {
     
     }
     getchar();
+}
+
+void esc_forn(Fornecedor* forn) {
+  FILE* fp;
+  fp = fopen("forn.dat", "ab");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  else {
+    fwrite(forn, sizeof(Fornecedor), 1, fp);
+    fclose(fp);
+  }
 }
