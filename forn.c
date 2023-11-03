@@ -195,19 +195,53 @@ void tela_edit_forn(void) {
 }
 
 void tela_exc_forn(void) {
-    system("clear||cls");
-    printf("\n");
-    printf("-----------------------------------------------------------------------------\n");
-    printf("                                                                             \n");
-    printf("              < < < < < < < Exclusão - Fornecedoras > > > > > > >            \n");
-    printf("                                                                             \n");
-    printf("              Informe o CNPJ para excluir do sistema:                        \n");
-    printf("                                                                             \n");
-    printf("                                                                             \n");
-    printf("-----------------------------------------------------------------------------\n");
-    printf("\n");
+  char cnpj[15];
+  Fornecedor* new_forn = (Fornecedor*) malloc(sizeof(Fornecedor));
+  FILE* fp;
+  int forn_found = 0;
+  system("clear||cls");
+  printf("\n");
+  printf("-----------------------------------------------------------------------------\n");
+  printf("                                                                             \n");
+  printf("              < < < < < < < Exclusão - Fornecedoras > > > > > > >            \n");
+  printf("                                                                             \n");
+  printf("Informe o CNPJ para excluir do sistema: ");
+  fgets (cnpj, 15, stdin);
+  getchar();
+  fp = fopen("forn.dat", "r+b");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar(); 
+    getchar();
+  } else {
+    while (fread(new_forn, sizeof(Fornecedor), 1, fp) == 1) {
+      if(strcmp(new_forn->cnpj, cnpj) == 0) {
+        printf("\n");
+        printf("\t\t\t= = = Fornecedora Encontrada = = =\n");
+        printf("\n");
+
+        new_forn->status = 'e';
+
+        fseek(fp, -sizeof(Fornecedor), SEEK_CUR);
+        fwrite(new_forn, sizeof(Fornecedor), 1, fp);
+        forn_found = 1;
+        break;
+      }
+    }
+  }
+  if (!forn_found) {
+        printf("\n");
+        printf("\t\t\tCNPJ não encontrado!\n");
+    } else {
+        printf("\n");
+        printf("\t\t\tFornecedora excluída com sucesso!\n");
+    }
+  printf("\n");
+  printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+  getchar();
+  fclose(fp);
 }
 
 void ler_cnpj1 (char* cnpj) {
