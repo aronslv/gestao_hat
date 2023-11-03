@@ -23,7 +23,9 @@ void modulo_forn(void) {
                         esc_forn(forn_x);
                         free(forn_x);
                         break;
-            case '2':   tela_pes_forn();
+            case '2':   forn_x = tela_pes_forn();
+                        exb_forn(forn_x);
+                        free(forn_x);
                         break;
             case '3':   tela_edit_forn();
                         break;
@@ -94,20 +96,42 @@ Fornecedor* tela_cad_forn(void) {
   return forn;
 }
 
-void tela_pes_forn(void) {
-    system("clear||cls");
-    printf("\n");
-    printf("-----------------------------------------------------------------------------\n");
-    printf("                                                                             \n");
-    printf("              < < < < < < < Pesquisa - Fornecedoras > > > > > > >            \n");
-    printf("                                                                             \n");
-    printf("              Informe o CNPJ que deseja pesquisar:                           \n");
-    printf("                                                                             \n");
-    printf("                                                                             \n");
-    printf("-----------------------------------------------------------------------------\n");
-    printf("\n");
+Fornecedor* tela_pes_forn(void) {
+  FILE* fp;
+  Fornecedor* forn;
+  char cnpj[15];
+  system("clear||cls");
+  printf("\n");
+  printf("-----------------------------------------------------------------------------\n");
+  printf("                                                                             \n");
+  printf("              < < < < < < < Pesquisa - Fornecedoras > > > > > > >            \n");
+  printf("                                                                             \n");
+  printf("Informe o CNPJ que deseja pesquisar: ");
+  fgets (cnpj, 15, stdin);
+  getchar();
+  forn = (Fornecedor*) malloc(sizeof(Fornecedor));
+  fp = fopen("forn.dat", "rb");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar(); 
+    getchar();
+  } else {
+      while(!feof(fp)) {
+        fread(forn, sizeof(Fornecedor), 1, fp);
+        if((strcmp(forn->cnpj, cnpj) == 0) && (forn->status != 'e')) {
+          exb_forn(forn);
+          printf("\n");
+          printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+          getchar();
+          fclose(fp);
+          return forn;
+        }
+      }
+    }
+  fclose(fp);
+  return NULL;
 }
 
 void tela_edit_forn(void) {
@@ -251,5 +275,31 @@ void esc_forn(Fornecedor* forn) {
   else {
     fwrite(forn, sizeof(Fornecedor), 1, fp);
     fclose(fp);
+  }
+}
+
+void exb_forn(Fornecedor* forn) {
+  if ((forn == NULL) || (forn->status == 'e')) {
+    printf("\n");
+    printf("\t\t\tCNPJ não encontrado!\n");
+    printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }else{
+    char sit[20];
+    printf("\n= = = Revendedora Cadastrada = = =\n");
+    printf("\n");
+    printf("CNPJ: %s\n", forn->cnpj);
+    printf("Nome do estabelecimento: %s\n", forn->nome_est);
+    printf("Endereço: %s\n", forn->end);
+    printf("Nome do proprietário: %s\n", forn->nome_prop);
+    printf("Telefone: %s\n", forn->cel);
+    if (forn->status == 'c') {
+      strcpy(sit, "Cadastrado");
+    } else {
+      strcpy(sit, "Não Informado");
+    }
+    printf("Situação da Revendedora: %s\n", sit);
+    printf("\n");
   }
 }

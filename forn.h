@@ -18,7 +18,8 @@ void modulo_forn(void);
 char tela_fornecedoras(void);
 Fornecedor* tela_cad_forn(void);
 void esc_forn(Fornecedor*);
-void tela_pes_forn(void);
+Fornecedor* tela_pes_forn(void);
+void exb_forn(Fornecedor*);
 void tela_edit_forn(void);
 void tela_exc_forn(void);
 
