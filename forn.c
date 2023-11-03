@@ -135,19 +135,63 @@ Fornecedor* tela_pes_forn(void) {
 }
 
 void tela_edit_forn(void) {
-    system("clear||cls");
-    printf("\n");
-    printf("-----------------------------------------------------------------------------\n");
-    printf("                                                                             \n");
-    printf("              < < < < < < < Edição - Fornecedoras > > > > > > >              \n");
-    printf("                                                                             \n");
-    printf("              Informe o CNPJ para edição de dados:                           \n");
-    printf("                                                                             \n");
-    printf("                                                                             \n");
-    printf("-----------------------------------------------------------------------------\n");
-    printf("\n");
+  char cnpj[15];
+  Fornecedor* new_forn = (Fornecedor*) malloc(sizeof(Fornecedor));
+  FILE* fp;
+  int forn_found = 0;
+  system("clear||cls");
+  printf("\n");
+  printf("-----------------------------------------------------------------------------\n");
+  printf("                                                                             \n");
+  printf("              < < < < < < < Edição - Fornecedoras > > > > > > >              \n");
+  printf("                                                                             \n");
+  printf("Informe o CNPJ para edição de dados: ");
+  fgets (cnpj, 15, stdin);
+  getchar();
+  fp = fopen("forn.dat", "r+b");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar(); 
+    getchar();
+  } else {
+    while (fread(new_forn, sizeof(Fornecedor), 1, fp) == 1) {
+      if(strcmp(new_forn->cnpj, cnpj) == 0) {
+        printf("\n");
+        printf("\t\t\t= = = Fornecedora Encontrada = = =\n");
+        printf("\n");
+
+        ler_cnpj1(new_forn->cnpj);
+
+        ler_nome1(new_forn->nome_est);
+
+        ler_nome3(new_forn->end);
+
+        ler_nome2(new_forn->nome_prop);
+
+        ler_cel1(new_forn->cel);
+
+        new_forn->status = 'c';
+
+        fseek(fp, -sizeof(Fornecedor), SEEK_CUR);
+        fwrite(new_forn, sizeof(Fornecedor), 1, fp);
+        forn_found = 1;
+        break;
+      }
+    }
+  }
+  if (!forn_found) {
+        printf("\n");
+        printf("\t\t\tCNPJ não encontrado!\n");
+    } else {
+        printf("\n");
+        printf("\t\t\tFornecedora atualizada com sucesso!\n");
+    }
+  printf("\n");
+  printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+  getchar();
+  fclose(fp);
 }
 
 void tela_exc_forn(void) {
@@ -287,7 +331,7 @@ void exb_forn(Fornecedor* forn) {
     getchar();
   }else{
     char sit[20];
-    printf("\n= = = Revendedora Cadastrada = = =\n");
+    printf("\t\t\t= = = Fornecedora Cadastrada = = =\n");
     printf("\n");
     printf("CNPJ: %s\n", forn->cnpj);
     printf("Nome do estabelecimento: %s\n", forn->nome_est);

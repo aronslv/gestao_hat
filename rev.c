@@ -376,7 +376,7 @@ void exb_rev(Revendedor* rev) {
     getchar();
   }else{
     char sit[20];
-    printf("\n= = = Revendedora Cadastrada = = =\n");
+    printf("\t\t\t= = = Revendedora Cadastrada = = =\n");
     printf("\n");
     printf("CNPJ: %s\n", rev->cnpj);
     printf("Nome do estabelecimento: %s\n", rev->nome_est);
