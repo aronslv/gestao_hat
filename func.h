@@ -11,11 +11,13 @@ struct funcionario {
     char prof[25];
     float salario;
     char cel[12];
+    char status;
 };
 
 void modulo_func(void);
 char tela_funcionarios(void);
-void tela_cad_func(void);
+Funcionario* tela_cad_func(void);
+void esc_func(Funcionario*);
 void tela_pes_func(void);
 void tela_edit_func(void);
 void tela_exc_func(void);

@@ -14,11 +14,14 @@ void ler_cel2(char*);
 // função do módulo de funcionários
 
 void modulo_func(void) {
+    Funcionario* func_x;
     char op;
     do{
         op = tela_funcionarios();
         switch (op) {
-            case '1':   tela_cad_func();
+            case '1':   func_x = tela_cad_func();
+                        esc_func(func_x);
+                        free(func_x);
                         break;
             case '2':   tela_pes_func();
                         break;
@@ -54,8 +57,8 @@ char tela_funcionarios(void) {
     return op;
 }
 
-void tela_cad_func(void) {
-    Funcionario* funcionario;
+Funcionario* tela_cad_func(void) {
+    Funcionario* func;
 
     system("clear||cls");
     printf("\n");
@@ -66,19 +69,21 @@ void tela_cad_func(void) {
     printf("              Digite as informações a seguir:                                \n");
     printf("                                                                             \n");
 
-    funcionario = (Funcionario*) malloc(sizeof(Funcionario));
+    func = (Funcionario*) malloc(sizeof(Funcionario));
     
-    ler_nome(funcionario->nome);
+    ler_nome(func->nome);
 
-    ler_cpf(funcionario->cpf);
+    ler_cpf(func->cpf);
 
     printf("Salário: R$ ");
-    scanf("%f", &funcionario->salario);
+    scanf("%f", &func->salario);
     getchar();
 
-    ler_prof(funcionario->prof);
+    ler_prof(func->prof);
 
-    ler_cel2(funcionario->cel);
+    ler_cel2(func->cel);
+
+    func->status = 'c';
     printf("                                                                             \n");
     printf("                                                                             \n");
     printf("-----------------------------------------------------------------------------\n");
@@ -88,6 +93,7 @@ void tela_cad_func(void) {
     printf("\t\t\t>>> Cadastro concluído!\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
+    return func;
 }
 
 void tela_pes_func(void) {
@@ -213,3 +219,19 @@ void ler_cel2 (char* cel) {
     }
     getchar();
 } 
+
+void esc_func(Funcionario* func) {
+  FILE* fp;
+  fp = fopen("func.dat", "ab");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  else {
+    fwrite(func, sizeof(Funcionario), 1, fp);
+    fclose(fp);
+  }
+}
