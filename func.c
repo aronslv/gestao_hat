@@ -199,19 +199,53 @@ void tela_edit_func(void) {
 }
 
 void tela_exc_func(void) {
-    system("clear||cls");
-    printf("\n");
-    printf("-----------------------------------------------------------------------------\n");
-    printf("                                                                             \n");
-    printf("              < < < < < < < Exclusão - Funcionários > > > > > > >            \n");
-    printf("                                                                             \n");
-    printf("              Informe o CPF para excluir do sistema:                         \n");
-    printf("                                                                             \n");
-    printf("                                                                             \n");
-    printf("-----------------------------------------------------------------------------\n");
-    printf("\n");
+  char cpf[12];
+  Funcionario* new_func = (Funcionario*) malloc(sizeof(Funcionario));
+  FILE* fp;
+  int func_found = 0;
+  system("clear||cls");
+  printf("\n");
+  printf("-----------------------------------------------------------------------------\n");
+  printf("                                                                             \n");
+  printf("              < < < < < < < Exclusão - Funcionários > > > > > > >            \n");
+  printf("                                                                             \n");
+  printf("Informe o CPF para excluir do sistema: ");
+  fgets (cpf, 12, stdin);
+  getchar();
+  fp = fopen("func.dat", "r+b");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar(); 
+    getchar();
+  } else {
+    while (fread(new_func, sizeof(Funcionario), 1, fp) == 1) {
+      if(strcmp(new_func->cpf, cpf) == 0) {
+        printf("\n");
+        printf("\t\t\t= = = Funcionário Encontrado = = =\n");
+        printf("\n");
+
+        new_func->status = 'e';
+
+        fseek(fp, -sizeof(Funcionario), SEEK_CUR);
+        fwrite(new_func, sizeof(Funcionario), 1, fp);
+        func_found = 1;
+        break;
+      }
+    }
+  }
+  if (!func_found) {
+        printf("\n");
+        printf("\t\t\tCPF não encontrado!\n");
+    } else {
+        printf("\n");
+        printf("\t\t\tFuncionário excluído com sucesso!\n");
+    }
+  printf("\n");
+  printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+  getchar();
+  fclose(fp);
 }
 
 // Função inspirada no código do Prof. Flavius
