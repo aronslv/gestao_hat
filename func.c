@@ -23,7 +23,9 @@ void modulo_func(void) {
                         esc_func(func_x);
                         free(func_x);
                         break;
-            case '2':   tela_pes_func();
+            case '2':   func_x = tela_pes_func();
+                        exb_func(func_x);
+                        free(func_x);
                         break;
             case '3':   tela_edit_func();
                         break;
@@ -96,20 +98,42 @@ Funcionario* tela_cad_func(void) {
     return func;
 }
 
-void tela_pes_func(void) {
-    system("clear||cls");
-    printf("\n");
-    printf("-----------------------------------------------------------------------------\n");
-    printf("                                                                             \n");
-    printf("              < < < < < < < Pesquisa - Funcionários > > > > > > >            \n");
-    printf("                                                                             \n");
-    printf("              Informe o CPF que deseja pesquisar:                            \n");
-    printf("                                                                             \n");
-    printf("                                                                             \n");
-    printf("-----------------------------------------------------------------------------\n");
-    printf("\n");
+Funcionario* tela_pes_func(void) {
+  FILE* fp;
+  Funcionario* func;
+  char cpf[12];
+  system("clear||cls");
+  printf("\n");
+  printf("-----------------------------------------------------------------------------\n");
+  printf("                                                                             \n");
+  printf("              < < < < < < < Pesquisa - Funcionários > > > > > > >            \n");
+  printf("                                                                             \n");
+  printf("Informe o CPF que deseja pesquisar: ");
+  fgets (cpf, 12, stdin);
+  getchar();
+  func = (Funcionario*) malloc(sizeof(Funcionario));
+  fp = fopen("func.dat", "rb");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar(); 
+    getchar();
+  } else {
+      while(!feof(fp)) {
+        fread(func, sizeof(Funcionario), 1, fp);
+        if((strcmp(func->cpf, cpf) == 0) && (func->status != 'e')) {
+          exb_func(func);
+          printf("\n");
+          printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+          getchar();
+          fclose(fp);
+          return func;
+        }
+      }
+    }
+  fclose(fp);
+  return NULL;
 }
 
 void tela_edit_func(void) {
@@ -233,5 +257,31 @@ void esc_func(Funcionario* func) {
   else {
     fwrite(func, sizeof(Funcionario), 1, fp);
     fclose(fp);
+  }
+}
+
+void exb_func(Funcionario* func) {
+  if ((func == NULL) || (func->status == 'e')) {
+    printf("\n");
+    printf("\t\t\tCPF não encontrado!\n");
+    printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }else{
+    char sit[20];
+    printf("\t\t\t= = = Funcionário Cadastrado = = =\n");
+    printf("\n");
+    printf("CPF: %s\n", func->cpf);
+    printf("Nome completo: %s\n", func->nome);
+    printf("Salário: R$ %.2f\n", func->salario);
+    printf("Profissão: %s\n", func->prof);
+    printf("Telefone: %s\n", func->cel);
+    if (func->status == 'c') {
+      strcpy(sit, "Cadastrado");
+    } else {
+      strcpy(sit, "Não Informado");
+    }
+    printf("Situação do Funcionário: %s\n", sit);
+    printf("\n");
   }
 }
