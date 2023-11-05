@@ -137,19 +137,65 @@ Funcionario* tela_pes_func(void) {
 }
 
 void tela_edit_func(void) {
-    system("clear||cls");
-    printf("\n");
-    printf("-----------------------------------------------------------------------------\n");
-    printf("                                                                             \n");
-    printf("              < < < < < < < Edição - Funcionários > > > > > > >              \n");
-    printf("                                                                             \n");
-    printf("              Informe o CPF para edição de dados:                            \n");
-    printf("                                                                             \n");
-    printf("                                                                             \n");
-    printf("-----------------------------------------------------------------------------\n");
-    printf("\n");
+  char cpf[12];
+  Funcionario* new_func = (Funcionario*) malloc(sizeof(Funcionario));
+  FILE* fp;
+  int func_found = 0;
+  system("clear||cls");
+  printf("\n");
+  printf("-----------------------------------------------------------------------------\n");
+  printf("                                                                             \n");
+  printf("              < < < < < < < Edição - Funcionários > > > > > > >              \n");
+  printf("                                                                             \n");
+  printf("Informe o CPF para edição de dados: ");
+  fgets (cpf, 12, stdin);
+  getchar();
+  fp = fopen("func.dat", "r+b");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar(); 
+    getchar();
+  } else {
+    while (fread(new_func, sizeof(Funcionario), 1, fp) == 1) {
+      if(strcmp(new_func->cpf, cpf) == 0) {
+        printf("\n");
+        printf("\t\t\t= = = Funcionário Encontrado = = =\n");
+        printf("\n");
+
+        ler_nome(new_func->nome);
+
+        ler_cpf(new_func->cpf);
+
+        printf("Salário: R$ ");
+        scanf("%f", &new_func->salario);
+        getchar();
+
+        ler_prof(new_func->prof);
+
+        ler_cel2(new_func->cel);
+
+        new_func->status = 'c';
+
+        fseek(fp, -sizeof(Funcionario), SEEK_CUR);
+        fwrite(new_func, sizeof(Funcionario), 1, fp);
+        func_found = 1;
+        break;
+      }
+    }
+  }
+  if (!func_found) {
+        printf("\n");
+        printf("\t\t\tCPF não encontrado!\n");
+    } else {
+        printf("\n");
+        printf("\t\t\tFuncionário atualizado com sucesso!\n");
+    }
+  printf("\n");
+  printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+  getchar();
+  fclose(fp);
 }
 
 void tela_exc_func(void) {
