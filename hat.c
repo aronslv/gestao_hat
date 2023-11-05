@@ -5,6 +5,7 @@
 #include "func.h"
 #include "forn.h"
 #include "prods.h"
+#include "rel.h"
 
 //funções base
 char tela_main(void);
@@ -24,9 +25,7 @@ int main(void) {
                         break;
             case '4':   modulo_prods();
                         break;
-            case '5':   printf("Em desenvolvimento!\n");
-                        printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-                        getchar();
+            case '5':   modulo_rel();
                         break;
             case '6':   tela_info();
                         break;

@@ -31,10 +31,6 @@ void modulo_rev(void) {
                         break;
             case '4':   tela_exc_rev();
                         break;
-            case '5':   lista_todos();
-                        printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-                        getchar();
-                        break;
         }
         
     }while (op != '0');
@@ -52,7 +48,6 @@ char tela_revendedoras(void) {
     printf("§              2. Pesquisar Revendedoras                                      §\n");
     printf("§              3. Editar Dados de Revendedoras                                §\n");
     printf("§              4. Excluir uma Revendedora do Sistema                          §\n");
-    printf("§              5. Listar todas as revendedoras                                §\n");
     printf("§              0. Retornar ao Menu Principal                                  §\n");
     printf("§                                                                             §\n");
     printf("§                                                                             §\n");
@@ -343,28 +338,6 @@ void ler_cel3 (char* cel) {
     
     }
     getchar();
-}
-
-void lista_todos(void) {
-  FILE* fp;
-  Revendedor* revendedor;
-  printf("\n = Lista de Revendedoras = \n");
-  revendedor = (Revendedor*) malloc(sizeof(Revendedor));
-  fp = fopen("rev.dat", "rb");
-  if (fp == NULL) {
-    printf("\t\t\t>>> Processando as informações...\n");
-    sleep(1);
-    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
-  }
-  while (fread(revendedor, sizeof(Revendedor), 1, fp)) { 
-    if (revendedor->status != 'e') {
-      exb_rev(revendedor);
-    }
-  }
-  fclose(fp);
-  free(revendedor);
 }
 
 void exb_rev(Revendedor* rev) {
