@@ -66,9 +66,23 @@ void lista_all_rev(void) {
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
   }
+  printf("%-15s", "CNPJ");
+  printf("|");
+  printf("%-30s", "Nome do Estabelecimento");
+  printf("|");
+  printf("%-30s", "Nome do Proprietário");
+  printf("\n");
+  printf("%16s", "|");
+  printf("%31s", "|");
+  printf("\n");
   while (fread(revendedor, sizeof(Revendedor), 1, fp)) { 
     if (revendedor->status != 'e') {
-      exb_rev(revendedor);
+      printf("%15s", revendedor->cnpj);
+      printf("|");
+      printf("%-30s", revendedor->nome_est);
+      printf("|");
+      printf("%-30s", revendedor->nome_prop);
+      printf("\n");
     }
   }
   fclose(fp);
