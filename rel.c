@@ -13,14 +13,17 @@ void modulo_rel(void) {
         op = tela_rel();
         switch (op) {
             case '1':   lista_all_rev();
+                        printf("\n");
                         printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
                         getchar();
                         break;
             case '2':   lista_all_func();
+                        printf("\n");
                         printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
                         getchar();
                         break;
             case '3':   lista_all_forn();
+                        printf("\n");
                         printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
                         getchar();
                         break;
@@ -77,7 +80,7 @@ void lista_all_rev(void) {
   printf("\n");
   while (fread(revendedor, sizeof(Revendedor), 1, fp)) { 
     if (revendedor->status != 'e') {
-      printf("%15s", revendedor->cnpj);
+      printf("%-15s", revendedor->cnpj);
       printf("|");
       printf("%-30s", revendedor->nome_est);
       printf("|");
@@ -103,9 +106,23 @@ void lista_all_func(void) {
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
   }
+  printf("%-12s", "CPF");
+  printf("|");
+  printf("%-31s", "Nome do Funcionário");
+  printf("|");
+  printf("%-30s", "Profissão");
+  printf("\n");
+  printf("%13s", "|");
+  printf("%31s", "|");
+  printf("\n");
   while (fread(funcionario, sizeof(Funcionario), 1, fp)) { 
     if (funcionario->status != 'e') {
-      exb_func(funcionario);
+      printf("%-12s", funcionario->cpf);
+      printf("|");
+      printf("%-30s", funcionario->nome);
+      printf("|");
+      printf("%-30s", funcionario->prof);
+      printf("\n");
     }
   }
   fclose(fp);
@@ -126,9 +143,23 @@ void lista_all_forn(void) {
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
   }
+  printf("%-15s", "CNPJ");
+  printf("|");
+  printf("%-30s", "Nome do Estabelecimento");
+  printf("|");
+  printf("%-30s", "Nome do Proprietário");
+  printf("\n");
+  printf("%16s", "|");
+  printf("%31s", "|");
+  printf("\n");
   while (fread(fornecedor, sizeof(Fornecedor), 1, fp)) { 
     if (fornecedor->status != 'e') {
-      exb_forn(fornecedor);
+      printf("%-15s", fornecedor->cnpj);
+      printf("|");
+      printf("%-30s", fornecedor->nome_est);
+      printf("|");
+      printf("%-30s", fornecedor->nome_prop);
+      printf("\n");
     }
   }
   fclose(fp);
