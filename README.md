@@ -5,14 +5,14 @@ Projeto de gestão de fábrica de chapéus e bonés. BSI 2º Período
 
 Linux:
 
-gcc -c -Wall *.c
-gcc -c -Wall *.h
-gcc -o hat *.o
-./hat
+- gcc -c -Wall *.c
+- gcc -c -Wall *.h
+- gcc -o hat *.o
+- ./hat
 
 Windows:
 
-gcc -c -Wall *.c
-gcc -c -Wall *.h
-gcc -o hat *.o
-hat.exe
+- gcc -c -Wall *.c
+- gcc -c -Wall *.h
+- gcc -o hat *.o
+- hat.exe
