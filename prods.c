@@ -7,12 +7,15 @@
 
 void ler_mat_prim(char*);
 void ler_prods(char*);
+void ler_data_mat(char*);
+void ler_data_prods(char*);
 void ler_cnpj3(char*);
 void ler_cnpj4(char*);
 
 // função do módulo de produtos
 
 void modulo_prods(void) {
+    Materia* mat_x;
     char opc;
     char op;
     do{
@@ -22,7 +25,9 @@ void modulo_prods(void) {
             do{
                 op = tela_material();
                 switch (op) {
-                    case '1':   tela_cad_mat();
+                    case '1':   mat_x = tela_cad_mat();
+                                esc_mat(mat_x);
+                                free(mat_x);
                                 break;
                     case '2':   tela_pes_mat();
                                 break;
@@ -96,8 +101,8 @@ char tela_material(void) {
     return op;
 }
 
-void tela_cad_mat(void) {
-    Materia* materia;
+Materia* tela_cad_mat(void) {
+    Materia* mat;
 
     system("clear||cls");
     printf("\n");
@@ -108,29 +113,23 @@ void tela_cad_mat(void) {
     printf("              Digite as informações a seguir:                                \n");
     printf("                                                                             \n");
 
-    materia = (Materia*) malloc(sizeof(Materia));
+    mat = (Materia*) malloc(sizeof(Materia));
 
-    ler_mat_prim(materia->mat_prim);
+    ler_mat_prim(mat->mat_prim);
 
     printf("Quantidade: ");
-    scanf("%d", &materia->quant_mat);
+    scanf("%d", &mat->quant_mat);
     getchar();
 
     printf("Valor da unidade: R$ ");
-    scanf("%f", &materia->valor);
+    scanf("%f", &mat->valor);
     getchar();
 
-    printf("Digite a data de compra(dd/mm/aaaa): ");
-    scanf("%[0-9/]", materia->data);
-    getchar();
-    while(!validarData(materia->data)) {
-      printf("Data inválida!\n");
-      printf("Informe uma nova data: ");
-      scanf("%[0-9/]", materia->data);
-      getchar();
-    }
+    ler_data_mat(mat->data);
 
-    ler_cnpj3(materia->cnpj);
+    ler_cnpj3(mat->cnpj);
+
+    mat->status = 'c';
     printf("                                                                             \n");
     printf("                                                                             \n");
     printf("-----------------------------------------------------------------------------\n");
@@ -140,6 +139,7 @@ void tela_cad_mat(void) {
     printf("\t\t\t>>> Cadastro concluído!\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
+    return mat;
 }
 
 void tela_pes_mat(void) {
@@ -237,15 +237,7 @@ void tela_cad_prods(void) {
     scanf("%f", &produto->valor);
     getchar();
 
-    printf("Digite a data de compra(dd/mm/aaaa): ");
-    scanf("%[0-9/]", produto->data);
-    getchar();
-    while(!validarData(produto->data)) {
-      printf("Data inválida!\n");
-      printf("Informe uma nova data: ");
-      scanf("%[0-9/]", produto->data);
-      getchar();
-    }
+    ler_data_prods(produto->data);
 
     ler_cnpj4(produto->cnpj);
     printf("                                                                             \n");
@@ -331,6 +323,40 @@ void ler_mat_prim(char* mat_prim) {
   } 
 }
 
+void ler_data_mat(char* data) {
+  int dia, mes, ano;
+  char dd[3], mm[3], aa[5];
+  fflush(stdin);
+  printf("Digite a data de compra(dd/mm/aaaa): ");
+  fgets(data, 11, stdin); 
+  getchar();
+  
+  strncpy(dd, &data[0], 2);
+  sscanf(dd, "%d", &dia);
+  
+  strncpy(mm, &data[3], 2);
+  sscanf(mm, "%d", &mes);
+
+  strncpy(aa, &data[6], 4);
+  sscanf(aa, "%d", &ano);
+
+  while (!validarData(dia, mes, ano)) {
+    printf("Data inválida: %d/%d/%d\n", dia, mes, ano);
+    printf("Informe uma nova data\n\n");
+    printf("Data de compra(dd/mm/aaaa): ");
+    fgets(data, 11, stdin);
+    fflush(stdin);
+    getchar();
+    strncpy(dd, &data[0], 2);
+    sscanf(dd, "%d", &dia);
+    strncpy(mm, &data[3], 2);
+    sscanf(mm, "%d", &mes);
+    strncpy(aa, &data[6], 4);
+    sscanf(aa, "%d", &ano);
+    
+  } 
+}
+
 void ler_cnpj3 (char* cnpj) {
     fflush(stdin);
     printf("Digite o CNPJ (Apenas Números): ");
@@ -366,6 +392,40 @@ void ler_prods(char* prods) {
   } 
 }
 
+void ler_data_prods(char* data) {
+  int dia, mes, ano;
+  char dd[3], mm[3], aa[5];
+  fflush(stdin);
+  printf("Digite a data de compra(dd/mm/aaaa): ");
+  fgets(data, 11, stdin); 
+  getchar();
+  
+  strncpy(dd, &data[0], 2);
+  sscanf(dd, "%d", &dia);
+  
+  strncpy(mm, &data[3], 2);
+  sscanf(mm, "%d", &mes);
+
+  strncpy(aa, &data[6], 4);
+  sscanf(aa, "%d", &ano);
+
+  while (!validarData(dia, mes, ano)) {
+    printf("Data inválida: %d/%d/%d\n", dia, mes, ano);
+    printf("Informe uma nova data\n\n");
+    printf("Data de compra(dd/mm/aaaa): ");
+    fgets(data, 11, stdin);
+    fflush(stdin);
+    getchar();
+    strncpy(dd, &data[0], 2);
+    sscanf(dd, "%d", &dia);
+    strncpy(mm, &data[3], 2);
+    sscanf(mm, "%d", &mes);
+    strncpy(aa, &data[6], 4);
+    sscanf(aa, "%d", &ano);
+    
+  } 
+}
+
 void ler_cnpj4 (char* cnpj) {
     fflush(stdin);
     printf("Digite o CNPJ (Apenas Números): ");
@@ -375,4 +435,20 @@ void ler_cnpj4 (char* cnpj) {
         fgets (cnpj, 15, stdin);
     }
     getchar();
+}
+
+void esc_mat(Materia* mat) {
+  FILE* fp;
+  fp = fopen("mat.dat", "ab");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  else {
+    fwrite(mat, sizeof(Materia), 1, fp);
+    fclose(fp);
+  }
 }

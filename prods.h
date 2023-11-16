@@ -11,6 +11,7 @@ struct materia {
     float valor;
     char data[11];
     char cnpj[15];
+    char status;
 };
 
 typedef struct produto Produto;
@@ -21,12 +22,14 @@ struct produto {
     float valor;
     char data[11];
     char cnpj[15];
+    char status;
 };
 
 void modulo_prods(void);
 char escolha_prods(void);
 char tela_material(void);
-void tela_cad_mat(void);
+Materia* tela_cad_mat(void);
+void esc_mat(Materia*);
 void tela_pes_mat(void);
 void tela_edit_mat(void);
 void tela_exc_mat(void);

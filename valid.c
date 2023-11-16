@@ -83,30 +83,22 @@ int validarQuant(char* x) {
 
 // Função baseada no código https://github.com/Gabrielygor/Clinica-dentaria-UFRN
 
-int validarData(char data[11]) {
-  int tamanho = strlen(data);
-    if (tamanho < 10 || tamanho > 11) {
-        return 0;
-    } else {
-        for (int i = 0; i <= (tamanho - 1); i++) {
-            if (data[i] == '0' || data[i] <= '9') {
-              if (data[2] == '/' && data[5] == '/') {
-                  if (data[i] == ' ') {
-                      return true;
-                  }
-                  if (data[i] == '@') {
-                      return false;
-                  }
-              } else {
-                return false;
-              }
-            } else {
-                return false;
-            }
-        }
-
-    }
-    return true;
+int validarData(int dd, int mm, int aa) {
+  int maiorDia;
+  if (aa < 0 || mm < 1 || mm > 12)
+    return false;
+  if (mm == 2) {
+    if (ehBissexto(aa)) 
+      maiorDia = 29;
+    else
+      maiorDia = 28;
+  } else if (mm == 4 || mm == 6 || mm == 9 || mm == 11) {
+    maiorDia = 30;
+  } else
+    maiorDia = 31;
+  if (dd < 1 || dd > maiorDia)
+    return false;
+  return true;
 }
 
 // Função baseada no código do Prof. Flavius
