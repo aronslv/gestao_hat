@@ -16,6 +16,7 @@ void ler_cnpj4(char*);
 
 void modulo_prods(void) {
     Materia* mat_x;
+    Produto* prod_x;
     char opc;
     char op;
     do{
@@ -42,7 +43,9 @@ void modulo_prods(void) {
             do{
                 op = tela_produtos();
                 switch (op) {
-                    case '1':   tela_cad_prods();
+                    case '1':   prod_x = tela_cad_prods();
+                                esc_prod(prod_x);
+                                free(prod_x);
                                 break;
                     case '2':   tela_pes_prods();
                                 break;
@@ -213,8 +216,8 @@ char tela_produtos(void) {
     return op;
 }
 
-void tela_cad_prods(void) {
-    Produto* produto;
+Produto* tela_cad_prods(void) {
+    Produto* prod;
 
     system("clear||cls");
     printf("\n");
@@ -225,21 +228,23 @@ void tela_cad_prods(void) {
     printf("              Digite as informações a seguir:                                \n");
     printf("                                                                             \n");
 
-    produto = (Produto*) malloc(sizeof(Produto));
+    prod = (Produto*) malloc(sizeof(Produto));
 
-    ler_mat_prim(produto->prods);
+    ler_prods(prod->prods);
 
     printf("Quantidade: ");
-    scanf("%d", &produto->quant_prods);
+    scanf("%d", &prod->quant_prods);
     getchar();
 
     printf("Valor da unidade: R$ ");
-    scanf("%f", &produto->valor);
+    scanf("%f", &prod->valor);
     getchar();
 
-    ler_data_prods(produto->data);
+    ler_data_prods(prod->data);
 
-    ler_cnpj4(produto->cnpj);
+    ler_cnpj4(prod->cnpj);
+
+    prod->status = 'c';
     printf("                                                                             \n");
     printf("                                                                             \n");
     printf("-----------------------------------------------------------------------------\n");
@@ -249,6 +254,7 @@ void tela_cad_prods(void) {
     printf("\t\t\t>>> Cadastro concluído!\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
+    return prod;
 }
 
 void tela_pes_prods(void) {
@@ -301,7 +307,7 @@ void tela_exc_prods(void) {
 
 void ler_mat_prim(char* mat_prim) {
   fflush(stdin);
-  printf("Nome completo: ");
+  printf("Descrição da Matéria-Prima: ");
   fgets(mat_prim, 25, stdin); 
   // Remove o caractere de nova linha do final, se estiver presente
   int tam = strlen(mat_prim);
@@ -310,8 +316,8 @@ void ler_mat_prim(char* mat_prim) {
     fflush(stdin);
   }
   while (!validarNome(mat_prim)) {
-    printf("Nome inválido: %s\n", mat_prim);
-    printf("Informe um novo nome: ");
+    printf("Descrição inválida: %s\n", mat_prim);
+    printf("Informe uma nova descrição: ");
     fflush(stdin);
     fgets(mat_prim, 25, stdin); 
     // Remove o caractere de nova linha do final, se estiver presente
@@ -370,7 +376,7 @@ void ler_cnpj3 (char* cnpj) {
 
 void ler_prods(char* prods) {
   fflush(stdin);
-  printf("Tipo de Produto: ");
+  printf("Descrição do Produto: ");
   fgets(prods, 25, stdin); 
   // Remove o caractere de nova linha do final, se estiver presente
   int tam = strlen(prods);
@@ -379,8 +385,8 @@ void ler_prods(char* prods) {
     fflush(stdin);
   }
   while (!validarNome(prods)) {
-    printf("Tipo inválido: %s\n", prods);
-    printf("Informe um novo tipo: ");
+    printf("Descrição inválida: %s\n", prods);
+    printf("Informe uma nova descrição: ");
     fflush(stdin);
     fgets(prods, 25, stdin); 
     // Remove o caractere de nova linha do final, se estiver presente
@@ -449,6 +455,22 @@ void esc_mat(Materia* mat) {
   }
   else {
     fwrite(mat, sizeof(Materia), 1, fp);
+    fclose(fp);
+  }
+}
+
+void esc_prod(Produto* prod) {
+  FILE* fp;
+  fp = fopen("prod.dat", "ab");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  else {
+    fwrite(prod, sizeof(Materia), 1, fp);
     fclose(fp);
   }
 }
