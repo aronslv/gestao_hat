@@ -372,19 +372,67 @@ Produto* tela_pes_prods(void) {
 }
 
 void tela_edit_prods(void) {
+    char cnpj[15];
+    Produto* new_prod = (Produto*) malloc(sizeof(Produto));
+    FILE* fp;
+    int prod_found = 0;
     system("clear||cls");
     printf("\n");
     printf("--------------------------------------------------------------------------------\n");
     printf("                                                                                \n");
     printf("              < < < < < < < Edição - Produtos > > > > > > >                     \n");
     printf("                                                                                \n");
-    printf("     Informe o CNPJ da revendedora para edição de produtos:                     \n");
-    printf("                                                                                \n");
-    printf("                                                                                \n");
-    printf("--------------------------------------------------------------------------------\n");
-    printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar(); 
+    printf(" Informe o CNPJ da revendedora para edição de produtos: ");
+    fgets (cnpj, 15, stdin);
+    getchar();
+    fp = fopen("prod.dat", "r+b");
+    if (fp == NULL) {
+        printf("\t\t\t>>> Processando as informações...\n");
+        sleep(1);
+        printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+        printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+    } else {
+        while (fread(new_prod, sizeof(Produto), 1, fp) == 1) {
+            if(strcmp(new_prod->cnpj, cnpj) == 0) {
+                printf("\n");
+                printf("\t\t\t= = = Revendedora Encontrada = = =\n");
+                printf("\n");
+
+                ler_prods(new_prod->prods);
+
+                printf("Quantidade: ");
+                scanf("%d", &new_prod->quant_prods);
+                getchar();
+
+                printf("Valor da unidade: R$ ");
+                scanf("%f", &new_prod->valor);
+                getchar();
+
+                ler_data_prods(new_prod->data);
+
+                ler_cnpj4(new_prod->cnpj);
+
+                new_prod->status = 'c';
+
+                fseek(fp, -sizeof(Produto), SEEK_CUR);
+                fwrite(new_prod, sizeof(Produto), 1, fp);
+                prod_found = 1;
+                break;
+            }
+        }
+    }
+    if (!prod_found) {
+        printf("\n");
+        printf("\t\t\tCNPJ não encontrado!\n");
+    } else {
+        printf("\n");
+        printf("\t\t\tProduto atualizado com sucesso!\n");
+    }
+  printf("\n");
+  printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+  getchar();
+  fclose(fp);
 }
 
 void tela_exc_prods(void) {
