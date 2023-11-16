@@ -109,6 +109,7 @@ Fornecedor* tela_pes_forn(void) {
   printf("Informe o CNPJ que deseja pesquisar: ");
   fgets (cnpj, 15, stdin);
   getchar();
+  printf("\n");
   forn = (Fornecedor*) malloc(sizeof(Fornecedor));
   fp = fopen("forn.dat", "rb");
   if (fp == NULL) {

@@ -111,6 +111,7 @@ Funcionario* tela_pes_func(void) {
   printf("Informe o CPF que deseja pesquisar: ");
   fgets (cpf, 12, stdin);
   getchar();
+  printf("\n");
   func = (Funcionario*) malloc(sizeof(Funcionario));
   fp = fopen("func.dat", "rb");
   if (fp == NULL) {

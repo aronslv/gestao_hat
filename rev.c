@@ -109,6 +109,7 @@ Revendedor* tela_pes_rev(void) {
   printf("Informe o CNPJ que deseja pesquisar: ");
   fgets (cnpj, 15, stdin);
   getchar();
+  printf("\n");
   rev = (Revendedor*) malloc(sizeof(Revendedor));
   fp = fopen("rev.dat", "rb");
   if (fp == NULL) {
