@@ -37,7 +37,8 @@ void tela_exc_mat(void);
 char tela_produtos(void);
 Produto* tela_cad_prods(void);
 void esc_prod(Produto*);
-void tela_pes_prods(void);
+Produto* tela_pes_prods(void);
+void exb_prod(Produto*);
 void tela_edit_prods(void);
 void tela_exc_prods(void);
 

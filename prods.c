@@ -49,7 +49,9 @@ void modulo_prods(void) {
                                 esc_prod(prod_x);
                                 free(prod_x);
                                 break;
-                    case '2':   tela_pes_prods();
+                    case '2':   prod_x = tela_pes_prods();
+                                exb_prod(prod_x);
+                                free(prod_x);
                                 break;
                     case '3':   tela_edit_prods();
                                 break;
@@ -282,20 +284,43 @@ Produto* tela_cad_prods(void) {
     return prod;
 }
 
-void tela_pes_prods(void) {
+Produto* tela_pes_prods(void) {
+    FILE* fp;
+    Produto* prod;
+    char cnpj[15];
     system("clear||cls");
     printf("\n");
     printf("-----------------------------------------------------------------------------\n");
     printf("                                                                             \n");
     printf("              < < < < < < < Pesquisa - Produtos > > > > > > >                \n");
     printf("                                                                             \n");
-    printf("     Informe o CNPJ da revendedora para pesquisa de produtos:                \n");
-    printf("                                                                             \n");
-    printf("                                                                             \n");
-    printf("-----------------------------------------------------------------------------\n");
+    printf("  Informe o CNPJ da revendedora para pesquisa de produtos: ");
+    fgets (cnpj, 15, stdin);
+    getchar();
     printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar(); 
+    prod = (Produto*) malloc(sizeof(Produto));
+    fp = fopen("prod.dat", "rb");
+    if (fp == NULL) {
+        printf("\t\t\t>>> Processando as informações...\n");
+        sleep(1);
+        printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+        printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+    } else {
+        while(!feof(fp)) {
+            fread(prod, sizeof(Produto), 1, fp);
+            if((strcmp(prod->cnpj, cnpj) == 0) && (prod->status != 'e')) {
+            exb_prod(prod);
+            printf("\n");
+            printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+            getchar();
+            fclose(fp);
+            return prod;
+            }
+        }
+    }
+    fclose(fp);
+    return NULL;
 }
 
 void tela_edit_prods(void) {
@@ -522,6 +547,32 @@ void exb_mat(Materia* mat) {
       strcpy(sit, "Não Informada");
     }
     printf("Situação da Matéria-Prima: %s\n", sit);
+    printf("\n");
+  }
+}
+
+void exb_prod(Produto* prod) {
+  if ((prod == NULL) || (prod->status == 'e')) {
+    printf("\n");
+    printf("\t\t\tCNPJ não encontrado!\n");
+    printf("\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }else{
+    char sit[20];
+    printf("\t\t\t= = = Produto Cadastrado = = =\n");
+    printf("\n");
+    printf("CNPJ da Revendedora: %s\n", prod->cnpj);
+    printf("Descrição do Produto: %s\n", prod->prods);
+    printf("Quantidade: %d\n", prod->quant_prods);
+    printf("Valor da Unidade: R$ %.2f\n", prod->valor);
+    printf("Data da venda: %s\n", prod->data);
+    if (prod->status == 'c') {
+      strcpy(sit, "Vendido");
+    } else {
+      strcpy(sit, "Não Informada");
+    }
+    printf("Situação do Produto: %s\n", sit);
     printf("\n");
   }
 }
