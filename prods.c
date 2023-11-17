@@ -253,19 +253,53 @@ void tela_edit_mat(void) {
 }
 
 void tela_exc_mat(void) {
+    char cnpj[15];
+    Materia* new_mat = (Materia*) malloc(sizeof(Materia));
+    FILE* fp;
+    int mat_found = 0;
     system("clear||cls");
     printf("\n");
     printf("--------------------------------------------------------------------------------\n");
     printf("                                                                                \n");
     printf("              < < < < < < Exclusão - Matérias-Primas > > > > > >                \n");
     printf("                                                                                \n");
-    printf("     Informe o CNPJ da fornecedora para exclusão de matérias-primas:            \n");
-    printf("                                                                                \n");
-    printf("                                                                                \n");
-    printf("--------------------------------------------------------------------------------\n");
-    printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar(); 
+    printf(" Informe o CNPJ da fornecedora para exclusão de matérias-primas: ");
+    fgets (cnpj, 15, stdin);
+    getchar();
+    fp = fopen("mat.dat", "r+b");
+    if (fp == NULL) {
+        printf("\t\t\t>>> Processando as informações...\n");
+        sleep(1);
+        printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+        printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+    } else {
+        while (fread(new_mat, sizeof(Materia), 1, fp) == 1) {
+            if(strcmp(new_mat->cnpj, cnpj) == 0) {
+                printf("\n");
+                printf("\t\t\t= = = Fornecedora Encontrada = = =\n");
+                printf("\n");
+
+                new_mat->status = 'e';
+
+                fseek(fp, -sizeof(Materia), SEEK_CUR);
+                fwrite(new_mat, sizeof(Materia), 1, fp);
+                mat_found = 1;
+                break;
+            }
+        }
+    }
+    if (!mat_found) {
+        printf("\n");
+        printf("\t\t\tCNPJ não encontrado!\n");
+    } else {
+        printf("\n");
+        printf("\t\t\tMatéria-Prima excluída com sucesso!\n");
+    }
+  printf("\n");
+  printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+  getchar();
+  fclose(fp);
 }
 
 char tela_produtos(void) {
