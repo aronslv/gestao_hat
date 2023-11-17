@@ -470,19 +470,53 @@ void tela_edit_prods(void) {
 }
 
 void tela_exc_prods(void) {
+    char cnpj[15];
+    Produto* new_prod = (Produto*) malloc(sizeof(Produto));
+    FILE* fp;
+    int prod_found = 0;
     system("clear||cls");
     printf("\n");
     printf("--------------------------------------------------------------------------------\n");
     printf("                                                                                \n");
     printf("              < < < < < < < Exclusão - Produtos > > > > > > >                   \n");
     printf("                                                                                \n");
-    printf("     Informe o CNPJ da revendedora para exclusão de produtos:                   \n");
-    printf("                                                                                \n");
-    printf("                                                                                \n");
-    printf("--------------------------------------------------------------------------------\n");
-    printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar(); 
+    printf(" Informe o CNPJ da revendedora para exclusão de produtos: ");
+    fgets (cnpj, 15, stdin);
+    getchar();
+    fp = fopen("prod.dat", "r+b");
+    if (fp == NULL) {
+        printf("\t\t\t>>> Processando as informações...\n");
+        sleep(1);
+        printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+        printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+    } else {
+        while (fread(new_prod, sizeof(Produto), 1, fp) == 1) {
+            if(strcmp(new_prod->cnpj, cnpj) == 0) {
+                printf("\n");
+                printf("\t\t\t= = = Revendedora Encontrada = = =\n");
+                printf("\n");
+
+                new_prod->status = 'e';
+
+                fseek(fp, -sizeof(Produto), SEEK_CUR);
+                fwrite(new_prod, sizeof(Produto), 1, fp);
+                prod_found = 1;
+                break;
+            }
+        }
+    }
+    if (!prod_found) {
+        printf("\n");
+        printf("\t\t\tCNPJ não encontrado!\n");
+    } else {
+        printf("\n");
+        printf("\t\t\tProduto excluído com sucesso!\n");
+    }
+  printf("\n");
+  printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+  getchar();
+  fclose(fp);
 }
 
 void ler_mat_prim(char* mat_prim) {
