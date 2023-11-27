@@ -8,7 +8,7 @@ typedef struct revendedor Revendedor;
 struct revendedor{
     char cnpj[15];
     char nome_est[30];
-    char end[30];
+    char cid[30];
     char nome_prop[50];
     char cel[12];
     char status;

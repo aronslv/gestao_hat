@@ -2,15 +2,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <time.h>
 #include "prods.h"
 #include "valid.h"
 
 void ler_mat_prim(char*);
 void ler_prods(char*);
-void ler_data_mat(char*);
-void ler_data_prods(char*);
-void ler_cnpj3(char*);
-void ler_cnpj4(char*);
 
 // função do módulo de produtos
 
@@ -31,7 +28,6 @@ void modulo_prods(void) {
                                 free(mat_x);
                                 break;
                     case '2':   mat_x = tela_pes_mat();
-                                exb_mat(mat_x);
                                 free(mat_x);
                                 break;
                     case '3':   tela_edit_mat();
@@ -50,7 +46,6 @@ void modulo_prods(void) {
                                 free(prod_x);
                                 break;
                     case '2':   prod_x = tela_pes_prods();
-                                exb_prod(prod_x);
                                 free(prod_x);
                                 break;
                     case '3':   tela_edit_prods();
@@ -70,7 +65,7 @@ char escolha_prods(void) {
     printf("\n");
     printf("-------------------------------------------------------------------------------\n");
     printf("§                                                                             §\n");
-    printf("§                  < < < < < < < Opções de Produtos > > > > > > >             §\n");
+    printf("§                  < < < < < < < < Mercadorias > > > > > > > >                §\n");
     printf("§                                                                             §\n");
     printf("§                  1. Matérias-primas                                         §\n");
     printf("§                  2. Produtos                                                §\n");
@@ -124,17 +119,13 @@ Materia* tela_cad_mat(void) {
 
     ler_mat_prim(mat->mat_prim);
 
-    printf("Quantidade: ");
-    scanf("%d", &mat->quant_mat);
+    printf("ID da matéria-prima: ");
+    scanf("%d", &mat->id);
     getchar();
 
     printf("Valor da unidade: R$ ");
     scanf("%f", &mat->valor);
     getchar();
-
-    ler_data_mat(mat->data);
-
-    ler_cnpj3(mat->cnpj);
 
     mat->status = 'c';
     printf("                                                                             \n");
@@ -152,15 +143,15 @@ Materia* tela_cad_mat(void) {
 Materia* tela_pes_mat(void) {
     FILE* fp;
     Materia* mat;
-    char cnpj[15];
+    int id;
     system("clear||cls");
     printf("\n");
     printf("-----------------------------------------------------------------------------\n");
     printf("                                                                             \n");
     printf("              < < < < < < Pesquisa - Matérias-Primas > > > > > >             \n");
     printf("                                                                             \n");
-    printf(" Informe o CNPJ da fornecedora para pesquisa de matérias-primas: ");
-    fgets (cnpj, 15, stdin);
+    printf(" Informe o ID da matéria-prima para pesquisa: ");
+    scanf("%d", &id);
     getchar();
     printf("\n");
     mat = (Materia*) malloc(sizeof(Materia));
@@ -172,24 +163,23 @@ Materia* tela_pes_mat(void) {
         printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
         getchar();
     } else {
-        while(!feof(fp)) {
-            fread(mat, sizeof(Materia), 1, fp);
-            if((strcmp(mat->cnpj, cnpj) == 0) && (mat->status != 'e')) {
-            exb_mat(mat);
-            printf("\n");
-            printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-            getchar();
-            fclose(fp);
-            return mat;
+        while(fread(mat, sizeof(Materia), 1, fp) == 1) {
+            if((mat->status != 'e') && (mat->id == id)) {
+              exb_mat(mat);
+              printf("\n");
             }
         }
+        printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        fclose(fp);
+        return mat;
     }
     fclose(fp);
     return NULL;
 }
 
 void tela_edit_mat(void) {
-    char cnpj[15];
+    int id;
     Materia* new_mat = (Materia*) malloc(sizeof(Materia));
     FILE* fp;
     int mat_found = 0;
@@ -199,8 +189,8 @@ void tela_edit_mat(void) {
     printf("                                                                                \n");
     printf("              < < < < < < Edição - Matérias-Primas > > > > > >                  \n");
     printf("                                                                                \n");
-    printf(" Informe o CNPJ da fornecedora para edição de matérias-primas: ");
-    fgets (cnpj, 15, stdin);
+    printf(" Informe o ID da matéria-prima para edição: ");
+    scanf("%d", &id);
     getchar();
     fp = fopen("mat.dat", "r+b");
     if (fp == NULL) {
@@ -211,24 +201,20 @@ void tela_edit_mat(void) {
         getchar();
     } else {
         while (fread(new_mat, sizeof(Materia), 1, fp) == 1) {
-            if(strcmp(new_mat->cnpj, cnpj) == 0) {
+            if((new_mat->status != 'e') && (new_mat->id == id)) {
                 printf("\n");
-                printf("\t\t\t= = = Fornecedora Encontrada = = =\n");
+                printf("\t\t\t= = = Matéria-Prima Encontrada = = =\n");
                 printf("\n");
 
                 ler_mat_prim(new_mat->mat_prim);
 
-                printf("Quantidade: ");
-                scanf("%d", &new_mat->quant_mat);
+                printf("ID da matéria-prima: ");
+                scanf("%d", &new_mat->id);
                 getchar();
 
                 printf("Valor da unidade: R$ ");
                 scanf("%f", &new_mat->valor);
                 getchar();
-
-                ler_data_mat(new_mat->data);
-
-                ler_cnpj3(new_mat->cnpj);
 
                 new_mat->status = 'c';
 
@@ -241,7 +227,7 @@ void tela_edit_mat(void) {
     }
     if (!mat_found) {
         printf("\n");
-        printf("\t\t\tCNPJ não encontrado!\n");
+        printf("\t\t\tCNPJ ou Matéria-Prima não encontrada!\n");
     } else {
         printf("\n");
         printf("\t\t\tMatéria-Prima atualizada com sucesso!\n");
@@ -253,7 +239,7 @@ void tela_edit_mat(void) {
 }
 
 void tela_exc_mat(void) {
-    char cnpj[15];
+    int id;
     Materia* new_mat = (Materia*) malloc(sizeof(Materia));
     FILE* fp;
     int mat_found = 0;
@@ -263,8 +249,8 @@ void tela_exc_mat(void) {
     printf("                                                                                \n");
     printf("              < < < < < < Exclusão - Matérias-Primas > > > > > >                \n");
     printf("                                                                                \n");
-    printf(" Informe o CNPJ da fornecedora para exclusão de matérias-primas: ");
-    fgets (cnpj, 15, stdin);
+    printf(" Informe o ID da matéria-prima para excluir: ");
+    scanf("%d", &id);
     getchar();
     fp = fopen("mat.dat", "r+b");
     if (fp == NULL) {
@@ -275,9 +261,9 @@ void tela_exc_mat(void) {
         getchar();
     } else {
         while (fread(new_mat, sizeof(Materia), 1, fp) == 1) {
-            if(strcmp(new_mat->cnpj, cnpj) == 0) {
+            if(new_mat->id == id) {
                 printf("\n");
-                printf("\t\t\t= = = Fornecedora Encontrada = = =\n");
+                printf("\t\t\t= = = Matéria-Prima Encontrada = = =\n");
                 printf("\n");
 
                 new_mat->status = 'e';
@@ -291,7 +277,7 @@ void tela_exc_mat(void) {
     }
     if (!mat_found) {
         printf("\n");
-        printf("\t\t\tCNPJ não encontrado!\n");
+        printf("\t\t\tCNPJ ou Matéria-Prima não encontrada!\n");
     } else {
         printf("\n");
         printf("\t\t\tMatéria-Prima excluída com sucesso!\n");
@@ -341,17 +327,13 @@ Produto* tela_cad_prods(void) {
 
     ler_prods(prod->prods);
 
-    printf("Quantidade: ");
-    scanf("%d", &prod->quant_prods);
+    printf("ID do produto: ");
+    scanf("%d", &prod->id);
     getchar();
 
     printf("Valor da unidade: R$ ");
     scanf("%f", &prod->valor);
     getchar();
-
-    ler_data_prods(prod->data);
-
-    ler_cnpj4(prod->cnpj);
 
     prod->status = 'c';
     printf("                                                                             \n");
@@ -369,15 +351,15 @@ Produto* tela_cad_prods(void) {
 Produto* tela_pes_prods(void) {
     FILE* fp;
     Produto* prod;
-    char cnpj[15];
+    int id;
     system("clear||cls");
     printf("\n");
     printf("-----------------------------------------------------------------------------\n");
     printf("                                                                             \n");
     printf("              < < < < < < < Pesquisa - Produtos > > > > > > >                \n");
     printf("                                                                             \n");
-    printf("  Informe o CNPJ da revendedora para pesquisa de produtos: ");
-    fgets (cnpj, 15, stdin);
+    printf("  Informe o ID do produto para pesquisa: ");
+    scanf("%d", &id);
     getchar();
     printf("\n");
     prod = (Produto*) malloc(sizeof(Produto));
@@ -389,24 +371,23 @@ Produto* tela_pes_prods(void) {
         printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
         getchar();
     } else {
-        while(!feof(fp)) {
-            fread(prod, sizeof(Produto), 1, fp);
-            if((strcmp(prod->cnpj, cnpj) == 0) && (prod->status != 'e')) {
-            exb_prod(prod);
-            printf("\n");
-            printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-            getchar();
-            fclose(fp);
-            return prod;
+        while(fread(prod, sizeof(Produto), 1, fp) == 1) {
+            if((prod->id == id) && (prod->status != 'e')) {
+              exb_prod(prod);
+              printf("\n");
             }
         }
+        printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+        fclose(fp);
+        return prod;
     }
     fclose(fp);
     return NULL;
 }
 
 void tela_edit_prods(void) {
-    char cnpj[15];
+    int id;
     Produto* new_prod = (Produto*) malloc(sizeof(Produto));
     FILE* fp;
     int prod_found = 0;
@@ -416,8 +397,8 @@ void tela_edit_prods(void) {
     printf("                                                                                \n");
     printf("              < < < < < < < Edição - Produtos > > > > > > >                     \n");
     printf("                                                                                \n");
-    printf(" Informe o CNPJ da revendedora para edição de produtos: ");
-    fgets (cnpj, 15, stdin);
+    printf(" Informe o ID do produto para edição: ");
+    scanf("%d", &id);
     getchar();
     fp = fopen("prod.dat", "r+b");
     if (fp == NULL) {
@@ -428,24 +409,20 @@ void tela_edit_prods(void) {
         getchar();
     } else {
         while (fread(new_prod, sizeof(Produto), 1, fp) == 1) {
-            if(strcmp(new_prod->cnpj, cnpj) == 0) {
+            if((new_prod->id == id) && (new_prod->status != 'e')) {
                 printf("\n");
-                printf("\t\t\t= = = Revendedora Encontrada = = =\n");
+                printf("\t\t\t= = = Produto Encontrado = = =\n");
                 printf("\n");
 
                 ler_prods(new_prod->prods);
 
-                printf("Quantidade: ");
-                scanf("%d", &new_prod->quant_prods);
+                printf("ID do produto: ");
+                scanf("%d", &new_prod->id);
                 getchar();
 
                 printf("Valor da unidade: R$ ");
                 scanf("%f", &new_prod->valor);
                 getchar();
-
-                ler_data_prods(new_prod->data);
-
-                ler_cnpj4(new_prod->cnpj);
 
                 new_prod->status = 'c';
 
@@ -458,7 +435,7 @@ void tela_edit_prods(void) {
     }
     if (!prod_found) {
         printf("\n");
-        printf("\t\t\tCNPJ não encontrado!\n");
+        printf("\t\t\tCNPJ ou Produto não encontrado!\n");
     } else {
         printf("\n");
         printf("\t\t\tProduto atualizado com sucesso!\n");
@@ -470,7 +447,7 @@ void tela_edit_prods(void) {
 }
 
 void tela_exc_prods(void) {
-    char cnpj[15];
+    int id;
     Produto* new_prod = (Produto*) malloc(sizeof(Produto));
     FILE* fp;
     int prod_found = 0;
@@ -480,8 +457,8 @@ void tela_exc_prods(void) {
     printf("                                                                                \n");
     printf("              < < < < < < < Exclusão - Produtos > > > > > > >                   \n");
     printf("                                                                                \n");
-    printf(" Informe o CNPJ da revendedora para exclusão de produtos: ");
-    fgets (cnpj, 15, stdin);
+    printf(" Informe o ID do produto para excluir: ");
+    scanf("%d", &id);
     getchar();
     fp = fopen("prod.dat", "r+b");
     if (fp == NULL) {
@@ -492,9 +469,9 @@ void tela_exc_prods(void) {
         getchar();
     } else {
         while (fread(new_prod, sizeof(Produto), 1, fp) == 1) {
-            if(strcmp(new_prod->cnpj, cnpj) == 0) {
+            if(new_prod->id == id) {
                 printf("\n");
-                printf("\t\t\t= = = Revendedora Encontrada = = =\n");
+                printf("\t\t\t= = = Produto Encontrado = = =\n");
                 printf("\n");
 
                 new_prod->status = 'e';
@@ -508,7 +485,7 @@ void tela_exc_prods(void) {
     }
     if (!prod_found) {
         printf("\n");
-        printf("\t\t\tCNPJ não encontrado!\n");
+        printf("\t\t\tCNPJ ou Produto não encontrado!\n");
     } else {
         printf("\n");
         printf("\t\t\tProduto excluído com sucesso!\n");
@@ -543,51 +520,6 @@ void ler_mat_prim(char* mat_prim) {
   } 
 }
 
-void ler_data_mat(char* data) {
-  int dia, mes, ano;
-  char dd[3], mm[3], aa[5];
-  fflush(stdin);
-  printf("Digite a data de compra(dd/mm/aaaa): ");
-  fgets(data, 11, stdin); 
-  getchar();
-  
-  strncpy(dd, &data[0], 2);
-  sscanf(dd, "%d", &dia);
-  
-  strncpy(mm, &data[3], 2);
-  sscanf(mm, "%d", &mes);
-
-  strncpy(aa, &data[6], 4);
-  sscanf(aa, "%d", &ano);
-
-  while (!validarData(dia, mes, ano)) {
-    printf("Data inválida: %d/%d/%d\n", dia, mes, ano);
-    printf("Informe uma nova data\n\n");
-    printf("Data de compra(dd/mm/aaaa): ");
-    fgets(data, 11, stdin);
-    fflush(stdin);
-    getchar();
-    strncpy(dd, &data[0], 2);
-    sscanf(dd, "%d", &dia);
-    strncpy(mm, &data[3], 2);
-    sscanf(mm, "%d", &mes);
-    strncpy(aa, &data[6], 4);
-    sscanf(aa, "%d", &ano);
-    
-  } 
-}
-
-void ler_cnpj3 (char* cnpj) {
-    fflush(stdin);
-    printf("Digite o CNPJ da Fornecedora (Apenas Números): ");
-    fgets (cnpj, 15, stdin);
-    while (!validarCnpj(cnpj)) {
-        printf("CNPJ inválido! Digite o CNPJ novamente: ");
-        fgets (cnpj, 15, stdin);
-    }
-    getchar();
-}
-
 void ler_prods(char* prods) {
   fflush(stdin);
   printf("Descrição do Produto: ");
@@ -610,51 +542,6 @@ void ler_prods(char* prods) {
       fflush(stdin);
     }
   } 
-}
-
-void ler_data_prods(char* data) {
-  int dia, mes, ano;
-  char dd[3], mm[3], aa[5];
-  fflush(stdin);
-  printf("Digite a data de venda(dd/mm/aaaa): ");
-  fgets(data, 11, stdin); 
-  getchar();
-  
-  strncpy(dd, &data[0], 2);
-  sscanf(dd, "%d", &dia);
-  
-  strncpy(mm, &data[3], 2);
-  sscanf(mm, "%d", &mes);
-
-  strncpy(aa, &data[6], 4);
-  sscanf(aa, "%d", &ano);
-
-  while (!validarData(dia, mes, ano)) {
-    printf("Data inválida: %d/%d/%d\n", dia, mes, ano);
-    printf("Informe uma nova data\n\n");
-    printf("Data de venda(dd/mm/aaaa): ");
-    fgets(data, 11, stdin);
-    fflush(stdin);
-    getchar();
-    strncpy(dd, &data[0], 2);
-    sscanf(dd, "%d", &dia);
-    strncpy(mm, &data[3], 2);
-    sscanf(mm, "%d", &mes);
-    strncpy(aa, &data[6], 4);
-    sscanf(aa, "%d", &ano);
-    
-  } 
-}
-
-void ler_cnpj4 (char* cnpj) {
-    fflush(stdin);
-    printf("Digite o CNPJ da Revendedora (Apenas Números): ");
-    fgets (cnpj, 15, stdin);
-    while (!validarCnpj(cnpj)) {
-        printf("CNPJ inválido! Digite o CNPJ novamente: ");
-        fgets (cnpj, 15, stdin);
-    }
-    getchar();
 }
 
 void esc_mat(Materia* mat) {
@@ -692,7 +579,7 @@ void esc_prod(Produto* prod) {
 void exb_mat(Materia* mat) {
   if ((mat == NULL) || (mat->status == 'e')) {
     printf("\n");
-    printf("\t\t\tCNPJ não encontrado!\n");
+    printf("\t\t\tID não encontrado!\n");
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
@@ -700,11 +587,9 @@ void exb_mat(Materia* mat) {
     char sit[20];
     printf("\t\t\t= = = Matéria-Prima Cadastrada = = =\n");
     printf("\n");
-    printf("CNPJ da Fornecedora: %s\n", mat->cnpj);
+    printf("ID da Matéria-Prima: %d\n", mat->id);
     printf("Descrição da Matéria-Prima: %s\n", mat->mat_prim);
-    printf("Quantidade: %d\n", mat->quant_mat);
     printf("Valor da Unidade: R$ %.2f\n", mat->valor);
-    printf("Data da compra: %s\n", mat->data);
     if (mat->status == 'c') {
       strcpy(sit, "Comprada");
     } else {
@@ -718,7 +603,7 @@ void exb_mat(Materia* mat) {
 void exb_prod(Produto* prod) {
   if ((prod == NULL) || (prod->status == 'e')) {
     printf("\n");
-    printf("\t\t\tCNPJ não encontrado!\n");
+    printf("\t\t\tID não encontrado!\n");
     printf("\n");
     printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
     getchar();
@@ -726,11 +611,9 @@ void exb_prod(Produto* prod) {
     char sit[20];
     printf("\t\t\t= = = Produto Cadastrado = = =\n");
     printf("\n");
-    printf("CNPJ da Revendedora: %s\n", prod->cnpj);
+    printf("ID do Produto: %d\n", prod->id);
     printf("Descrição do Produto: %s\n", prod->prods);
-    printf("Quantidade: %d\n", prod->quant_prods);
     printf("Valor da Unidade: R$ %.2f\n", prod->valor);
-    printf("Data da venda: %s\n", prod->data);
     if (prod->status == 'c') {
       strcpy(sit, "Vendido");
     } else {

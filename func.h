@@ -8,6 +8,7 @@ typedef struct funcionario Funcionario;
 struct funcionario {
     char nome[50];
     char cpf[12];
+    char data[11];
     char prof[25];
     float salario;
     char cel[12];

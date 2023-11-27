@@ -8,7 +8,7 @@
 
 void ler_cpf(char*);
 void ler_nome(char*);
-void ler_prof(char*);
+void ler_nasc(char*);
 void ler_cel2(char*);
 
 // função do módulo de funcionários
@@ -24,7 +24,6 @@ void modulo_func(void) {
                         free(func_x);
                         break;
             case '2':   func_x = tela_pes_func();
-                        exb_func(func_x);
                         free(func_x);
                         break;
             case '3':   tela_edit_func();
@@ -77,11 +76,11 @@ Funcionario* tela_cad_func(void) {
 
     ler_cpf(func->cpf);
 
+    ler_nasc(func->data);
+
     printf("Salário: R$ ");
     scanf("%f", &func->salario);
     getchar();
-
-    ler_prof(func->prof);
 
     ler_cel2(func->cel);
 
@@ -169,11 +168,11 @@ void tela_edit_func(void) {
 
         ler_cpf(new_func->cpf);
 
+        ler_nasc(new_func->data);
+
         printf("Salário: R$ ");
         scanf("%f", &new_func->salario);
         getchar();
-
-        ler_prof(new_func->prof);
 
         ler_cel2(new_func->cel);
 
@@ -288,27 +287,37 @@ void ler_cpf (char* cpf) {
     getchar();
 }
 
-void ler_prof(char* prof) {
+void ler_nasc(char* data) {
+  int dia, mes, ano;
+  char dd[3], mm[3], aa[5];
   fflush(stdin);
-  printf("Profissão: ");
-  fgets(prof, 50, stdin); 
-  // Remove o caractere de nova linha do final, se estiver presente
-  int tam = strlen(prof);
-  if (tam > 0 && prof[tam - 1] == '\n') {
-    prof[tam - 1] = '\0';
+  printf("Informe a data de nascimento(dd/mm/aaaa): ");
+  fgets(data, 11, stdin); 
+  getchar();
+  
+  strncpy(dd, &data[0], 2);
+  sscanf(dd, "%d", &dia);
+  
+  strncpy(mm, &data[3], 2);
+  sscanf(mm, "%d", &mes);
+
+  strncpy(aa, &data[6], 4);
+  sscanf(aa, "%d", &ano);
+
+  while (!validarData(dia, mes, ano)) {
+    printf("Data inválida: %d/%d/%d\n", dia, mes, ano);
+    printf("Informe uma nova data\n\n");
+    printf("Data de nascimento(dd/mm/aaaa): ");
+    fgets(data, 11, stdin);
     fflush(stdin);
-  }
-  while (!validarNome(prof)) {
-    printf("Escrita inválida: %s\n", prof);
-    printf("Informe a profissão novamente: ");
-    fflush(stdin);
-    fgets(prof, 50, stdin); 
-    // Remove o caractere de nova linha do final, se estiver presente
-    tam = strlen(prof);
-    if (tam > 0 && prof[tam - 1] == '\n') {
-      prof[tam - 1] = '\0';
-      fflush(stdin);
-    }
+    getchar();
+    strncpy(dd, &data[0], 2);
+    sscanf(dd, "%d", &dia);
+    strncpy(mm, &data[3], 2);
+    sscanf(mm, "%d", &mes);
+    strncpy(aa, &data[6], 4);
+    sscanf(aa, "%d", &ano);
+    
   } 
 }
 
@@ -354,8 +363,8 @@ void exb_func(Funcionario* func) {
     printf("\n");
     printf("CPF: %s\n", func->cpf);
     printf("Nome completo: %s\n", func->nome);
+    printf("Data de nascimento: %s\n", func->data);
     printf("Salário: R$ %.2f\n", func->salario);
-    printf("Profissão: %s\n", func->prof);
     printf("Telefone: %s\n", func->cel);
     if (func->status == 'c') {
       strcpy(sit, "Cadastrado");

@@ -216,3 +216,4 @@ int validarCnpj(char* cnpj) {
   }
   return true;
 }
+

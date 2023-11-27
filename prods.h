@@ -7,10 +7,9 @@ typedef struct materia Materia;
 
 struct materia {
     char mat_prim[25];
-    int quant_mat;
+    int id;
     float valor;
     char data[11];
-    char cnpj[15];
     char status;
 };
 
@@ -18,10 +17,9 @@ typedef struct produto Produto;
 
 struct produto {
     char prods[25];
-    int quant_prods;
+    int id;
     float valor;
     char data[11];
-    char cnpj[15];
     char status;
 };
 

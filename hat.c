@@ -5,6 +5,7 @@
 #include "func.h"
 #include "forn.h"
 #include "prods.h"
+#include "vendas.h"
 #include "rel.h"
 
 //funções base
@@ -25,9 +26,11 @@ int main(void) {
                         break;
             case '4':   modulo_prods();
                         break;
-            case '5':   modulo_rel();
+            case '5':   modulo_vendas();
                         break;
-            case '6':   tela_info();
+            case '6':   modulo_rel();
+                        break;
+            case '7':   tela_info();
                         break;
         }
     } while (op != '0');   
@@ -46,9 +49,10 @@ char tela_main(void) {
     printf("§              1. Revendedoras                                                §\n");
     printf("§              2. Funcionários                                                §\n");
     printf("§              3. Fornecedores                                                §\n");
-    printf("§              4. Produtos                                                    §\n");
-    printf("§              5. Relatórios                                                  §\n");
-    printf("§              6. Informações                                                 §\n");
+    printf("§              4. Mercadorias                                                 §\n");
+    printf("§              5. Transações                                                  §\n");
+    printf("§              6. Relatórios                                                  §\n");
+    printf("§              7. Informações                                                 §\n");
     printf("§              0. Sair                                                        §\n");
     printf("§                                                                             §\n");
     printf("§                                                                             §\n");

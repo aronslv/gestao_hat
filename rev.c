@@ -24,7 +24,6 @@ void modulo_rev(void) {
                         free(rev_x);
                         break;
             case '2':   rev_x = tela_pes_rev();
-                        exb_rev(rev_x);
                         free(rev_x);
                         break;
             case '3':   tela_edit_rev();
@@ -77,7 +76,7 @@ Revendedor* tela_cad_rev(void) {
 
     ler_nome4(rev->nome_est);
 
-    ler_nome6(rev->end);
+    ler_nome6(rev->cid);
 
     ler_nome5(rev->nome_prop);
 
@@ -167,7 +166,7 @@ void tela_edit_rev(void) {
 
         ler_nome4(new_rev->nome_est);
 
-        ler_nome6(new_rev->end);
+        ler_nome6(new_rev->cid);
 
         ler_nome5(new_rev->nome_prop);
 
@@ -304,25 +303,25 @@ void ler_nome5(char* nome_prop) {
   } 
 }
 
-void ler_nome6(char* end) {
+void ler_nome6(char* cid) {
   fflush(stdin);
-  printf("Endereço do estabelecimento: ");
-  fgets(end, 50, stdin); 
+  printf("Cidade do estabelecimento: ");
+  fgets(cid, 50, stdin); 
   // Remove o caractere de nova linha do final, se estiver presente
-  int tam = strlen(end);
-  if (tam > 0 && end[tam - 1] == '\n') {
-    end[tam - 1] = '\0';
+  int tam = strlen(cid);
+  if (tam > 0 && cid[tam - 1] == '\n') {
+    cid[tam - 1] = '\0';
     fflush(stdin);
   }
-  while (!validarNome(end)) {
-    printf("Endereço inválido: %s\n", end);
-    printf("Informe um novo endereço de estabelecimento: ");
+  while (!validarNome(cid)) {
+    printf("Cidade inválida: %s\n", cid);
+    printf("Informe uma nova cidade do estabelecimento: ");
     fflush(stdin);
-    fgets(end, 50, stdin); 
+    fgets(cid, 50, stdin); 
     // Remove o caractere de nova linha do final, se estiver presente
-    tam = strlen(end);
-    if (tam > 0 && end[tam - 1] == '\n') {
-      end[tam - 1] = '\0';
+    tam = strlen(cid);
+    if (tam > 0 && cid[tam - 1] == '\n') {
+      cid[tam - 1] = '\0';
       fflush(stdin);
     }
   } 
@@ -354,7 +353,7 @@ void exb_rev(Revendedor* rev) {
     printf("\n");
     printf("CNPJ: %s\n", rev->cnpj);
     printf("Nome do estabelecimento: %s\n", rev->nome_est);
-    printf("Endereço: %s\n", rev->end);
+    printf("Cidade: %s\n", rev->cid);
     printf("Nome do proprietário: %s\n", rev->nome_prop);
     printf("Telefone: %s\n", rev->cel);
     if (rev->status == 'c') {

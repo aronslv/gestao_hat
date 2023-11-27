@@ -24,7 +24,6 @@ void modulo_forn(void) {
                         free(forn_x);
                         break;
             case '2':   forn_x = tela_pes_forn();
-                        exb_forn(forn_x);
                         free(forn_x);
                         break;
             case '3':   tela_edit_forn();
@@ -77,7 +76,7 @@ Fornecedor* tela_cad_forn(void) {
 
   ler_nome1(forn->nome_est);
 
-  ler_nome3(forn->end);
+  ler_nome3(forn->cid);
 
   ler_nome2(forn->nome_prop);
 
@@ -167,7 +166,7 @@ void tela_edit_forn(void) {
 
         ler_nome1(new_forn->nome_est);
 
-        ler_nome3(new_forn->end);
+        ler_nome3(new_forn->cid);
 
         ler_nome2(new_forn->nome_prop);
 
@@ -304,25 +303,25 @@ void ler_nome2(char* nome_prop) {
   } 
 }
 
-void ler_nome3(char* end) {
+void ler_nome3(char* cid) {
   fflush(stdin);
-  printf("Endereço do estabelecimento: ");
-  fgets(end, 50, stdin); 
+  printf("Cidade do estabelecimento: ");
+  fgets(cid, 50, stdin); 
   // Remove o caractere de nova linha do final, se estiver presente
-  int tam = strlen(end);
-  if (tam > 0 && end[tam - 1] == '\n') {
-    end[tam - 1] = '\0';
+  int tam = strlen(cid);
+  if (tam > 0 && cid[tam - 1] == '\n') {
+    cid[tam - 1] = '\0';
     fflush(stdin);
   }
-  while (!validarNome(end)) {
-    printf("Endereço inválido: %s\n", end);
-    printf("Informe um novo endereço de estabelecimento: ");
+  while (!validarNome(cid)) {
+    printf("Cidade inválida: %s\n", cid);
+    printf("Informe uma nova cidade do estabelecimento: ");
     fflush(stdin);
-    fgets(end, 50, stdin); 
+    fgets(cid, 50, stdin); 
     // Remove o caractere de nova linha do final, se estiver presente
-    tam = strlen(end);
-    if (tam > 0 && end[tam - 1] == '\n') {
-      end[tam - 1] = '\0';
+    tam = strlen(cid);
+    if (tam > 0 && cid[tam - 1] == '\n') {
+      cid[tam - 1] = '\0';
       fflush(stdin);
     }
   } 
@@ -370,7 +369,7 @@ void exb_forn(Fornecedor* forn) {
     printf("\n");
     printf("CNPJ: %s\n", forn->cnpj);
     printf("Nome do estabelecimento: %s\n", forn->nome_est);
-    printf("Endereço: %s\n", forn->end);
+    printf("Cidade: %s\n", forn->cid);
     printf("Nome do proprietário: %s\n", forn->nome_prop);
     printf("Telefone: %s\n", forn->cel);
     if (forn->status == 'c') {
