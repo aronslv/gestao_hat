@@ -24,6 +24,16 @@ void modulo_rel(void) {
                             printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
                             getchar();
                             break;
+                case '2':   lista_ativo_rev();
+                            printf("\n");
+                            printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+                            getchar();
+                            break;
+                case '3':   lista_inativo_rev();
+                            printf("\n");
+                            printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+                            getchar();
+                            break;
               }
             }while (op != '0');
             break;   
@@ -32,6 +42,16 @@ void modulo_rel(void) {
               op = rel_func();
               switch(op) {
                 case '1':   lista_all_func();
+                            printf("\n");
+                            printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+                            getchar();
+                            break;
+                case '2':   lista_ativo_func();
+                            printf("\n");
+                            printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+                            getchar();
+                            break;
+                case '3':   lista_inativo_func();
                             printf("\n");
                             printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
                             getchar();
@@ -48,6 +68,16 @@ void modulo_rel(void) {
                             printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
                             getchar();
                             break;
+                case '2':   lista_ativo_forn();
+                            printf("\n");
+                            printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+                            getchar();
+                            break;
+                case '3':   lista_inativo_forn();
+                            printf("\n");
+                            printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+                            getchar();
+                            break;
               }
             }while (op != '0');
             break;  
@@ -60,6 +90,16 @@ void modulo_rel(void) {
                             printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
                             getchar();
                             break;
+                case '2':   lista_ativo_mat();
+                            printf("\n");
+                            printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+                            getchar();
+                            break;
+                case '3':   lista_inativo_mat();
+                            printf("\n");
+                            printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+                            getchar();
+                            break;
               }
             }while (op != '0');
             break;  
@@ -68,6 +108,16 @@ void modulo_rel(void) {
               op = rel_prod();
               switch(op) {
                 case '1':   lista_all_prods();
+                            printf("\n");
+                            printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+                            getchar();
+                            break;
+                case '2':   lista_ativo_prods();
+                            printf("\n");
+                            printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+                            getchar();
+                            break;
+                case '3':   lista_inativo_prods();
                             printf("\n");
                             printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
                             getchar();
@@ -115,7 +165,7 @@ char tela_rel(void) {
     printf("§                                                                             §\n");
     printf("§              1. Revendedoras                                                §\n");
     printf("§              2. Funcionários                                                §\n");
-    printf("§              3. Fornecedores                                                §\n");
+    printf("§              3. Fornecedoras                                                §\n");
     printf("§              4. Matérias-Primas                                             §\n");
     printf("§              5. Produtos                                                    §\n");
     printf("§              6. Compras                                                     §\n");
@@ -140,6 +190,8 @@ char rel_rev(void) {
     printf("§               < < < < < < Relatórios - Revendedoras > > > > > >             §\n");
     printf("§                                                                             §\n");
     printf("§               1. Listar todas as Revendedoras                               §\n");
+    printf("§               2. Listar as Revendedoras Ativas                              §\n");
+    printf("§               3. Listar as Revendedoras Inativas                            §\n");
     printf("§               0. Retornar ao Menu de Opções                                 §\n");
     printf("§                                                                             §\n");
     printf("§                                                                             §\n");
@@ -160,6 +212,8 @@ char rel_func(void) {
     printf("§               < < < < < < Relatórios - Funcionários > > > > > >             §\n");
     printf("§                                                                             §\n");
     printf("§               1. Listar todos os Funcionários                               §\n");
+    printf("§               2. Listar os Funcionários Ativos                              §\n");
+    printf("§               3. Listar os Funcionários Inativos                            §\n");
     printf("§               0. Retornar ao Menu de Opções                                 §\n");
     printf("§                                                                             §\n");
     printf("§                                                                             §\n");
@@ -177,9 +231,11 @@ char rel_forn(void) {
     printf("\n");
     printf("-------------------------------------------------------------------------------\n");
     printf("§                                                                             §\n");
-    printf("§               < < < < < < Relatórios - Fornecedores > > > > > >             §\n");
+    printf("§               < < < < < < Relatórios - Fornecedoras > > > > > >             §\n");
     printf("§                                                                             §\n");
-    printf("§               1. Listar todos os Fornecedores                               §\n");
+    printf("§               1. Listar todas as Fornecedoras                               §\n");
+    printf("§               2. Listar as Fornecedoras Ativas                              §\n");
+    printf("§               3. Listar as Fornecedoras Inativas                            §\n");
     printf("§               0. Retornar ao Menu de Opções                                 §\n");
     printf("§                                                                             §\n");
     printf("§                                                                             §\n");
@@ -200,6 +256,8 @@ char rel_mat(void) {
     printf("§               < < < < < < Relatórios - Matérias-Primas > > > > > >          §\n");
     printf("§                                                                             §\n");
     printf("§               1. Listar todas as Matérias-Primas                            §\n");
+    printf("§               2. Listar as Matérias-Primas Ativas                           §\n");
+    printf("§               3. Listar as Matérias-Primas Inativas                         §\n");
     printf("§               0. Retornar ao Menu de Opções                                 §\n");
     printf("§                                                                             §\n");
     printf("§                                                                             §\n");
@@ -220,6 +278,8 @@ char rel_prod(void) {
     printf("§               < < < < < < Relatórios - Produtos > > > > > >                 §\n");
     printf("§                                                                             §\n");
     printf("§               1. Listar todos os Produtos                                   §\n");
+    printf("§               2. Listar os Produtos Ativos                                  §\n");
+    printf("§               3. Listar os Produtos Inativos                                §\n");
     printf("§               0. Retornar ao Menu de Opções                                 §\n");
     printf("§                                                                             §\n");
     printf("§                                                                             §\n");
@@ -296,12 +356,97 @@ void lista_all_rev(void) {
   printf("%31s", "|");
   printf("\n");
   while (fread(revendedor, sizeof(Revendedor), 1, fp)) { 
+    printf("%-15s", revendedor->cnpj);
+    printf("|");
+    printf("%-30s", revendedor->nome_est);
+    printf("|");
+    printf("%-30s", revendedor->nome_prop);
+    printf("\n");
+
+  }
+  fclose(fp);
+  free(revendedor);
+}
+
+void lista_ativo_rev(void) {
+  system("clear||cls");
+  FILE* fp;
+  Revendedor* revendedor;
+  printf("\n = Lista de Revendedoras Ativas = \n");
+  printf("\n");
+  revendedor = (Revendedor*) malloc(sizeof(Revendedor));
+  fp = fopen("rev.dat", "rb");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  printf("%-15s", "CNPJ");
+  printf("|");
+  printf("%-30s", "Nome do Estabelecimento");
+  printf("|");
+  printf("%-31s", "Nome do Proprietário");
+  printf("|");
+  printf("%-8s", "Status");
+  printf("\n");
+  printf("%16s", "|");
+  printf("%31s", "|");
+  printf("%31s", "|");
+  printf("\n");
+  while (fread(revendedor, sizeof(Revendedor), 1, fp)) { 
     if (revendedor->status != 'e') {
       printf("%-15s", revendedor->cnpj);
       printf("|");
       printf("%-30s", revendedor->nome_est);
       printf("|");
       printf("%-30s", revendedor->nome_prop);
+      printf("|");
+      printf("%-7s", "Ativo");
+      printf("\n");
+    }
+  }
+  fclose(fp);
+  free(revendedor);
+}
+
+void lista_inativo_rev(void) {
+  system("clear||cls");
+  FILE* fp;
+  Revendedor* revendedor;
+  printf("\n = Lista de Revendedoras Inativas = \n");
+  printf("\n");
+  revendedor = (Revendedor*) malloc(sizeof(Revendedor));
+  fp = fopen("rev.dat", "rb");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  printf("%-15s", "CNPJ");
+  printf("|");
+  printf("%-30s", "Nome do Estabelecimento");
+  printf("|");
+  printf("%-31s", "Nome do Proprietário");
+  printf("|");
+  printf("%-8s", "Status");
+  printf("\n");
+  printf("%16s", "|");
+  printf("%31s", "|");
+  printf("%31s", "|");
+  printf("\n");
+  while (fread(revendedor, sizeof(Revendedor), 1, fp)) { 
+    if (revendedor->status == 'e') {
+      printf("%-15s", revendedor->cnpj);
+      printf("|");
+      printf("%-30s", revendedor->nome_est);
+      printf("|");
+      printf("%-30s", revendedor->nome_prop);
+      printf("|");
+      printf("%-9s", "Inativo");
       printf("\n");
     }
   }
@@ -334,12 +479,96 @@ void lista_all_func(void) {
   printf("%31s", "|");
   printf("\n");
   while (fread(funcionario, sizeof(Funcionario), 1, fp)) { 
+    printf("%-12s", funcionario->cpf);
+    printf("|");
+    printf("%-30s", funcionario->nome);
+    printf("|");
+    printf("R$ %-10.2f", funcionario->salario);
+    printf("\n");
+  }
+  fclose(fp);
+  free(funcionario);
+}
+
+void lista_ativo_func(void) {
+  system("clear||cls");
+  FILE* fp;
+  Funcionario* funcionario;
+  printf("\n = Lista de Funcionários Ativos = \n");
+  printf("\n");
+  funcionario = (Funcionario*) malloc(sizeof(Funcionario));
+  fp = fopen("func.dat", "rb");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  printf("%-12s", "CPF");
+  printf("|");
+  printf("%-31s", "Nome do Funcionário");
+  printf("|");
+  printf("%-16s", "Salário");
+  printf("|");
+  printf("%-8s", "Status");
+  printf("\n");
+  printf("%13s", "|");
+  printf("%31s", "|");
+  printf("%16s", "|");
+  printf("\n");
+  while (fread(funcionario, sizeof(Funcionario), 1, fp)) { 
     if (funcionario->status != 'e') {
       printf("%-12s", funcionario->cpf);
       printf("|");
       printf("%-30s", funcionario->nome);
       printf("|");
-      printf("R$ %-10.2f", funcionario->salario);
+      printf("R$ %-12.2f", funcionario->salario);
+      printf("|");
+      printf("%-7s", "Ativo");
+      printf("\n");
+    }
+  }
+  fclose(fp);
+  free(funcionario);
+}
+
+void lista_inativo_func(void) {
+  system("clear||cls");
+  FILE* fp;
+  Funcionario* funcionario;
+  printf("\n = Lista de Funcionários Inativos = \n");
+  printf("\n");
+  funcionario = (Funcionario*) malloc(sizeof(Funcionario));
+  fp = fopen("func.dat", "rb");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  printf("%-12s", "CPF");
+  printf("|");
+  printf("%-31s", "Nome do Funcionário");
+  printf("|");
+  printf("%-16s", "Salário");
+  printf("|");
+  printf("%-8s", "Status");
+  printf("\n");
+  printf("%13s", "|");
+  printf("%31s", "|");
+  printf("%16s", "|");
+  printf("\n");
+  while (fread(funcionario, sizeof(Funcionario), 1, fp)) { 
+    if (funcionario->status == 'e') {
+      printf("%-12s", funcionario->cpf);
+      printf("|");
+      printf("%-30s", funcionario->nome);
+      printf("|");
+      printf("R$ %-12.2f", funcionario->salario);
+      printf("|");
+      printf("%-9s", "Inativo");
       printf("\n");
     }
   }
@@ -351,7 +580,7 @@ void lista_all_forn(void) {
   system("clear||cls");
   FILE* fp;
   Fornecedor* fornecedor;
-  printf("\n = Lista de Fornecedores = \n");
+  printf("\n = Lista de Fornecedoras = \n");
   printf("\n");
   fornecedor = (Fornecedor*) malloc(sizeof(Fornecedor));
   fp = fopen("forn.dat", "rb");
@@ -372,12 +601,96 @@ void lista_all_forn(void) {
   printf("%31s", "|");
   printf("\n");
   while (fread(fornecedor, sizeof(Fornecedor), 1, fp)) { 
+    printf("%-15s", fornecedor->cnpj);
+    printf("|");
+    printf("%-30s", fornecedor->nome_est);
+    printf("|");
+    printf("%-30s", fornecedor->nome_prop);
+    printf("\n");
+  }
+  fclose(fp);
+  free(fornecedor);
+}
+
+void lista_ativo_forn(void) {
+  system("clear||cls");
+  FILE* fp;
+  Fornecedor* fornecedor;
+  printf("\n = Lista de Fornecedoras Ativas = \n");
+  printf("\n");
+  fornecedor = (Fornecedor*) malloc(sizeof(Fornecedor));
+  fp = fopen("forn.dat", "rb");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  printf("%-15s", "CNPJ");
+  printf("|");
+  printf("%-30s", "Nome do Estabelecimento");
+  printf("|");
+  printf("%-31s", "Nome do Proprietário");
+  printf("|");
+  printf("%-8s", "Status");
+  printf("\n");
+  printf("%16s", "|");
+  printf("%31s", "|");
+  printf("%31s", "|");
+  printf("\n");
+  while (fread(fornecedor, sizeof(Fornecedor), 1, fp)) { 
     if (fornecedor->status != 'e') {
       printf("%-15s", fornecedor->cnpj);
       printf("|");
       printf("%-30s", fornecedor->nome_est);
       printf("|");
       printf("%-30s", fornecedor->nome_prop);
+      printf("|");
+      printf("%-7s", "Ativo");
+      printf("\n");
+    }
+  }
+  fclose(fp);
+  free(fornecedor);
+}
+
+void lista_inativo_forn(void) {
+  system("clear||cls");
+  FILE* fp;
+  Fornecedor* fornecedor;
+  printf("\n = Lista de Fornecedoras Inativas = \n");
+  printf("\n");
+  fornecedor = (Fornecedor*) malloc(sizeof(Fornecedor));
+  fp = fopen("forn.dat", "rb");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  printf("%-15s", "CNPJ");
+  printf("|");
+  printf("%-30s", "Nome do Estabelecimento");
+  printf("|");
+  printf("%-31s", "Nome do Proprietário");
+  printf("|");
+  printf("%-8s", "Status");
+  printf("\n");
+  printf("%16s", "|");
+  printf("%31s", "|");
+  printf("%31s", "|");
+  printf("\n");
+  while (fread(fornecedor, sizeof(Fornecedor), 1, fp)) { 
+    if (fornecedor->status == 'e') {
+      printf("%-15s", fornecedor->cnpj);
+      printf("|");
+      printf("%-30s", fornecedor->nome_est);
+      printf("|");
+      printf("%-30s", fornecedor->nome_prop);
+      printf("|");
+      printf("%-9s", "Inativo");
       printf("\n");
     }
   }
@@ -410,12 +723,96 @@ void lista_all_mat(void) {
   printf("%31s", "|");
   printf("\n");
   while (fread(mat, sizeof(Materia), 1, fp)) { 
+    printf("%-7d", mat->id);
+    printf("|");
+    printf("%-30s", mat->mat_prim);
+    printf("|");
+    printf("R$ %-10.2f", mat->valor);
+    printf("\n");
+  }
+  fclose(fp);
+  free(mat);
+}
+
+void lista_ativo_mat(void) {
+  system("clear||cls");
+  FILE* fp;
+  Materia* mat;
+  printf("\n = Lista de Matérias-Primas Ativas = \n");
+  printf("\n");
+  mat = (Materia*) malloc(sizeof(Materia));
+  fp = fopen("mat.dat", "rb");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  printf("%-7s", "ID");
+  printf("|");
+  printf("%-33s", "Descrição da Matéria-Prima");
+  printf("|");
+  printf("%-18s", "Valor da Unidade");
+  printf("|");
+  printf("%-8s", "Status");
+  printf("\n");
+  printf("%8s", "|");
+  printf("%31s", "|");
+  printf("%19s", "|");
+  printf("\n");
+  while (fread(mat, sizeof(Materia), 1, fp)) { 
     if (mat->status != 'e') {
       printf("%-7d", mat->id);
       printf("|");
       printf("%-30s", mat->mat_prim);
       printf("|");
-      printf("R$ %-10.2f", mat->valor);
+      printf("R$ %-15.2f", mat->valor);
+      printf("|");
+      printf("%-7s", "Ativo");
+      printf("\n");
+    }
+  }
+  fclose(fp);
+  free(mat);
+}
+
+void lista_inativo_mat(void) {
+  system("clear||cls");
+  FILE* fp;
+  Materia* mat;
+  printf("\n = Lista de Matérias-Primas Inativas = \n");
+  printf("\n");
+  mat = (Materia*) malloc(sizeof(Materia));
+  fp = fopen("mat.dat", "rb");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  printf("%-7s", "ID");
+  printf("|");
+  printf("%-33s", "Descrição da Matéria-Prima");
+  printf("|");
+  printf("%-18s", "Valor da Unidade");
+  printf("|");
+  printf("%-8s", "Status");
+  printf("\n");
+  printf("%8s", "|");
+  printf("%31s", "|");
+  printf("%19s", "|");
+  printf("\n");
+  while (fread(mat, sizeof(Materia), 1, fp)) { 
+    if (mat->status == 'e') {
+      printf("%-7d", mat->id);
+      printf("|");
+      printf("%-30s", mat->mat_prim);
+      printf("|");
+      printf("R$ %-15.2f", mat->valor);
+      printf("|");
+      printf("%-9s", "Inativo");
       printf("\n");
     }
   }
@@ -448,12 +845,96 @@ void lista_all_prods(void) {
   printf("%31s", "|");
   printf("\n");
   while (fread(prod, sizeof(Produto), 1, fp)) { 
+    printf("%-8d", prod->id);
+    printf("|");
+    printf("%-30s", prod->prods);
+    printf("|");
+    printf("R$ %-10.2f", prod->valor);
+    printf("\n"); 
+  }
+  fclose(fp);
+  free(prod);
+}
+
+void lista_ativo_prods(void) {
+  system("clear||cls");
+  FILE* fp;
+  Produto* prod;
+  printf("\n = Lista de Produtos Ativos = \n");
+  printf("\n");
+  prod = (Produto*) malloc(sizeof(Produto));
+  fp = fopen("prod.dat", "rb");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  printf("%-8s", "ID");
+  printf("|");
+  printf("%-32s", "Descrição do Produto");
+  printf("|");
+  printf("%-18s", "Valor da Unidade");
+  printf("|");
+  printf("%-8s", "Status");
+  printf("\n");
+  printf("%9s", "|");
+  printf("%31s", "|");
+  printf("%19s", "|");
+  printf("\n");
+  while (fread(prod, sizeof(Produto), 1, fp)) { 
     if (prod->status != 'e') {
       printf("%-8d", prod->id);
       printf("|");
       printf("%-30s", prod->prods);
       printf("|");
-      printf("R$ %-10.2f", prod->valor);
+      printf("R$ %-15.2f", prod->valor);
+      printf("|");
+      printf("%-7s", "Ativo");
+      printf("\n");
+    }
+  }
+  fclose(fp);
+  free(prod);
+}
+
+void lista_inativo_prods(void) {
+  system("clear||cls");
+  FILE* fp;
+  Produto* prod;
+  printf("\n = Lista de Produtos Inativos = \n");
+  printf("\n");
+  prod = (Produto*) malloc(sizeof(Produto));
+  fp = fopen("prod.dat", "rb");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  printf("%-8s", "ID");
+  printf("|");
+  printf("%-32s", "Descrição do Produto");
+  printf("|");
+  printf("%-18s", "Valor da Unidade");
+  printf("|");
+  printf("%-8s", "Status");
+  printf("\n");
+  printf("%9s", "|");
+  printf("%31s", "|");
+  printf("%19s", "|");
+  printf("\n");
+  while (fread(prod, sizeof(Produto), 1, fp)) { 
+    if (prod->status == 'e') {
+      printf("%-8d", prod->id);
+      printf("|");
+      printf("%-30s", prod->prods);
+      printf("|");
+      printf("R$ %-15.2f", prod->valor);
+      printf("|");
+      printf("%-9s", "Inativo");
       printf("\n");
     }
   }
