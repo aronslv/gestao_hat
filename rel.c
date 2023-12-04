@@ -315,6 +315,7 @@ char rel_com(void) {
     printf("§               < < < < < < Relatórios - Compras > > > > > >                  §\n");
     printf("§                                                                             §\n");
     printf("§               1. Listar todas as Compras                                    §\n");
+    printf("§               2. Listar as Compras por CNPJ                                 §\n");
     printf("§               0. Retornar ao Menu de Opções                                 §\n");
     printf("§                                                                             §\n");
     printf("§                                                                             §\n");
@@ -1006,6 +1007,7 @@ void lista_all_com(void) {
 }
 
 void lista_cnpj_com(Compras* com) {
+  char *nome_mat;
   char *nome_forn;
   char cnpj[15];
   system("clear||cls");
@@ -1027,7 +1029,7 @@ void lista_cnpj_com(Compras* com) {
   }
   printf("%-14s", "ID da Compra");
   printf("|");
-  printf("%-23s", "ID da Matéria-Prima");
+  printf("%-25s", "Nome da Matéria-Prima");
   printf("|");
   printf("%-30s", "Nome do Estabelecimento");
   printf("|");
@@ -1036,16 +1038,17 @@ void lista_cnpj_com(Compras* com) {
   printf("%-16s", "Data da Venda");
   printf("\n");
   printf("%15s", "|");
-  printf("%23s", "|");
+  printf("%25s", "|");
   printf("%31s", "|");
   printf("%14s", "|");
   printf("\n");
   while(fread(com, sizeof(Compras), 1, fp) == 1) {
     if (strcmp(com->cnpj, cnpj) == 0) {
       nome_forn = get_forn(cnpj);
+      nome_mat = get_mat(com->id);
       printf("%-14d", com->id_compra);
       printf("|");
-      printf("%-22d", com->id);
+      printf("%-24s", nome_mat);
       printf("|");
       printf("%-30s", nome_forn);
       printf("|");

@@ -105,6 +105,8 @@ char tela_compras(void) {
 
 Compras* tela_cad_com(void) {
     Compras* com;
+    char* nome_mat;
+    char* nome_forn;
     system("clear||cls");
     printf("\n");
     printf("-----------------------------------------------------------------------------\n");
@@ -120,11 +122,21 @@ Compras* tela_cad_com(void) {
     scanf("%d", &com->id);
     getchar();
 
+    nome_mat = get_mat(com->id);
+
+    printf("Descrição da matéria-prima: %s\n", nome_mat);
+
     ler_cnpj3(com->cnpj);
+
+    nome_forn = get_forn(com->cnpj);
+
+    printf("Nome do estabelecimento: %s\n", nome_forn);
 
     printf("Quantidade: ");
     scanf("%d", &com->quant);
     getchar();
+
+    get_est_mat(com->id, com->quant);
 
     printf("Valor da unidade: R$ ");
     scanf("%f", &com->valor);
@@ -298,7 +310,7 @@ Vendas* tela_cad_ven(void) {
     scanf("%d", &ven->quant);
     getchar();
 
-    ven->quant = get_est(ven->id, ven->quant);
+    ven->quant = get_est_prod(ven->id, ven->quant);
 
     printf("Valor da unidade: R$ ");
     scanf("%f", &ven->valor);
@@ -585,6 +597,35 @@ void exb_ven(Vendas* ven) {
   }
 }
 
+char *get_mat(const int id) {
+  Materia mat;
+  FILE* fp = fopen("mat.dat", "rb");
+
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  while (fread(&mat, sizeof(mat), 1, fp) == 1) {
+    if(mat.id == id) {
+      char* x = (char*)malloc(strlen(mat.mat_prim) + 1);
+      if (x == NULL) {
+        printf("Ocorreu um erro.\n");
+        fclose(fp);
+        return NULL;
+      }
+      strcpy(x, mat.mat_prim);
+      fclose(fp);
+      return x;
+      
+    }
+  }
+  fclose(fp);
+  return NULL;
+}
+
 char *get_prod(const int id) {
   Produto prod;
   FILE* fp = fopen("prod.dat", "rb");
@@ -614,7 +655,29 @@ char *get_prod(const int id) {
   return NULL;
 }
 
-int get_est(int id, int quant) {
+void get_est_mat(int id, int quant) {
+  Materia* mat;
+  FILE* fp = fopen("mat.dat", "r+b");
+
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  mat = (Materia*) malloc(sizeof(Materia));
+  while (fread(mat, sizeof(Materia), 1, fp) == 1) {
+    if (mat->id == id) {
+      mat->quant += quant;
+      fseek(fp, -sizeof(Materia), SEEK_CUR);
+      fwrite(mat, sizeof(Materia), 1, fp);
+    }
+  }
+  fclose(fp);
+}
+
+int get_est_prod(int id, int quant) {
   Produto* prod;
   FILE* fp = fopen("prod.dat", "r+b");
 
