@@ -49,7 +49,7 @@ char tela_main(void) {
     printf("§              1. Revendedoras                                                §\n");
     printf("§              2. Funcionários                                                §\n");
     printf("§              3. Fornecedoras                                                §\n");
-    printf("§              4. Mercadorias                                                 §\n");
+    printf("§              4. Estoque                                                     §\n");
     printf("§              5. Transações                                                  §\n");
     printf("§              6. Relatórios                                                  §\n");
     printf("§              7. Informações                                                 §\n");

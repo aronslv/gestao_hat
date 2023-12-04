@@ -4,6 +4,8 @@
 #include <unistd.h>
 #include <time.h>
 #include "vendas.h"
+#include "prods.h"
+#include "rel.h"
 #include "valid.h"
 
 void ler_cnpj3(char*);
@@ -29,7 +31,10 @@ void modulo_vendas(void) {
                                 free(com_x);
                                 break;
                     case '2':   com_x = tela_pes_com();
+                                exb_com(com_x);
                                 free(com_x);
+                                break;
+                    case '3':   tela_exc_com();
                                 break;
                 }
             }while (op != '0');
@@ -43,7 +48,10 @@ void modulo_vendas(void) {
                                 free(ven_x);
                                 break;
                     case '2':   ven_x = tela_pes_ven();
+                                exb_ven(ven_x);
                                 free(ven_x);
+                                break;
+                    case '3':   tela_exc_ven();
                                 break;
                 }
             }while (op != '0');
@@ -83,6 +91,7 @@ char tela_compras(void) {
     printf("§                                                                             §\n");
     printf("§              1. Cadastro de Compras                                         §\n");
     printf("§              2. Pesquisar Compras                                           §\n");
+    printf("§              3. Cancelar Compras                                            §\n");
     printf("§              0. Retornar ao Menu de Opções                                  §\n");
     printf("§                                                                             §\n");
     printf("§                                                                             §\n");
@@ -128,6 +137,8 @@ Compras* tela_cad_com(void) {
     printf("ID da compra: ");
     scanf("%d", &com->id_compra);
     getchar();
+
+    com->status = 'c';
     printf("                                                                             \n");
     printf("                                                                             \n");
     printf("-----------------------------------------------------------------------------\n");
@@ -178,6 +189,56 @@ Compras* tela_pes_com(void) {
     return NULL;
 }
 
+void tela_exc_com(void) {
+    int id;
+    Compras* new_com = (Compras*) malloc(sizeof(Compras));
+    FILE* fp;
+    int com_found = 0;
+    system("clear||cls");
+    printf("\n");
+    printf("--------------------------------------------------------------------------------\n");
+    printf("                                                                                \n");
+    printf("              < < < < < < < Cancelar - Compras > > > > > > >                    \n");
+    printf("                                                                                \n");
+    printf(" Informe o ID da compra para cancelar: ");
+    scanf("%d", &id);
+    getchar();
+    fp = fopen("compras.dat", "r+b");
+    if (fp == NULL) {
+        printf("\t\t\t>>> Processando as informações...\n");
+        sleep(1);
+        printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+        printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+    } else {
+        while (fread(new_com, sizeof(Compras), 1, fp) == 1) {
+            if(new_com->id_compra == id) {
+                printf("\n");
+                printf("\t\t\t= = = Compra Encontrada = = =\n");
+                printf("\n");
+
+                new_com->status = 'e';
+
+                fseek(fp, -sizeof(Compras), SEEK_CUR);
+                fwrite(new_com, sizeof(Compras), 1, fp);
+                com_found = 1;
+                break;
+            }
+        }
+    }
+    if (!com_found) {
+        printf("\n");
+        printf("\t\t\tID não encontrado!\n");
+    } else {
+        printf("\n");
+        printf("\t\t\tCompra cancelada com sucesso!\n");
+    }
+  printf("\n");
+  printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+  getchar();
+  fclose(fp);
+}
+
 
 char tela_vendas(void) {
     char op;
@@ -189,6 +250,7 @@ char tela_vendas(void) {
     printf("§                                                                             §\n");
     printf("§              1. Cadastro de Vendas                                          §\n");
     printf("§              2. Pesquisar Vendas                                            §\n");
+    printf("§              3. Cancelar Vendas                                             §\n");
     printf("§              0. Retornar ao Menu de Opções                                  §\n");
     printf("§                                                                             §\n");
     printf("§                                                                             §\n");
@@ -202,6 +264,8 @@ char tela_vendas(void) {
 
 Vendas* tela_cad_ven(void) {
     Vendas* ven;
+    char* nome_prod;
+    char* nome_rev;
     system("clear||cls");
     printf("\n");
     printf("-----------------------------------------------------------------------------\n");
@@ -213,17 +277,28 @@ Vendas* tela_cad_ven(void) {
 
     ven = (Vendas*) malloc(sizeof(Vendas));
 
+
     printf("ID do Produto: ");
     scanf("%d", &ven->id);
     getchar();
 
+    nome_prod = get_prod(ven->id);
+
+    printf("Descrição do produto: %s\n", nome_prod);
+
     ler_cnpj4(ven->cnpj);
+
+    nome_rev = get_rev(ven->cnpj);
+
+    printf("Nome do estabelecimento: %s\n", nome_rev);
 
     ler_cpf_vend(ven->cpf);
 
     printf("Quantidade: ");
     scanf("%d", &ven->quant);
     getchar();
+
+    ven->quant = get_est(ven->id, ven->quant);
 
     printf("Valor da unidade: R$ ");
     scanf("%f", &ven->valor);
@@ -236,6 +311,8 @@ Vendas* tela_cad_ven(void) {
     printf("ID da venda: ");
     scanf("%d", &ven->id_venda);
     getchar();
+
+    ven->status = 'c';
     printf("                                                                             \n");
     printf("                                                                             \n");
     printf("-----------------------------------------------------------------------------\n");
@@ -284,6 +361,56 @@ Vendas* tela_pes_ven(void) {
     }
     fclose(fp);
     return NULL;
+}
+
+void tela_exc_ven(void) {
+    int id;
+    Vendas* new_ven = (Vendas*) malloc(sizeof(Vendas));
+    FILE* fp;
+    int ven_found = 0;
+    system("clear||cls");
+    printf("\n");
+    printf("--------------------------------------------------------------------------------\n");
+    printf("                                                                                \n");
+    printf("              < < < < < < < Cancelar - Vendas > > > > > > >                     \n");
+    printf("                                                                                \n");
+    printf(" Informe o ID da venda para cancelar: ");
+    scanf("%d", &id);
+    getchar();
+    fp = fopen("vendas.dat", "r+b");
+    if (fp == NULL) {
+        printf("\t\t\t>>> Processando as informações...\n");
+        sleep(1);
+        printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+        printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+        getchar();
+    } else {
+        while (fread(new_ven, sizeof(Vendas), 1, fp) == 1) {
+            if(new_ven->id_venda == id) {
+                printf("\n");
+                printf("\t\t\t= = = Venda Encontrada = = =\n");
+                printf("\n");
+
+                new_ven->status = 'e';
+
+                fseek(fp, -sizeof(Vendas), SEEK_CUR);
+                fwrite(new_ven, sizeof(Vendas), 1, fp);
+                ven_found = 1;
+                break;
+            }
+        }
+    }
+    if (!ven_found) {
+        printf("\n");
+        printf("\t\t\tID não encontrado!\n");
+    } else {
+        printf("\n");
+        printf("\t\t\tVenda cancelada com sucesso!\n");
+    }
+  printf("\n");
+  printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+  getchar();
+  fclose(fp);
 }
 
 void ler_cnpj3 (char* cnpj) {
@@ -456,4 +583,70 @@ void exb_ven(Vendas* ven) {
     printf("Valor da Unidade: R$ %.2f\n", ven->valor);
     printf("Data da compra: %s\n", ven->data);
   }
+}
+
+char *get_prod(const int id) {
+  Produto prod;
+  FILE* fp = fopen("prod.dat", "rb");
+
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  while (fread(&prod, sizeof(prod), 1, fp) == 1) {
+    if(prod.id == id) {
+      char* x = (char*)malloc(strlen(prod.prods) + 1);
+      if (x == NULL) {
+        printf("Ocorreu um erro.\n");
+        fclose(fp);
+        return NULL;
+      }
+      strcpy(x, prod.prods);
+      fclose(fp);
+      return x;
+      
+    }
+  }
+  fclose(fp);
+  return NULL;
+}
+
+int get_est(int id, int quant) {
+  Produto* prod;
+  FILE* fp = fopen("prod.dat", "r+b");
+
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  prod = (Produto*) malloc(sizeof(Produto));
+  while (fread(prod, sizeof(Produto), 1, fp) == 1) {
+    if (prod->id == id) {
+      if (prod->quant == 0) {
+        printf("\n\t\t\tO estoque desse produto está vazio!");
+        printf("\n\t\t\tEssa venda não prosseguirá!\n");
+        fclose(fp);
+        return 0;
+      }
+      else if (quant > prod->quant) {
+        do {
+          printf("A quantidade excede a do estoque! Estoque: %d\n", prod-> quant);
+          printf("Quantidade: ");
+          scanf("%d", &quant);
+          getchar();
+        }while (quant > prod->quant);
+      }
+      prod->quant -= quant;
+      fseek(fp, -sizeof(Produto), SEEK_CUR);
+      fwrite(prod, sizeof(Produto), 1, fp);
+    }
+  }
+  fclose(fp);
+  return quant;
 }

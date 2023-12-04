@@ -30,4 +30,7 @@ void lista_all_com(void);
 char rel_ven(void);
 void lista_all_ven(void);
 
+char *get_forn(const char *cnpj);
+char *get_rev(const char *cnpj);
+
 #endif 

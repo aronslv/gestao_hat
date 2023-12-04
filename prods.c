@@ -28,6 +28,7 @@ void modulo_prods(void) {
                                 free(mat_x);
                                 break;
                     case '2':   mat_x = tela_pes_mat();
+                                exb_mat(mat_x);
                                 free(mat_x);
                                 break;
                     case '3':   tela_edit_mat();
@@ -46,6 +47,7 @@ void modulo_prods(void) {
                                 free(prod_x);
                                 break;
                     case '2':   prod_x = tela_pes_prods();
+                                exb_prod(prod_x);
                                 free(prod_x);
                                 break;
                     case '3':   tela_edit_prods();
@@ -65,7 +67,7 @@ char escolha_prods(void) {
     printf("\n");
     printf("-------------------------------------------------------------------------------\n");
     printf("§                                                                             §\n");
-    printf("§                  < < < < < < < < Mercadorias > > > > > > > >                §\n");
+    printf("§                  < < < < < < < < Estoque > > > > > > > >                    §\n");
     printf("§                                                                             §\n");
     printf("§                  1. Matérias-primas                                         §\n");
     printf("§                  2. Produtos                                                §\n");
@@ -121,6 +123,10 @@ Materia* tela_cad_mat(void) {
 
     printf("ID da matéria-prima: ");
     scanf("%d", &mat->id);
+    getchar();
+
+    printf("Quantidade: ");
+    scanf("%d", &mat->quant);
     getchar();
 
     printf("Valor da unidade: R$ ");
@@ -210,6 +216,10 @@ void tela_edit_mat(void) {
 
                 printf("ID da matéria-prima: ");
                 scanf("%d", &new_mat->id);
+                getchar();
+
+                printf("Quantidade: ");
+                scanf("%d", &new_mat->quant);
                 getchar();
 
                 printf("Valor da unidade: R$ ");
@@ -331,6 +341,10 @@ Produto* tela_cad_prods(void) {
     scanf("%d", &prod->id);
     getchar();
 
+    printf("Quantidade: ");
+    scanf("%d", &prod->quant);
+    getchar();
+
     printf("Valor da unidade: R$ ");
     scanf("%f", &prod->valor);
     getchar();
@@ -375,12 +389,12 @@ Produto* tela_pes_prods(void) {
             if((prod->id == id) && (prod->status != 'e')) {
               exb_prod(prod);
               printf("\n");
+              printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+              getchar();
+              fclose(fp);
+              return prod;
             }
         }
-        printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-        getchar();
-        fclose(fp);
-        return prod;
     }
     fclose(fp);
     return NULL;
@@ -418,6 +432,10 @@ void tela_edit_prods(void) {
 
                 printf("ID do produto: ");
                 scanf("%d", &new_prod->id);
+                getchar();
+
+                printf("Quantidade: ");
+                scanf("%d", &new_prod->quant);
                 getchar();
 
                 printf("Valor da unidade: R$ ");
@@ -589,9 +607,10 @@ void exb_mat(Materia* mat) {
     printf("\n");
     printf("ID da Matéria-Prima: %d\n", mat->id);
     printf("Descrição da Matéria-Prima: %s\n", mat->mat_prim);
+    printf("Quantidade: %d\n", mat->quant);
     printf("Valor da Unidade: R$ %.2f\n", mat->valor);
     if (mat->status == 'c') {
-      strcpy(sit, "Comprada");
+      strcpy(sit, "Cadastrado");
     } else {
       strcpy(sit, "Não Informada");
     }
@@ -613,9 +632,10 @@ void exb_prod(Produto* prod) {
     printf("\n");
     printf("ID do Produto: %d\n", prod->id);
     printf("Descrição do Produto: %s\n", prod->prods);
+    printf("Quantidade: %d\n", prod->quant);
     printf("Valor da Unidade: R$ %.2f\n", prod->valor);
     if (prod->status == 'c') {
-      strcpy(sit, "Vendido");
+      strcpy(sit, "Cadastrado");
     } else {
       strcpy(sit, "Não Informada");
     }

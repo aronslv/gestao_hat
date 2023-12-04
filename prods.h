@@ -8,6 +8,7 @@ typedef struct materia Materia;
 struct materia {
     char mat_prim[25];
     int id;
+    int quant;
     float valor;
     char data[11];
     char status;
@@ -18,6 +19,7 @@ typedef struct produto Produto;
 struct produto {
     char prods[25];
     int id;
+    int quant;
     float valor;
     char data[11];
     char status;
@@ -39,5 +41,8 @@ Produto* tela_pes_prods(void);
 void exb_prod(Produto*);
 void tela_edit_prods(void);
 void tela_exc_prods(void);
+
+char * get_prod(const int id);
+int get_est(int id, int quant);
 
 #endif

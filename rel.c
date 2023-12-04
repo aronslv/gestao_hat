@@ -9,9 +9,14 @@
 #include "prods.h"
 #include "vendas.h"
 
+void lista_cnpj_com(Compras*);
+void lista_cnpj_ven(Vendas*);
+
 void modulo_rel(void) {
     char opc;
     char op;
+    Compras* com_x;
+    Vendas* ven_x;
     do{
         opc = tela_rel();
         switch (opc) {
@@ -134,6 +139,11 @@ void modulo_rel(void) {
                             printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
                             getchar();
                             break;
+                case '2':   lista_cnpj_com(com_x);
+                            printf("\n");
+                            printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+                            getchar();
+                            break;
               }
             }while (op != '0');
             break; 
@@ -142,6 +152,11 @@ void modulo_rel(void) {
               op = rel_ven();
               switch(op) {
                 case '1':   lista_all_ven();
+                            printf("\n");
+                            printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+                            getchar();
+                            break;
+                case '2':   lista_cnpj_ven(ven_x);
                             printf("\n");
                             printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
                             getchar();
@@ -320,6 +335,7 @@ char rel_ven(void) {
     printf("§               < < < < < < Relatórios - Vendas > > > > > >                   §\n");
     printf("§                                                                             §\n");
     printf("§               1. Listar todas as Vendas                                     §\n");
+    printf("§               2. Listar as Vendas por CNPJ                                  §\n");
     printf("§               0. Retornar ao Menu de Opções                                 §\n");
     printf("§                                                                             §\n");
     printf("§                                                                             §\n");
@@ -989,6 +1005,60 @@ void lista_all_com(void) {
   free(com);
 }
 
+void lista_cnpj_com(Compras* com) {
+  char *nome_forn;
+  char cnpj[15];
+  system("clear||cls");
+  FILE* fp;
+  printf("\n = Lista de Compras por CNPJ = \n");
+  printf("\n");
+  printf("Informe o CNPJ: ");
+  fgets (cnpj, 15, stdin);
+  getchar();
+  printf("\n");
+  com = (Compras*) malloc(sizeof(Compras));
+  fp = fopen("compras.dat", "rb");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  printf("%-14s", "ID da Compra");
+  printf("|");
+  printf("%-23s", "ID da Matéria-Prima");
+  printf("|");
+  printf("%-30s", "Nome do Estabelecimento");
+  printf("|");
+  printf("%-13s", "Valor Total");
+  printf("|");
+  printf("%-16s", "Data da Venda");
+  printf("\n");
+  printf("%15s", "|");
+  printf("%23s", "|");
+  printf("%31s", "|");
+  printf("%14s", "|");
+  printf("\n");
+  while(fread(com, sizeof(Compras), 1, fp) == 1) {
+    if (strcmp(com->cnpj, cnpj) == 0) {
+      nome_forn = get_forn(cnpj);
+      printf("%-14d", com->id_compra);
+      printf("|");
+      printf("%-22d", com->id);
+      printf("|");
+      printf("%-30s", nome_forn);
+      printf("|");
+      printf("R$ %-10.2f", com->preco);
+      printf("|");
+      printf("%-12s", com->data);
+      printf("\n");   
+    }
+  }
+  fclose(fp);
+  free(com);
+}
+
 void lista_all_ven(void) {
   system("clear||cls");
   FILE* fp;
@@ -1039,4 +1109,121 @@ void lista_all_ven(void) {
   }
   fclose(fp);
   free(ven);
+}
+
+void lista_cnpj_ven(Vendas* ven) {
+  char *nome_rev;
+  char *nome_prod;
+  char cnpj[15];
+  system("clear||cls");
+  FILE* fp;
+  printf("\n = Lista de Vendas por CNPJ = \n");
+  printf("\n");
+  printf("Informe o CNPJ: ");
+  fgets (cnpj, 15, stdin);
+  getchar();
+  printf("\n");
+  ven = (Vendas*) malloc(sizeof(Vendas));
+  fp = fopen("vendas.dat", "rb");
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  printf("%-14s", "ID da Venda");
+  printf("|");
+  printf("%-20s", "Nome do Produto");
+  printf("|");
+  printf("%-30s", "Nome do Estabelecimento");
+  printf("|");
+  printf("%-17s", "CPF do Vendedor");
+  printf("|");
+  printf("%-13s", "Valor Total");
+  printf("|");
+  printf("%-16s", "Data da Venda");
+  printf("\n");
+  printf("%15s", "|");
+  printf("%21s", "|");
+  printf("%31s", "|");
+  printf("%18s", "|");
+  printf("%14s", "|");
+  printf("\n");
+  while(fread(ven, sizeof(Vendas), 1, fp) == 1) {
+    if (strcmp(ven->cnpj, cnpj) == 0) {
+      nome_rev = get_rev(cnpj);
+      nome_prod = get_prod(ven->id);
+      printf("%-14d", ven->id_venda);
+      printf("|");
+      printf("%-20s", nome_prod);
+      printf("|");
+      printf("%-30s", nome_rev);
+      printf("|");
+      printf("%-17s", ven->cpf);
+      printf("|");
+      printf("R$ %-10.2f", ven->preco);
+      printf("|");
+      printf("%-12s", ven->data);
+      printf("\n");   
+    }
+  }
+  fclose(fp);
+  free(ven);
+}
+
+char *get_forn(const char *cnpj) {
+  Fornecedor forn;
+  FILE* fp = fopen("forn.dat", "rb");
+
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  while (fread(&forn, sizeof(forn), 1, fp) == 1) {
+    if(strcmp(forn.cnpj, cnpj) == 0) {
+      char *x = (char *)malloc(strlen(forn.nome_est) + 1);
+      if (x == NULL) {
+        printf("Ocorreu um erro.\n");
+        fclose(fp);
+        return NULL;
+      }
+      strcpy(x, forn.nome_est);
+      fclose(fp);
+      return x;
+    }
+  }
+  fclose(fp);
+  return NULL;
+}
+
+char *get_rev(const char *cnpj) {
+  Revendedor rev;
+  FILE* fp = fopen("rev.dat", "rb");
+
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  while (fread(&rev, sizeof(rev), 1, fp) == 1) {
+    if(strcmp(rev.cnpj, cnpj) == 0) {
+      char *x = (char *)malloc(strlen(rev.nome_est) + 1);
+      if (x == NULL) {
+        printf("Ocorreu um erro.\n");
+        fclose(fp);
+        return NULL;
+      }
+      strcpy(x, rev.nome_est);
+      fclose(fp);
+      return x;
+    }
+  }
+  fclose(fp);
+  return NULL;
 }
