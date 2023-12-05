@@ -46,5 +46,7 @@ char *get_mat(const int id);
 void get_est_mat(int id, int quant);
 char *get_prod(const int id);
 int get_est_prod(int id, int quant);
+float get_val_mat(int id);
+float get_val_prod(int id);
 
 #endif

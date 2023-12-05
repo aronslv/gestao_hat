@@ -138,9 +138,7 @@ Compras* tela_cad_com(void) {
 
     get_est_mat(com->id, com->quant);
 
-    printf("Valor da unidade: R$ ");
-    scanf("%f", &com->valor);
-    getchar();
+    com->valor = get_val_mat(com->id);
 
     com->preco = com->quant * com->valor;
 
@@ -312,9 +310,7 @@ Vendas* tela_cad_ven(void) {
 
     ven->quant = get_est_prod(ven->id, ven->quant);
 
-    printf("Valor da unidade: R$ ");
-    scanf("%f", &ven->valor);
-    getchar();
+    ven->valor = get_val_prod(ven->id);
 
     ven->preco = ven->quant * ven->valor;
 
@@ -712,4 +708,50 @@ int get_est_prod(int id, int quant) {
   }
   fclose(fp);
   return quant;
+}
+
+float get_val_mat(int id) {
+  Materia* mat;
+  float valor;
+  FILE* fp = fopen("mat.dat", "rb");
+
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  mat = (Materia*) malloc(sizeof(Materia));
+  while (fread(mat, sizeof(Materia), 1, fp) == 1) {
+    if (mat->id == id) {
+      valor = mat->valor;
+      return valor;
+    } else {
+      return 0;
+    }
+  }
+}
+
+float get_val_prod(int id) {
+  Produto* prod;
+  float valor;
+  FILE* fp = fopen("prod.dat", "rb");
+
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+  prod = (Produto*) malloc(sizeof(Produto));
+  while (fread(prod, sizeof(Produto), 1, fp) == 1) {
+    if (prod->id == id) {
+      valor = prod->valor;
+      return valor;
+    } else {
+      return 0;
+    }
+  }
 }
