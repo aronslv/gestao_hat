@@ -12,6 +12,7 @@ struct revendedor{
     char nome_prop[50];
     char cel[12];
     char status;
+    Revendedor* prox;
 };
 
 void modulo_rev(void);

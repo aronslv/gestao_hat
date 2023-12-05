@@ -9,6 +9,7 @@ char rel_rev(void);
 void lista_all_rev(void);
 void lista_ativo_rev(void);
 void lista_inativo_rev(void);
+void lista_ord_rev(void);
 char rel_func(void);
 void lista_all_func(void);
 void lista_ativo_func(void);

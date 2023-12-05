@@ -39,6 +39,8 @@ void modulo_rel(void) {
                             printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
                             getchar();
                             break;
+                case '4':   lista_ord_rev();
+                            break;
               }
             }while (op != '0');
             break;   
@@ -209,6 +211,7 @@ char rel_rev(void) {
     printf("§               1. Listar todas as Revendedoras                               §\n");
     printf("§               2. Listar as Revendedoras Ativas                              §\n");
     printf("§               3. Listar as Revendedoras Inativas                            §\n");
+    printf("§               4. Listar as Revendedoras em Ordem Alfabética                 §\n");
     printf("§               0. Retornar ao Menu de Opções                                 §\n");
     printf("§                                                                             §\n");
     printf("§                                                                             §\n");
@@ -472,6 +475,90 @@ void lista_inativo_rev(void) {
   }
   fclose(fp);
   free(revendedor);
+}
+
+void lista_ord_rev(void) {
+  system("clear||cls");
+  FILE* fp = fopen("rev.dat", "rb");
+  Revendedor* new_rev;
+  Revendedor* lista;
+
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+
+  printf("\n = Lista de Revendedoras = \n");
+  printf("\n");
+
+  printf("%-15s", "CNPJ");
+  printf("|");
+  printf("%-30s", "Nome do Estabelecimento");
+  printf("|");
+  printf("%-30s", "Nome do Proprietário");
+  printf("\n");
+  printf("%16s", "|");
+  printf("%31s", "|");
+  printf("\n");
+  lista = NULL;
+  new_rev = (Revendedor*)malloc(sizeof(Revendedor));
+
+  if (new_rev == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao alocar a memória!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+
+  while(fread(new_rev, sizeof(Revendedor), 1, fp) == 1) {
+    new_rev->prox = NULL;
+
+    if ((lista == NULL) || (strcmp(new_rev->nome_est, lista->nome_est) < 0)) {
+      new_rev->prox = lista;
+      lista = new_rev;
+    } else {
+      Revendedor* ant = lista;
+      Revendedor* atual = lista->prox;
+      while ((atual != NULL) && strcmp(atual->nome_est, new_rev->nome_est) < 0) {
+        ant = atual;
+        atual = atual->prox;
+      }
+      ant->prox = new_rev;
+      new_rev->prox = atual;
+    }
+    new_rev = (Revendedor*)malloc(sizeof(Revendedor));
+    if (new_rev == NULL) {
+      printf("\t\t\t>>> Processando as informações...\n");
+      sleep(1);
+      printf("\t\t\t>>> Houve um erro ao alocar a memória!\n");
+      printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+      getchar();
+    }
+  }
+  fclose(fp);
+  new_rev = lista;
+  while(new_rev != NULL) {
+    printf("%-15s", new_rev->cnpj);
+    printf("|");
+    printf("%-30s", new_rev->nome_est);
+    printf("|");
+    printf("%-30s", new_rev->nome_prop);
+    printf("\n");
+    new_rev = new_rev->prox;
+  }
+  new_rev = lista;
+  while (lista != NULL) {
+    lista = lista->prox;
+    free(new_rev);
+    new_rev = lista;
+  }
+  printf("\n");
+  printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+  getchar();
 }
 
 void lista_all_func(void) {
