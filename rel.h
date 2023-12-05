@@ -17,6 +17,7 @@ char rel_forn(void);
 void lista_all_forn(void);
 void lista_ativo_forn(void);
 void lista_inativo_forn(void);
+void lista_ord_forn(void);
 char rel_mat(void);
 void lista_all_mat(void);
 void lista_ativo_mat(void);

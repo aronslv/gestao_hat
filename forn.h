@@ -12,6 +12,7 @@ struct fornecedor{
     char nome_prop[50];
     char cel[12];
     char status;
+    Fornecedor* prox;
 };
 
 void modulo_forn(void);

@@ -83,6 +83,8 @@ void modulo_rel(void) {
                             printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
                             getchar();
                             break;
+                case '4':   lista_ord_forn();
+                            break;
               }
             }while (op != '0');
             break;  
@@ -251,6 +253,7 @@ char rel_forn(void) {
     printf("§               1. Listar todas as Fornecedoras                               §\n");
     printf("§               2. Listar as Fornecedoras Ativas                              §\n");
     printf("§               3. Listar as Fornecedoras Inativas                            §\n");
+    printf("§               4. Listar as Fornecedoras em Ordem Alfabética                 §\n");
     printf("§               0. Retornar ao Menu de Opções                                 §\n");
     printf("§                                                                             §\n");
     printf("§                                                                             §\n");
@@ -713,6 +716,90 @@ void lista_inativo_forn(void) {
   }
   fclose(fp);
   free(fornecedor);
+}
+
+void lista_ord_forn(void) {
+  system("clear||cls");
+  FILE* fp = fopen("forn.dat", "rb");
+  Fornecedor* new_forn;
+  Fornecedor* lista;
+
+  if (fp == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao abrir o arquivo!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+
+  printf("\n = Lista de Fornecedoras = \n");
+  printf("\n");
+
+  printf("%-15s", "CNPJ");
+  printf("|");
+  printf("%-30s", "Nome do Estabelecimento");
+  printf("|");
+  printf("%-30s", "Nome do Proprietário");
+  printf("\n");
+  printf("%16s", "|");
+  printf("%31s", "|");
+  printf("\n");
+  lista = NULL;
+  new_forn = (Fornecedor*)malloc(sizeof(Fornecedor));
+
+  if (new_forn == NULL) {
+    printf("\t\t\t>>> Processando as informações...\n");
+    sleep(1);
+    printf("\t\t\t>>> Houve um erro ao alocar a memória!\n");
+    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+    getchar();
+  }
+
+  while(fread(new_forn, sizeof(Fornecedor), 1, fp) == 1) {
+    new_forn->prox = NULL;
+
+    if ((lista == NULL) || (strcmp(new_forn->nome_est, lista->nome_est) < 0)) {
+      new_forn->prox = lista;
+      lista = new_forn;
+    } else {
+      Fornecedor* ant = lista;
+      Fornecedor* atual = lista->prox;
+      while ((atual != NULL) && strcmp(atual->nome_est, new_forn->nome_est) < 0) {
+        ant = atual;
+        atual = atual->prox;
+      }
+      ant->prox = new_forn;
+      new_forn->prox = atual;
+    }
+    new_forn = (Fornecedor*)malloc(sizeof(Fornecedor));
+    if (new_forn == NULL) {
+      printf("\t\t\t>>> Processando as informações...\n");
+      sleep(1);
+      printf("\t\t\t>>> Houve um erro ao alocar a memória!\n");
+      printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+      getchar();
+    }
+  }
+  fclose(fp);
+  new_forn = lista;
+  while(new_forn != NULL) {
+    printf("%-15s", new_forn->cnpj);
+    printf("|");
+    printf("%-30s", new_forn->nome_est);
+    printf("|");
+    printf("%-30s", new_forn->nome_prop);
+    printf("\n");
+    new_forn = new_forn->prox;
+  }
+  new_forn = lista;
+  while (lista != NULL) {
+    lista = lista->prox;
+    free(new_forn);
+    new_forn = lista;
+  }
+  printf("\n");
+  printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
+  getchar();
 }
 
 void lista_all_mat(void) {
