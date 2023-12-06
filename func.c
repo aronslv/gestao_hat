@@ -277,14 +277,16 @@ void ler_nome(char* nome) {
 // Função inspirada no código do Prof. Flavius
 
 void ler_cpf (char* cpf) {
+  fflush(stdin);
+  printf("Digite o CPF (Apenas Números): ");
+  fgets (cpf, 12, stdin);
+  getchar();
+  while ((!valid_cpf (cpf)) || (!verificaCPFDuplicado(cpf))) {
+    printf("CPF inválido! Digite o CPF novamente: ");
     fflush(stdin);
-    printf("Digite o CPF (Apenas Números): ");
     fgets (cpf, 12, stdin);
-    while (!validarCpf (cpf)) {
-        printf("CPF inválido! Digite o CPF novamente: ");
-        fgets (cpf, 12, stdin);
-    }
     getchar();
+  }
 }
 
 void ler_nasc(char* data) {
@@ -374,4 +376,21 @@ void exb_func(Funcionario* func) {
     printf("Situação do Funcionário: %s\n", sit);
     printf("\n");
   }
+}
+
+// Função baseada no código de https://github.com/StenioEric/SIG_LOJA_DE_PROD_FEMININOS.git
+
+int verificaCPFDuplicado(const char* cpf) {
+    FILE* fp = fopen("func.dat", "rb");
+
+    Funcionario func;
+    while (fread(&func, sizeof(Funcionario), 1, fp)) {
+        if (strcmp(func.cpf, cpf) == 0) {
+            fclose(fp);
+            return 0; // CPF duplicado
+        }
+    }
+
+    fclose(fp); // Fecha o arquivo
+    return 1; // CPF não duplicado
 }

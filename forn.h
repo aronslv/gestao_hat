@@ -23,5 +23,6 @@ Fornecedor* tela_pes_forn(void);
 void exb_forn(Fornecedor*);
 void tela_edit_forn(void);
 void tela_exc_forn(void);
+int verificaCNPJ1Duplicado(const char* cnpj);
 
 #endif 

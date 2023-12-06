@@ -422,14 +422,16 @@ void tela_exc_ven(void) {
 }
 
 void ler_cnpj3 (char* cnpj) {
+  fflush(stdin);
+  printf("Digite o CNPJ (Apenas Números): ");
+  fgets (cnpj, 15, stdin);
+  getchar();
+  while (!valid_cnpj(cnpj)) {
+    printf("CNPJ inválido! Digite o CNPJ novamente: ");
     fflush(stdin);
-    printf("Digite o CNPJ da Fornecedora (Apenas Números): ");
     fgets (cnpj, 15, stdin);
-    while (!validarCnpj(cnpj)) {
-        printf("CNPJ inválido! Digite o CNPJ novamente: ");
-        fgets (cnpj, 15, stdin);
-    }
     getchar();
+  }
 }
 
 void ler_data_mat(char* data) {
@@ -467,25 +469,29 @@ void ler_data_mat(char* data) {
 }
 
 void ler_cnpj4 (char* cnpj) {
+  fflush(stdin);
+  printf("Digite o CNPJ (Apenas Números): ");
+  fgets (cnpj, 15, stdin);
+  getchar();
+  while (!valid_cnpj(cnpj)) {
+    printf("CNPJ inválido! Digite o CNPJ novamente: ");
     fflush(stdin);
-    printf("Digite o CNPJ da Revendedora (Apenas Números): ");
     fgets (cnpj, 15, stdin);
-    while (!validarCnpj(cnpj)) {
-        printf("CNPJ inválido! Digite o CNPJ novamente: ");
-        fgets (cnpj, 15, stdin);
-    }
     getchar();
+  }
 }
 
 void ler_cpf_vend (char* cpf) {
+  fflush(stdin);
+  printf("Digite o CPF (Apenas Números): ");
+  fgets (cpf, 12, stdin);
+  getchar();
+  while (!valid_cpf (cpf)) {
+    printf("CPF inválido! Digite o CPF novamente: ");
     fflush(stdin);
-    printf("Digite o CPF do Vendedor (Apenas Números): ");
     fgets (cpf, 12, stdin);
-    while (!validarCpf (cpf)) {
-        printf("CPF inválido! Digite o CPF novamente: ");
-        fgets (cpf, 12, stdin);
-    }
     getchar();
+  }
 }
 
 void ler_data_prods(char* data) {
@@ -724,13 +730,12 @@ float get_val_mat(int id) {
   }
   mat = (Materia*) malloc(sizeof(Materia));
   while (fread(mat, sizeof(Materia), 1, fp) == 1) {
-    if (mat->id == id) {
-      valor = mat->valor;
-      return valor;
-    } else {
+    if (mat->id != id) {
       return 0;
-    }
+    }   
   }
+  valor = mat->valor;
+  return valor;
 }
 
 float get_val_prod(int id) {
@@ -747,11 +752,10 @@ float get_val_prod(int id) {
   }
   prod = (Produto*) malloc(sizeof(Produto));
   while (fread(prod, sizeof(Produto), 1, fp) == 1) {
-    if (prod->id == id) {
-      valor = prod->valor;
-      return valor;
-    } else {
+    if (prod->id != id) {
       return 0;
-    }
+    } 
   }
+  valor = prod->valor;
+  return valor;
 }

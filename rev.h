@@ -23,5 +23,6 @@ Revendedor* tela_pes_rev(void);
 void exb_rev(Revendedor*);
 void tela_edit_rev(void);
 void tela_exc_rev(void);
+int verificaCNPJ2Duplicado(const char* cnpj);
 
 #endif 

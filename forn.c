@@ -245,14 +245,16 @@ void tela_exc_forn(void) {
 }
 
 void ler_cnpj1 (char* cnpj) {
+  fflush(stdin);
+  printf("Digite o CNPJ (Apenas Números): ");
+  fgets (cnpj, 15, stdin);
+  getchar();
+  while ((!valid_cnpj(cnpj)) || (!verificaCNPJ1Duplicado(cnpj))) {
+    printf("CNPJ inválido! Digite o CNPJ novamente: ");
     fflush(stdin);
-    printf("Digite o CNPJ (Apenas Números): ");
     fgets (cnpj, 15, stdin);
-    while (!validarCnpj(cnpj)) {
-        printf("CNPJ inválido! Digite o CNPJ novamente: ");
-        fgets (cnpj, 15, stdin);
-    }
     getchar();
+  }
 }
 
 void ler_nome1(char* nome_est) {
@@ -380,4 +382,19 @@ void exb_forn(Fornecedor* forn) {
     printf("Situação da Revendedora: %s\n", sit);
     printf("\n");
   }
+}
+
+int verificaCNPJ1Duplicado(const char* cnpj) {
+    FILE* fp = fopen("forn.dat", "rb");
+
+    Fornecedor forn;
+    while (fread(&forn, sizeof(Fornecedor), 1, fp)) {
+        if (strcmp(forn.cnpj, cnpj) == 0) {
+            fclose(fp);
+            return 0;
+        }
+    }
+
+    fclose(fp); 
+    return 1; 
 }

@@ -245,14 +245,16 @@ void tela_exc_rev(void) {
 }
 
 void ler_cnpj2 (char* cnpj) {
+  fflush(stdin);
+  printf("Digite o CNPJ (Apenas Números): ");
+  fgets (cnpj, 15, stdin);
+  getchar();
+  while ((!valid_cnpj(cnpj)) || (!verificaCNPJ2Duplicado(cnpj))) {
+    printf("CNPJ inválido! Digite o CNPJ novamente: ");
     fflush(stdin);
-    printf("Digite o CNPJ (Apenas Números): ");
     fgets (cnpj, 15, stdin);
-    while (!validarCnpj(cnpj)) {
-        printf("CNPJ inválido! Digite o CNPJ novamente: ");
-        fgets (cnpj, 15, stdin);
-    }
     getchar();
+  }
 }
 
 void ler_nome4(char* nome_est) {
@@ -382,4 +384,19 @@ void esc_rev(Revendedor* rev) {
     fwrite(rev, sizeof(Revendedor), 1, fp);
     fclose(fp);
   }
+}
+
+int verificaCNPJ2Duplicado(const char* cnpj) {
+    FILE* fp = fopen("rev.dat", "rb");
+
+    Revendedor rev;
+    while (fread(&rev, sizeof(Revendedor), 1, fp)) {
+        if (strcmp(rev.cnpj, cnpj) == 0) {
+            fclose(fp);
+            return 0;
+        }
+    }
+
+    fclose(fp); 
+    return 1; 
 }

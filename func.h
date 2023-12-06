@@ -23,5 +23,6 @@ Funcionario* tela_pes_func(void);
 void exb_func(Funcionario*);
 void tela_edit_func(void);
 void tela_exc_func(void);
+int verificaCPFDuplicado(const char* cpf);
 
 #endif 
