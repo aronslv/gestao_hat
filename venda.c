@@ -140,7 +140,11 @@ Compras* tela_cad_com(void) {
 
     com->valor = get_val_mat(com->id);
 
+    printf("Valor da Unidade: R$ %.2f\n", com->valor);
+
     com->preco = com->quant * com->valor;
+
+    printf("Valor Total: R$ %.2f\n", com->preco);
 
     ler_data_mat(com->data);
 
@@ -312,7 +316,11 @@ Vendas* tela_cad_ven(void) {
 
     ven->valor = get_val_prod(ven->id);
 
+    printf("Valor Unitário: R$ %.2f\n", ven->valor);
+
     ven->preco = ven->quant * ven->valor;
+
+    printf("Valor Total: R$ %.2f\n", ven->preco);
 
     ler_data_prods(ven->data);
 
@@ -575,6 +583,7 @@ void exb_com(Compras* com) {
     printf("CNPJ da Fornecedora: %s\n", com->cnpj);
     printf("Quantidade: %d\n", com->quant);
     printf("Valor da Unidade: R$ %.2f\n", com->valor);
+    printf("Valor Total: R$ %.2f\n", com->preco);
     printf("Data da compra: %s\n", com->data);
   }
 }
@@ -595,6 +604,7 @@ void exb_ven(Vendas* ven) {
     printf("CPF do Vendendor: %s\n", ven->cpf);
     printf("Quantidade: %d\n", ven->quant);
     printf("Valor da Unidade: R$ %.2f\n", ven->valor);
+    printf("Valor Total: R$ %.2f\n", ven->preco);
     printf("Data da compra: %s\n", ven->data);
   }
 }
