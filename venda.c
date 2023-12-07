@@ -227,9 +227,6 @@ void tela_exc_com(void) {
     } else {
         while (fread(new_com, sizeof(Compras), 1, fp) == 1) {
             if(new_com->id_compra == id) {
-                printf("\n");
-                printf("\t\t\t= = = Compra Encontrada = = =\n");
-                printf("\n");
 
                 new_com->status = 'e';
 
@@ -244,6 +241,8 @@ void tela_exc_com(void) {
         printf("\n");
         printf("\t\t\tID não encontrado!\n");
     } else {
+        printf("\n");
+        printf("\t\t\t= = = Compra Encontrada = = =\n");
         printf("\n");
         printf("\t\t\tCompra cancelada com sucesso!\n");
     }
@@ -402,10 +401,7 @@ void tela_exc_ven(void) {
         getchar();
     } else {
         while (fread(new_ven, sizeof(Vendas), 1, fp) == 1) {
-            if(new_ven->id_venda == id) {
-                printf("\n");
-                printf("\t\t\t= = = Venda Encontrada = = =\n");
-                printf("\n");
+            while(new_ven->id_venda == id) {
 
                 new_ven->status = 'e';
 
@@ -420,6 +416,8 @@ void tela_exc_ven(void) {
         printf("\n");
         printf("\t\t\tID não encontrado!\n");
     } else {
+        printf("\n");
+        printf("\t\t\t= = = Venda Encontrada = = =\n");
         printf("\n");
         printf("\t\t\tVenda cancelada com sucesso!\n");
     }
@@ -569,12 +567,10 @@ void esc_ven(Vendas* ven) {
 }
 
 void exb_com(Compras* com) {
-  if (com == NULL) {
+  if ((com == NULL)|| (com->status == 'e')) {
     printf("\n");
     printf("\t\t\tID não encontrado!\n");
     printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
   }else{
     printf("\t\t\t= = = Compra Cadastrada = = =\n");
     printf("\n");
@@ -589,12 +585,10 @@ void exb_com(Compras* com) {
 }
 
 void exb_ven(Vendas* ven) {
-  if (ven == NULL) {
+  if ((ven == NULL) || (ven->status == 'e')) {
     printf("\n");
     printf("\t\t\tID não encontrado!\n");
     printf("\n");
-    printf("\t\t\t>>> Tecle <ENTER> para continuar...\n");
-    getchar();
   }else{
     printf("\t\t\t= = = Venda Cadastrada = = =\n");
     printf("\n");
@@ -740,12 +734,16 @@ float get_val_mat(int id) {
   }
   mat = (Materia*) malloc(sizeof(Materia));
   while (fread(mat, sizeof(Materia), 1, fp) == 1) {
-    if (mat->id != id) {
-      return 0;
-    }   
+    if (mat->id == id) {
+      valor = mat->valor;
+      fclose(fp);
+      free(mat);
+      return valor;
+    }
   }
-  valor = mat->valor;
-  return valor;
+  fclose(fp);
+  free(mat);
+  return 0;
 }
 
 float get_val_prod(int id) {
@@ -762,10 +760,14 @@ float get_val_prod(int id) {
   }
   prod = (Produto*) malloc(sizeof(Produto));
   while (fread(prod, sizeof(Produto), 1, fp) == 1) {
-    if (prod->id != id) {
-      return 0;
-    } 
+    if (prod->id == id) {
+      valor = prod->valor;
+      fclose(fp);
+      free(prod);
+      return valor;
+    }
   }
-  valor = prod->valor;
-  return valor;
+  fclose(fp);
+  free(prod);
+  return 0;
 }
